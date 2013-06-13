@@ -5,8 +5,7 @@ set background=dark
 set t_Co=256
 
 " Add custom vim plugins
-call pathogen#infect('~/.vim_custom/sources')
-call pathogen#infect('~/.vim_custom/drush/bundle')
+call pathogen#infect('~/.vim_runtime/drush/bundle')
 
 " Tab keys
 nnoremap th  :tabfirst<CR>
