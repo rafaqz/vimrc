@@ -1,0 +1,6 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =4
+let g:netrw_dirhist_1='/home/raf/vagrant/vagrant/cookbooks/drupal-cookbooks/drupal/attributes'
+let g:netrw_dirhist_2='/home/raf/vagrant/vagrant/roles'
+let g:netrw_dirhist_3='/home/raf/vagrant/vagrant/cookbooks/site-cookbooks/oh-my-zsh/templates/default'
+let g:netrw_dirhist_4='/home/raf/vagrant/vagrant'

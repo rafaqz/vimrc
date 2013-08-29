@@ -42,6 +42,7 @@ iunmap $e
 iunmap $t
 iunmap $q
 nunmap <space>
+iunmap <leader>e
 iunmap $1 
 iunmap $2
 iunmap $3
