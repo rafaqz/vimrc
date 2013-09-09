@@ -47,3 +47,12 @@ iunmap $1
 iunmap $2
 iunmap $3
 iunmap $4
+
+"Custom
+"iunmap <leader>g 
+"nnoremap <leader>gd :Gdiff HEAD<CR>
+"nnoremap <leader>gh :Gdiff HEAD~
+"nnoremap <leader>gc :Gcommit -m '
+"nnoremap <leader>gp :Git push<CR>
+"nnoremap <leader>gl :Git log<CR>
+"nnoremap <leader>gr :Git rebase -i<CR>
