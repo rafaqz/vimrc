@@ -1,14 +1,17 @@
 
-# Fork of... The Ultimate vimrc
+# Fork of "The Ultimate vimrc" for php and drupal.
 
-## This fork adds 
+## This fork adds:
 
 easymotion, nerdcommenter, phpfolding, syntastic, vdebug, vim-fugitive and vim phpqa
 
-It also adds the vim drush plugin for drupal coding standards.
 
-and my custom config.
+It also adds the vim drush plugin for drupal coding standards, and my custom config.
 
+
+
+
+# From "The Ultimate vimrc"
 
 Over the last 8 years I have used and tweaked Vim. This is my Ultimate vimrc.
 

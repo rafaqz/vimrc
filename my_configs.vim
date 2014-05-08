@@ -12,7 +12,10 @@ fun! RangerChooser()
     redraw! 
 endfun 
 
-map <leader>r :call RangerChooser()<CR>
+" Open ranger with current tab path.
+map ,r :cd %:p:h<cr>:pwd<cr>:call RangerChooser()<CR>
+" Open a new tab and open ranger.
+map tr :cd %:p:h<cr>:pwd<cr>:tabnew<CR>:call RangerChooser()<CR>
 
 " Add custom vim plugins
 call pathogen#infect('~/.vim_runtime/drush/bundle')
@@ -33,8 +36,13 @@ nnoremap tt  :tabedit<Space>
 nnoremap tm  :tabmove<Space>
 nnoremap td  :tabclose<CR>
 nnoremap tn  :tabnew<CR>
+nnoremap tN  :tabnew#<CR>
 nnoremap to  :tabonly<CR>
 nnoremap tc  :tabclose<CR>
+nnoremap tJ  :tabmove -1<CR>
+nnoremap tK  :tabmove +1<CR>
+nnoremap TJ  :tabmove -1<CR>
+nnoremap TK  :tabmove +1<CR>
 " Open tags in a new tab.
 nnoremap <silent>t] <C-w><C-]><C-w>T
 
@@ -56,6 +64,8 @@ nnoremap <leader>se  :source ~/sessions/
 " Tags - search down to root to find them.
 set tags=./tags;/
 
+" Use terminal background, Allows transparency and background switching for solarized.
+hi Normal guibg=NONE ctermbg=NONE
 
 " Overrides
 iunmap $e
