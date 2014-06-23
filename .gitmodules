@@ -7,3 +7,6 @@
 [submodule "sources_non_forked/vdebug"]
 	path = sources_non_forked/vdebug
 	url = https://github.com/joonty/vdebug.git
+[submodule "sources_non_forked/vim-ruby"]
+	path = sources_non_forked/vim-ruby
+	url = https://github.com/vim-ruby/vim-ruby.git
