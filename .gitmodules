@@ -1,9 +1,6 @@
 [submodule "sources_non_forked/vim-phpqa"]
 	path = sources_non_forked/vim-phpqa
 	url = https://github.com/joonty/vim-phpqa.git
-[submodule "sources_non_forked/vim-fugitive"]
-	path = sources_non_forked/vim-fugitive
-	url = https://github.com/tpope/vim-fugitive.git
 [submodule "sources_non_forked/vim-easymotion"]
 	path = sources_non_forked/vim-easymotion
 	url = https://github.com/Lokaltog/vim-easymotion.git
