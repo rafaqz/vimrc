@@ -10,3 +10,6 @@
 [submodule "sources_non_forked/vim-ruby"]
 	path = sources_non_forked/vim-ruby
 	url = https://github.com/vim-ruby/vim-ruby.git
+[submodule "sources_non_forked/vim-ansible-yaml"]
+	path = sources_non_forked/vim-ansible-yaml
+	url = https://github.com/chase/vim-ansible-yaml.git
