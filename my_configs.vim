@@ -18,7 +18,7 @@ map ,r :cd %:p:h<cr>:pwd<cr>:call RangerChooser()<CR>
 map tr :cd %:p:h<cr>:pwd<cr>:tabnew<CR>:call RangerChooser()<CR>
 
 " Add custom vim plugins
-call pathogen#infect('~/.vim_runtime/drush/bundle')
+call pathogen#infect('~/.vim_runtime/drush/bundle/{}')
 
 "Color scheme
 colorscheme solarized
