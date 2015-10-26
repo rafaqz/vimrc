@@ -203,8 +203,9 @@ autocmd! FileType vim call SetVim()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Markdown
 
-" au Filetype markdown setlocal textwidth=80
-autocmd FileType markdown NeoCompleteLock
+autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+au Filetype markdown setlocal textwidth=80
+" autocmd FileType markdown NeoCompleteLock
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Git

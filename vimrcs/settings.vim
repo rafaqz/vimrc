@@ -172,10 +172,10 @@ set tw=500
 set ai "Auto indent
 set si "Smart indent
 set wrap "Wrap lines
+set ruler
 
 " Use par for prettier line formatting
-set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72"
-set ruler
+" set formatprg="PARINIT='rTbgqR B=.,?_A_a Q=_s>|' par\ -w72"
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Status line
 

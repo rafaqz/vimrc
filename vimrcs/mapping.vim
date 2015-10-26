@@ -7,7 +7,7 @@
 
 let mapleader = ","
 let g:mapleader = ","
-let maplocalleader = ","
+let maplocalleader = "\\"
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -167,8 +167,7 @@ nmap <leader>sj :rightbelow new<CR>
 
 " Pressing ,ss will toggle and untoggle spell checking
 map <leader>ss :setlocal spell!<cr>
-map <leader>sn ]s
-map <leader>sp [s
+nnoremap <leader>sx ea<C-X><C-S>
 map <leader>sa zg
 map <leader>s? z=
 
@@ -201,6 +200,10 @@ nnoremap grt :call RangerChooser("tabedit")<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Plugins
 
+" {{{ Table Mode
+nmap <leader>tm :TableModeToggle<cr>       
+
+""""""""""""""""""""""""""""""}}}
 " {{{ Pad
 nmap <leader>nl         <Plug>(pad-list)                     " open the notes list
 " nmap <leader>nn         <Plug>(pad-new)                      " create a new note
@@ -370,3 +373,10 @@ map <leader>ap :Align
 "
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
+nnoremap <leader>t :<C-u>Unite -no-split -buffer-name=files   -start-insert file_rec/async:!<cr>
+nnoremap <leader>f :<C-u>Unite -no-split -buffer-name=files   -start-insert file<cr>
+nnoremap <leader>r :<C-u>Unite -no-split -buffer-name=mru     -start-insert file_mru<cr>
+nnoremap <leader>o :<C-u>Unite -no-split -buffer-name=outline -start-insert outline<cr>
+nnoremap <leader>y :<C-u>Unite -no-split -buffer-name=yank    history/yank<cr>
+nnoremap <leader>e :<C-u>Unite -no-split -buffer-name=buffer  buffer<cr>

@@ -2,14 +2,6 @@
 " Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" {{{ CmdLine
-function! CmdLine(str)
-  exe "menu Foo.Bar :" . a:str
-  emenu Foo.Bar
-  unmenu Foo
-endfunction
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ VisualSelection
 function! VisualSelection(direction, extra_filter) range
@@ -43,7 +35,7 @@ function! HasPaste()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Don't close window, when deleting a buffer
+" {{{ Don't close window when deleting a buffer
 command! Bclose call <SID>BufcloseCloseIt()
 function! <SID>BufcloseCloseIt()
   let l:currentBufNum = bufnr("%")
@@ -65,34 +57,6 @@ function! <SID>BufcloseCloseIt()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ DeleteTillSlash
-function! DeleteTillSlash()
-  let g:cmd = getcmdline()
-
-  if has("win16") || has("win32")
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\]\\).*", "\\1", "")
-  else
-    let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*", "\\1", "")
-  endif
-
-  if g:cmd == g:cmd_edited
-    if has("win16") || has("win32")
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[\\\\\]\\).*\[\\\\\]", "\\1", "")
-    else
-      let g:cmd_edited = substitute(g:cmd, "\\(.*\[/\]\\).*/", "\\1", "")
-    endif
-  endif
-
-  return g:cmd_edited
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ CurrentFileDir
-function! CurrentFileDir(cmd)
-  return a:cmd . " " . expand("%:p:h") . "/"
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Ranger file choose mode
 function! RangerChooser(layout)
   let cmd = printf("silent !ranger --choosefiles=/tmp/chosenfiles %s",
@@ -111,15 +75,6 @@ function! RangerChooser(layout)
   endif
   redraw!
 endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Map key to toggle opt
-function MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-  exec 'nnoremap '.a:key.' '.cmd
-  exec 'inoremap '.a:key." \<C-O>".cmd
-endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Quickfix
@@ -203,12 +158,17 @@ function! CustomizedTabLine()
     return s
 endfunction
 
-" Always show the tablilne 
+" Always show the tabline 
 set stal=2
 set tabline=%!CustomizedTabLine()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Default to markdown
-autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+" {{{ Map key to toggle opt
+function MapToggle(key, opt)
+  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
+  exec 'nnoremap '.a:key.' '.cmd
+  exec 'inoremap '.a:key." \<C-O>".cmd
+endfunction
+command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

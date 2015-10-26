@@ -16,7 +16,8 @@ Plug 'vim-scripts/nginx.vim', { 'for': 'nginx' }
 Plug 'groenewege/vim-less', { 'for': 'less' }
 Plug 'lervag/vimtex', { 'for': 'latex' }
 Plug 'vim-pandoc/vim-pandoc', { 'for': 'markdown' }
-Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'markdown' }
+" Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'markdown' }
+" Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'markdown' }
 " Plug 'joonty/vdebug'
 
   " Ruby
@@ -35,6 +36,7 @@ Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'markdown' }
 "---------------------------------
 " Edit
 Plug 'Shougo/neocomplete.vim'
+Plug 'Shougo/neomru.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
@@ -44,10 +46,14 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'godlygeek/tabular', { 'on': 'Tab' }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+
 
 "---------------------------------
 " Nav
 " Plug 'corntrace/bufexplorer'
+Plug 'Shougo/unite.vim'
+Plug 'termoshtt/unite-bibtex'
 Plug 'kien/ctrlp.vim'
 Plug 'amix/open_file_under_cursor.vim'
 Plug 'vim-scripts/taglist.vim'
@@ -87,6 +93,7 @@ Plug 'tmhedberg/matchit'
 call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
 " {{{ bufExplorer plugin
 
 let g:bufExplorerDefaultHelp=0
@@ -95,9 +102,41 @@ let g:bufExplorerFindActive=1
 let g:bufExplorerSortBy='name'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
+" {{{ Unite 
+
+let g:unite_source_history_yank_enable = 1
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+
+" Custom mappings for the unite buffer
+autocmd FileType unite call s:unite_settings()
+function! s:unite_settings()
+  " Play nice with supertab
+  let b:SuperTabDisabled=1
+  " Enable navigation with control-j and control-k in insert mode
+  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
+endfunction
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Unite Bibtex
+let g:unite_bibtex_bib_files=["~/Projects/Uni/Natural-Environments/Assesment/out.bib"]
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ MRU plugin
 
 let MRU_Max_Entries = 400
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Vim Pandoc
+
+let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Vim Table Mode
+
+let g:table_mode_corner_corner="+"
+let g:table_mode_header_fillchar="="
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ YankRing
@@ -186,6 +225,11 @@ let g:neocomplete#enable_smart_case = 1
 let g:neocomplete#sources#syntax#min_keyword_length = 2
 " inoremap <expr><TAB>  pumvisible() ? "\<C-n>" : "\<TAB>"
 
+" Enable heavy omni completion.
+" if !exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
+
 if !exists('g:neocomplete#force_omni_input_patterns')
   let g:neocomplete#force_omni_input_patterns = {}
 endif
@@ -230,3 +274,5 @@ let g:pad#rename_files                = 1
 let g:pad#title_first_line            = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
+
