@@ -1,4 +1,4 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Filetype specific settings
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
@@ -185,7 +185,7 @@ au FileType haskell call SetHaskell()
 function! SetPython()
   let python_highlight_all = 1
   syn keyword pythonDecorator True None False self
-  map <buffer> F :set foldmethod=indent<cr>
+  set foldmethod=indent
 endfunction
 autocmd FileType python SetPython()
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
@@ -193,23 +193,50 @@ au BufNewFile,BufRead *.mako set ft=mako
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Vim
+
 function! SetVim()
   " fold vimrc by categories
   set foldmethod=marker
   set foldlevel=0
 endfunction
 autocmd! FileType vim call SetVim()
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Markdown
 
-autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
-au Filetype markdown setlocal textwidth=80
-" autocmd FileType markdown NeoCompleteLock
+augroup markdown
+  autocmd!
+  " autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
+  autocmd! Bufread,BufEnter,BufNewFile *.md 
+    \   call SetLight()
+    " \ | set syntax=pandoc
+  autocmd! BufLeave *.md call SetDark()
+  
+  autocmd FileType pandoc,markdown,mkd
+    \   setlocal textwidth=80
+    \ | setlocal commentstring=<!--\ %s\ -->
+    \ | set foldlevel=1
+    \ | set iskeyword+=_ 
+    \ | call textobj#quote#init()
+    \ | call textobj#sentence#init()
+    " \ | NeoCompleteLock
+    " \ | call litecorrect#init()
+    " \ | call pencil#init()
+    " \ | call lexical#init()
+augroup END
+
+fun! SetLight()
+  set background=light
+  colorscheme pencil
+endfun
+
+fun! SetDark()
+  set background=dark
+  colorscheme solarized
+endfun
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Git
 
 au FileType gitcommit call setpos('.', [0, 1, 1, 0])
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

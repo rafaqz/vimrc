@@ -3,7 +3,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ VisualSelection
+" {{{Search Visual Selection
+
+" Visual mode searches for the current selection
 function! VisualSelection(direction, extra_filter) range
   let l:saved_reg = @"
   execute "normal! vgvy"
@@ -26,45 +28,19 @@ function! VisualSelection(direction, extra_filter) range
 endfunction
  
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Returns true if paste mode is enabled
-function! HasPaste()
-  if &paste
-    return 'PASTE MODE  '
-  en
-  return ''
-endfunction
+" {{{ Ranger
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Don't close window when deleting a buffer
-command! Bclose call <SID>BufcloseCloseIt()
-function! <SID>BufcloseCloseIt()
-  let l:currentBufNum = bufnr("%")
-  let l:alternateBufNum = bufnr("#")
-
-  if buflisted(l:alternateBufNum)
-    buffer #
-  else
-    bnext
-  endif
-
-  if bufnr("%") == l:currentBufNum
-    new
-  endif
-
-  if buflisted(l:currentBufNum)
-    execute("bdelete! ".l:currentBufNum)
-  endif
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Ranger file choose mode
-function! RangerChooser(layout)
+function! Ranger(path)
   let cmd = printf("silent !ranger --choosefiles=/tmp/chosenfiles %s",
-        \ expand("%:p:h"))
+        \ expand("%:p:h") . "/" . a:path)
   if has("gui_running") && (has("gui_gtk") || has("gui_motif"))
     let cmd = substitute(cmd, '!', '! urxvtr -e ', '')
   endif
   exec cmd
+endfunction
+
+function! RangerChooser(layout)
+  exec Ranger("")
   if filereadable('/tmp/chosenfiles')
     let chosenfiles = system('cat /tmp/chosenfiles')
     let splitfiles = split(chosenfiles, "\n")
@@ -76,17 +52,43 @@ function! RangerChooser(layout)
   redraw!
 endfunction
 
+function! RangerPaste(key) " a or i
+  let save_cursor = getpos(".")
+  call Ranger("")
+  call setpos('.', save_cursor)
+  if filereadable('/tmp/chosenfiles')
+    " Load filename, remove trailing null char
+    let result = substitute(system('cat /tmp/chosenfiles'), "\n*$", '', '')
+    " Insert or append
+    exe "normal " . a:key . result . "\<Esc>" 
+    call system('rm /tmp/chosenfiles')
+  endif
+  redraw!
+endfun
+
+function RangerOpenFolder(app, object)
+  exec "lcd %:p:h"
+  exec "normal yi" . a:object
+  let path = @0
+  let dir = fnamemodify(path, ':h')
+  call Ranger(dir)
+  if filereadable('/tmp/chosenfiles')
+    " Load filename, remove trailing null char
+    let result = substitute(system('cat /tmp/chosenfiles'), "\n*$", '', '')
+    exec "normal di" . a:object . "P"
+    call system('rm /tmp/chosenfiles')
+  endif
+  redraw!
+endfun
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Quickfix
-command! -nargs=0 -bar Qargs execute 'args ' . QuickfixFilenames()
-function! QuickfixFilenames()
-  " Building a hash ensures we get each buffer only once
-  let buffer_numbers = {}
-  for quickfix_item in getqflist()
-    let buffer_numbers[quickfix_item['bufnr']] = bufname(quickfix_item['bufnr'])
-  endfor
-  return join(values(buffer_numbers))
-endfunction
+" {{{ Open files externally
+function OpenFile(app, object)
+  exec "lcd %:p:h"
+  exec "normal yi" . a:object
+  let path = @0
+  exec "Start! " . a:app . " " . path
+endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ DeleteTrailingWS
@@ -95,39 +97,6 @@ function! DeleteTrailingWS()
   %s/\s\+$//ge
   exe "normal `z"
 endfunction
-
-augroup vimrc_autocmds
-  autocmd BufEnter * highlight OverLength ctermbg=black guibg=#592929
-  autocmd BufEnter * match OverLength /\%82v.*/
-augroup END
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ CommitedFiles
-function! CommittedFiles()
-  " Clear quickfix list
-  let qf_list = []
-  " Find files committed in HEAD
-  let git_output = system("git diff-tree --no-commit-id --name-only -r HEAD\n")
-  for committed_file in split(git_output, "\n")
-    let qf_item = {'filename': committed_file}
-    call add(qf_list, qf_item)
-  endfor
-  " Fill quickfix list with them
-  call setqflist(qf_list, '')
-endfunction
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Grep
-" command! -nargs=1 GGrep call NonintrusiveGitGrep(<q-args>)
-
-" " Hide messy Ggrep output and copen automatically
-" function! NonintrusiveGitGrep(term)
-"   execute "copen"
-"   " Map 't' to open selected item in new tab
-"   execute "nnoremap <silent> <buffer> t <C-W><CR><C-W>T"
-"   execute "silent! Ggrep " . a:term
-"   execute "redraw!"
-" endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Customize Tabline
@@ -161,14 +130,5 @@ endfunction
 " Always show the tabline 
 set stal=2
 set tabline=%!CustomizedTabLine()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Map key to toggle opt
-function MapToggle(key, opt)
-  let cmd = ':set '.a:opt.'! \| set '.a:opt."?\<CR>"
-  exec 'nnoremap '.a:key.' '.cmd
-  exec 'inoremap '.a:key." \<C-O>".cmd
-endfunction
-command -nargs=+ MapToggle call MapToggle(<f-args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
