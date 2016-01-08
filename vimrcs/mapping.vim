@@ -13,7 +13,11 @@ let maplocalleader = "\\"
 map <silent> <leader><cr> :noh<cr>
 " Search for pandoc @citations and images
 map <leader>1 /!\[./e<cr>
-map <leader>2 /@./e<cr>
+map <leader>2 /@\(Tbl:\)\@!\(Fig:\)\@!./e<cr>
+map <leader>3 /@Fig:./e<cr>
+map <leader>4 /@Tbl:./e<cr>
+map <leader># /#fig:<C-R><C-W><cr>
+map <leader>$ /#tbl:<C-R><C-W><cr>
 map <leader>9 /\](./e<cr>
 "  Buffers
 map      <leader>bd :Bclose<cr>     " Close the current buffer
@@ -23,38 +27,16 @@ nnoremap <leader>bk :bn<cr>
 nnoremap <leader>bo <c-w>o     " close every window in current tabview but the current
 nnoremap <leader>bd :bd<cr>     " delete buffer without closing pane
 " Pandoc compilation
-nnoremap <leader>cc :Pandoc pdf<cr>
+" nnoremap <leader>cc :Pandoc pdf<cr>
 " Swap background color
 nnoremap <leader>dw :call DeleteTrailingWS()<cr>
 nnoremap <leader>f gwip " Format paragraph
-nnoremap <leader>i :let &background = ( &background == "dark"? "light" : "dark" )<CR>
+nnoremap <leader>i :let &background = ( &background == "dark"? "light" : "dark" )<cr>
 " Urxvt
-nnoremap <leader>j :cd %:p:h<cr>:pwd<cr>:silent !urxvtr<cr> "Urxvt - not useing $TERM as it's set to "rxvt" for compatability issues.
-" Lexical
-" let g:lexical#thesaurus_key = '<leader>t'
-" let g:lexical#dictionary_key = '<leader>k'
+nnoremap <leader>j :cd %:p:h<cr>:pwd<cr>:silent Start! urxvtr<cr>
 " Remove the Windows ^M - when the encodings gets messed up
-nnoremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm 
-" Pad
-nmap <leader>nl         <Plug>(pad-list)                     " open the notes list
-" nmap <leader>nn         <Plug>(pad-new)                      " create a new note
-nmap <leader>n          :Pad new<space>
-nmap <leader>ns         <Plug>(pad-search)                   " search for a note
-nmap <leader>ns<leader> <Plug>(pad-incremental-search)       " search incrementally for a note
-nmap <leader>ns!        <Plug>(pad-incremental-new-note)     " create a new note with incremental search
-"Opening Files
-"Gimp
-nnoremap <leader>ofg :call OpenFile('gimp','f')<cr>
-nnoremap <leader>obg :call OpenFile('gimp','b')<cr>
-nnoremap <leader>owg :call OpenFile('gimp','w')<cr>
-nnoremap <leader>oWg :call OpenFile('gimp','W')<cr>
-nnoremap <leader>o(g :call OpenFile('gimp','(')<cr>
-"Gpicview
-nnoremap <leader>ofv :call OpenFile('gpicview','f')<cr>
-nnoremap <leader>obv :call OpenFile('gpicview','b')<cr>
-nnoremap <leader>owv :call OpenFile('gpicview','w')<cr>
-nnoremap <leader>oWv :call OpenFile('gpicview','W')<cr>
-nnoremap <leader>o(v :call OpenFile('gpicview','(')<cr>
+nnoremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
+
 "Paste
 nnoremap <leader>po "*p
 nnoremap <leader>pp "+p
@@ -64,98 +46,118 @@ nnoremap <leader>PO "*P
 nnoremap <leader>PP "+P
 nnoremap <leader>pO "*P
 nnoremap <leader>pP "+P
-vmap <Leader>y "+y
-vmap <Leader>d "+d
-nmap <Leader>p "+p
-nmap <Leader>P "+P
-vmap <Leader>p "+p
-vmap <Leader>P "+P
-"Ranger
-nnoremap <leader>rr :call RangerChooser("edit")<cr>
-nnoremap <leader>rv :call RangerChooser("vertical split")<cr>
-nnoremap <leader>rs :call RangerChooser("split")<cr>
-nnoremap <leader>rt :call RangerChooser("tabedit")<cr>
-nnoremap <leader>rp :call RangerPaste("a")<cr>
-nnoremap <leader>rP :call RangerPaste("i")<cr>
+vmap <leader>y "+y
+vmap <leader>d "+d
+nmap <leader>p "+p
+nmap <leader>P "+P
+vmap <leader>p "+p
+vmap <leader>P "+P
 
-nnoremap <leader>rf :call RangerOpenFolder('ranger','f')<cr>
-nnoremap <leader>rb :call RangerOpenFolder('ranger','b')<cr>
-nnoremap <leader>rw :call RangerOpenFolder('ranger','w')<cr>
-nnoremap <leader>rW :call RangerOpenFolder('ranger','W')<cr>
-nnoremap <leader>r( :call RangerOpenFolder('ranger','(')<cr>
-nnoremap <leader>rj :cd %:p:h<cr>:pwd<cr>:silent !urxvtr -e ranger<cr>
+" Notes
+nmap <leader>nn :call Note('~/Documents/notes')<cr><cr>
+nmap <leader>nu :call NoteMidDir('~/Projects/Uni','notes')<cr>
+nmap <leader>nr :call Note('~/Documents/Reviews')<cr><cr>
+
+"Opening Files
+"xdg-open
+nnoremap <leader>o :set operatorfunc=OpenOperator<cr>g@
+nnoremap <leader>x :set operatorfunc=CropOperator<cr>g@
+nnoremap <leader>g :set operatorfunc=GimpOperator<cr>g@
+
+"FZF
+nnoremap <leader>/ :FZF<cr>
+
 " Spell checking
-nnoremap <leader>ss :setlocal spell!<cr>
-nnoremap <leader>sx ea<C-X><C-S>
+nnoremap <leader>s  ea<C-X><C-S>
+nnoremap <leader>ss ea<C-X><C-S>
+nnoremap <leader>sx :setlocal spell!<cr>
 nnoremap <leader>sa zg
 nnoremap <leader>s? z=
+nnoremap <leader>sd :Sdcv <C-R><C-W><cr>
+nnoremap <leader>st :Sdcv --data-dir ~/.stardict/thesaurus -u "Moby Thesaurus II" <C-R><C-W><cr>
+nnoremap <leader>sw :Sdcv<Space>
+" nnoremap <leader>se :StarDict -l"<cr>
 " Splits
-nnoremap <leader>sh :leftabove  vnew<CR>
-nnoremap <leader>sl :rightbelow vnew<CR>
-nnoremap <leader>sk :leftabove  new<CR>
-nnoremap <leader>sj :rightbelow new<CR>
+nnoremap <leader>sh :leftabove  vnew<cr>
+nnoremap <leader>sl :rightbelow vnew<cr>
+nnoremap <leader>sk :leftabove  new<cr>
+nnoremap <leader>sj :rightbelow new<cr>
 " Git
 nnoremap <leader>gd :Gdiff HEAD<cr>
 nnoremap <leader>gh :Gdiff HEAD~
-nnoremap <leader>gc :Gcommit -m '
-nnoremap <leader>gl :Glog<cr>
 nnoremap <leader>gb :Gblame<cr>
 nnoremap <leader>ge :Extradite<cr>
-nnoremap <silent> <leader>g? :call CommittedFiles()<CR>:copen<CR>
-nmap     <leader>gs :copen<CR>:GGrep
+nmap     <leader>gs :copen<cr>:GGrep
 nmap     <leader>gg :GitGutterToggle<cr>
 " Table Mode
 nnoremap <leader>t :TableModeToggle<cr>
 " Undo tree
-" nnoremap <leader>u :GundoToggle<CR>
+" nnoremap <leader>u :GundoToggle<cr>
 "Save
-nnoremap <leader>w :w<CR>
+nnoremap <leader>w :w<cr>
 " Goyo
 nnoremap <silent> <leader>z :Goyo<cr>
+nnoremap <silent> <leader>Z :ReGoyo<cr>
 
-" Use unite matching to open bibtex files and urls
-nnoremap <silent><leader>cf :<C-u>Unite -buffer-name=bibtex -input=<C-R><C-W> -default-action=start -force-immediately bibtex_file<cr>
-nnoremap <silent><leader>cu :<C-u>Unite -buffer-name=bibtex -input=<C-R><C-W> -default-action=start -force-immediately bibtex_uri<cr>
-nnoremap <silent><leader>cU :<C-u>Unite -buffer-name=bibtex -input=<C-R><C-W> -default-action=yank -force-immediately bibtex_file<cr>
-nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=bibtex -input=<C-R><C-W> -default-action=yank -force-immediately bibtex_uri<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
 
-nmap <leader>u [unite]
+nmap m [unite]
 nnoremap [unite] <nop>
 
-nnoremap <silent>[unite]<space> :<C-u>Unite                       -start-insert                             source<cr>
-nnoremap <silent>[unite]fr      :<C-u>Unite -buffer-name=files    -start-insert                             file_rec/async:!<cr>
-nnoremap <silent>[unite]f       :<C-u>Unite -buffer-name=files    -start-insert                             file<cr>
-nnoremap <silent>[unite]b       :<C-u>Unite -buffer-name=buffer   -start-insert                             buffer<cr>
-nnoremap <silent>[unite]h       :<C-u>Unite -buffer-name=help     -start-insert                             help<cr>
-nnoremap <silent>[unite]r       :<C-u>Unite -buffer-name=mru      -start-insert                             file_mru<cr>
-nnoremap <silent>[unite]gi      :<C-u>Unite -buffer-name=giti     -start-insert                             giti<cr>
-nnoremap <silent>[unite]s       :<C-u>Unite -buffer-name=grep     -start-insert                             grep<cr>
-nnoremap <silent>[unite]l       :<C-u>Unite -buffer-name=line     -start-insert                             line<cr>
-nnoremap <silent>[unite]:       :<C-u>Unite -buffer-name=command  -start-insert                             command<cr>
-nnoremap <silent>[unite];       :<C-u>Unite -buffer-name=command  -start-insert                             command<cr>
-nnoremap <silent>[unite]u       :<C-u>Unite -buffer-name=function -start-insert                             function<cr>
-nnoremap <silent>[unite]m       :<C-u>Unite -buffer-name=bookmark -start-insert                             bookmark<cr>
-nnoremap <silent>[unite]n       :<C-u>Unite -buffer-name=neo      -start-insert                             neosnippet<cr>
-nnoremap <silent>[unite]k       :<C-u>Unite -buffer-name=mapping  -start-insert                             mapping<cr>
-nnoremap <silent>[unite]q       :<C-u>Unite -buffer-name=process  -start-insert                             process<cr>
-nnoremap <silent>[unite]i       :<C-u>Unite -buffer-name=history  -start-insert                             history/unite<cr>
-nnoremap <silent>[unite]o       :<C-u>Unite -buffer-name=outline                                            outline<cr>
-nnoremap <silent>[unite]j       :<C-u>Unite -buffer-name=jump                                               jump<cr>
-nnoremap <silent>[unite]p       :<C-u>Unite -buffer-name=yank                   -default-action=append      history/yank<cr>
-nnoremap <silent>[unite]e       :<C-u>Unite -buffer-name=files    -start-insert -default-action=start -quit file<cr>
-nnoremap <silent>[unite]t       :<C-u>Unite -buffer-name=theme   -start-insert -auto-preview               colorscheme<cr>
-nnoremap <silent>[unite]a       :<C-u>Unite -buffer-name=airline  -start-insert -auto-preview               airline_themes<cr>
-nnoremap <silent>[unite]P       :<C-u>Unite -buffer-name=history                -default-action=insert      history/yank<cr>
-nnoremap <silent>[unite]c       :<C-u>Unite -buffer-name=bibtex   -start-insert -default-action=append      bibtex<cr>
-nnoremap <silent>[unite]cf      :<C-u>Unite -buffer-name=bibtex   -start-insert -default-action=start       bibtex_file<cr>
-nnoremap <silent>[unite]cu      :<C-u>Unite -buffer-name=bibtex   -start-insert -default-action=start       bibtex_uri<cr>
-nnoremap <silent>[unite]d       :<C-u>Unite -buffer-name=autojump -start-insert                             autojump<cr>
+nnoremap <silent>[unite]u   :UniteResume<cr>
+nnoremap <silent>[unite]<space> :<C-u>Unite                                                source<cr>
+nnoremap <silent>[unite]F  :<C-u>Unite -buffer-name=file_rec                               file_rec/async:!<cr>
+nnoremap <silent>[unite]d  :<C-u>Unite -buffer-name=file_rec  -input=Documents             file_rec/async:!<cr>
+nnoremap <silent>[unite]f   :<C-u>Unite -buffer-name=files                                 file<cr>
+nnoremap <silent>[unite]b   :<C-u>Unite -buffer-name=buffer                                buffer<cr>
+nnoremap <silent>[unite]h   :<C-u>Unite -buffer-name=help      -vertical                   help<cr>
+nnoremap <silent>[unite]r   :<C-u>Unite -buffer-name=fasd                                  fasd<cr>
+nnoremap <silent>[unite]g   :<C-u>Unite -buffer-name=giti                                  giti<cr>
+nnoremap <silent>[unite]s   :<C-u>Unite -buffer-name=grep                                  grep<cr>
+nnoremap <silent>[unite]l   :<C-u>Unite -buffer-name=line      -vertical                   line<cr>
+nnoremap <silent>[unite]:   :<C-u>Unite -buffer-name=command   -vertical                   command<cr>
+nnoremap <silent>[unite];   :<C-u>Unite -buffer-name=command   -vertical                   command<cr>
+nnoremap <silent>[unite]c   :<C-u>Unite -buffer-name=function  -vertical                   function<cr>
+nnoremap <silent>[unite]m   :<C-u>Unite -buffer-name=bookmark  -vertical                   bookmark<cr>
+nnoremap <silent>[unite]n   :<C-u>Unite -buffer-name=neo                                   neosnippet<cr>
+nnoremap <silent>[unite]k   :<C-u>Unite -buffer-name=mapping                               mapping<cr>
+nnoremap <silent>[unite]q   :<C-u>Unite -buffer-name=process                               process<cr>
+nnoremap <silent>[unite]i   :<C-u>Unite -buffer-name=history                               history/unite<cr>
+nnoremap <silent>[unite]o   :<C-u>Unite -buffer-name=outline   -vertical                   outline<cr>
+nnoremap <silent>[unite]j   :<C-u>Unite -buffer-name=jump      -vertical                   jump<cr>
+nnoremap <silent>[unite]p   :<C-u>Unite -buffer-name=yank      -default-action=append      history/yank<cr>
+nnoremap <silent>[unite]P   :<C-u>Unite -buffer-name=yank      -default-action=insert      history/yank<cr>
+nnoremap <silent>[unite]e   :<C-u>Unite -buffer-name=files     -default-action=start -quit file<cr>
+nnoremap <silent>[unite]t   :<C-u>UniteWithProjectDir -buffer-name=tag       -vertical     tag/include<cr>
+nnoremap <silent>[unite]-   :<C-u>Unite -buffer-name=theme     -auto-preview               colorscheme<cr>
+nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
+nnoremap <silent><leader>cO :<C-u>Unite -buffer-name=citation    -default-action=start  -auto-preview   citation/file<cr>
+nnoremap <silent><leader>cu :<C-u>Unite -buffer-name=citation    -default-action=start  -auto-preview   citation/url<cr>
+nnoremap <silent><leader>cb :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/abstract<cr>
+nnoremap <silent><leader>cN :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/notes<cr>
+nnoremap <silent><leader>ca :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/author<cr>
+nnoremap <silent><leader>cI :<C-u>Unite -buffer-name=citation    -default-action=preview                citation/combined<cr>
+nnoremap <silent><leader>cd :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/doi<cr>
+nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/file<cr>
+nnoremap <silent><leader>cj :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/journal<cr>
+nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/key<cr>
+nnoremap <silent><leader>cl :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/language<cr>
+nnoremap <silent><leader>cm :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/month<cr>
+nnoremap <silent><leader>cp :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/publisher<cr>
+nnoremap <silent><leader>ct :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/title<cr>
+nnoremap <silent><leader>ce :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/type<cr>
+nnoremap <silent><leader>cv :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/volume<cr>
+nnoremap <silent><leader>cy :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/date<cr>
+" Use unite matching to open citation files and urls
+nnoremap <silent><leader>co :<C-u>Unite -input=<C-R><C-W> -default-action=start -force-immediately citation/file<cr>
+nnoremap <silent><leader>cf :<C-u>Unite -input=<C-R><C-W> -default-action=file -force-immediately citation/file<cr>
+nnoremap <silent><leader>ci :<C-u>Unite -input=<C-R><C-W> -default-action=preview -force-immediately citation/combined<cr>
+nnoremap <silent><leader>cn :CitationNote<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Tabs get to steal t 
+" {{{ Tabs get to steal t
 
 " Tab keys
 nnoremap tt  :tabs<cr>
@@ -179,8 +181,8 @@ nnoremap <silent>t] <C-w><C-]><C-w>T
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Other
 nnoremap Q <nop> " Kill the damned Ex mode.
-" :map ]] :cnext<cr>
-" :map [[ :cprevious<cr>
+nnoremap ]] :cnext<cr>
+nnoremap [[ :cprevious<cr>
 " Treat long lines as break lines but don't break dj or <count>j behavior
 nnoremap <expr> j v:count ? 'j' : 'gj'
 nnoremap <expr> k v:count ? 'k' : 'gk'
@@ -197,6 +199,17 @@ vnoremap <C-v> <Plug>(expand_region_shrink)
 vnoremap <silent> y y`]
 vnoremap <silent> p p`]
 nnoremap <silent> p p`]
+
+" nnoremap <C-h> <C-w><C-h>
+" nnoremap <C-k> <C-w><C-k>
+" nnoremap <C-j> <C-w><C-j>
+" nnoremap <C-L> <C-w><C-l>
+
+" EasyAlign
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " NeoSnippet SuperTab like snippets behavior.
 imap <expr><TAB> neosnippet#expandable_or_jumpable() ?

@@ -26,11 +26,17 @@ try
 catch
 endtry
 
+" set dir to current file
+autocmd BufEnter * silent! lcd %:p:h
+
 " No annoying sound on errors
 set noerrorbells
 set novisualbell
 set t_vb=
 set tm=500
+
+" No annoying promtps
+set shortmess=aoOtI
 
 " Enable filetype plugins
 filetype plugin on
@@ -76,8 +82,8 @@ set hidden      " A buffer becomes hidden when it is abandoned
 
 set foldlevelstart=20
 set foldcolumn=0
-set foldmethod=syntax 
-set foldnestmax=10 
+set foldmethod=syntax
+set foldnestmax=10
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Colors
@@ -141,7 +147,7 @@ set guioptions-=l
 set guioptions-=L
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Search 
+" {{{ Search
 
 " Ignore case when searching
 set ignorecase
@@ -154,6 +160,9 @@ set incsearch
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Files
+
+" Startup dir
+cd ~/Documents
 
 " Turn backup files off
 set nobackup
@@ -174,7 +183,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 " Remember info about open buffers on close
-set viminfo^=%
+" set viminfo^=%
 
 " Put config files in nicer places
 set viminfo+=n~/.vim/viminfo
@@ -209,3 +218,10 @@ set whichwrap+=<,>,h,l,[,]
 
 " set omnifunc=syntaxcomplete#Complete
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Highlight
+
+" Last so nothing can overwrite it.
+highlight Comment cterm=italic
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

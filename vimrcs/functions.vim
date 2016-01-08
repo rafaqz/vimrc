@@ -2,7 +2,7 @@
 " Helper functions
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " {{{Search Visual Selection
 
 " Visual mode searches for the current selection
@@ -26,69 +26,6 @@ function! VisualSelection(direction, extra_filter) range
   let @/ = l:pattern
   let @" = l:saved_reg
 endfunction
- 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Ranger
-
-function! Ranger(path)
-  let cmd = printf("silent !ranger --choosefiles=/tmp/chosenfiles %s",
-        \ expand("%:p:h") . "/" . a:path)
-  if has("gui_running") && (has("gui_gtk") || has("gui_motif"))
-    let cmd = substitute(cmd, '!', '! urxvtr -e ', '')
-  endif
-  exec cmd
-endfunction
-
-function! RangerChooser(layout)
-  exec Ranger("")
-  if filereadable('/tmp/chosenfiles')
-    let chosenfiles = system('cat /tmp/chosenfiles')
-    let splitfiles = split(chosenfiles, "\n")
-    for filename in splitfiles
-      exec a:layout . " " . filename
-    endfor
-    call system('rm /tmp/chosenfiles')
-  endif
-  redraw!
-endfunction
-
-function! RangerPaste(key) " a or i
-  let save_cursor = getpos(".")
-  call Ranger("")
-  call setpos('.', save_cursor)
-  if filereadable('/tmp/chosenfiles')
-    " Load filename, remove trailing null char
-    let result = substitute(system('cat /tmp/chosenfiles'), "\n*$", '', '')
-    " Insert or append
-    exe "normal " . a:key . result . "\<Esc>" 
-    call system('rm /tmp/chosenfiles')
-  endif
-  redraw!
-endfun
-
-function RangerOpenFolder(app, object)
-  exec "lcd %:p:h"
-  exec "normal yi" . a:object
-  let path = @0
-  let dir = fnamemodify(path, ':h')
-  call Ranger(dir)
-  if filereadable('/tmp/chosenfiles')
-    " Load filename, remove trailing null char
-    let result = substitute(system('cat /tmp/chosenfiles'), "\n*$", '', '')
-    exec "normal di" . a:object . "P"
-    call system('rm /tmp/chosenfiles')
-  endif
-  redraw!
-endfun
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Open files externally
-function OpenFile(app, object)
-  exec "lcd %:p:h"
-  exec "normal yi" . a:object
-  let path = @0
-  exec "Start! " . a:app . " " . path
-endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ DeleteTrailingWS
@@ -127,8 +64,212 @@ function! CustomizedTabLine()
     return s
 endfunction
 
-" Always show the tabline 
+" Always show the tabline
 set stal=2
 set tabline=%!CustomizedTabLine()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Notes
+function! NoteSubDir(parent)
+  call inputsave()
+  let path = input("Dir: ", a:parent, "dir")
+  call inputrestore()
+
+  call Note(path)
+endfunction
+
+function! NoteMidDir(parent,child)
+  call inputsave()
+  let path = fnamemodify(a:parent, 'h:r') . '/'
+  let path = input("Dir: ", path, "dir") 
+  let path = fnamemodify(path, 'h:r') . '/' . a:child
+  call inputrestore()
+
+  call Note(path)
+endfunction
+
+function! Note(dir, ...)
+  call system('mkdir -p ' . a:dir)
+  let path = fnamemodify(a:dir, 'h:r') . '/'
+
+  " Input note name
+  if a:0 > 0
+    let name = a:1
+  else
+    call inputsave()
+    let name = input("Note name: " . path, "", "file")
+    call inputrestore()
+  endif
+
+  if fnamemodify(name, ':r') == name
+    let filename = name . ".md"
+  endif
+  exec ":edit " . fnameescape(path . filename)
+
+  " Insert Header
+  let name = substitute(name, "_", " ", "")
+  call append(0, [name])
+  let underline = ''
+  for item in split(name, '\zs')
+    let underline .= '='
+  endfor
+  call append(1, [underline])
+
+endfunction
+
+function! CitationNote()
+  let extension = g:citation_vim_note_extension
+  let note_dir = g:citation_vim_note_dir
+  let input = expand("<cword>")
+  exec "split " . note_dir . input . "." . extension
+
+  " Insert a header in new files 
+  if line('$') == 1 && getline(1) == '' 
+    " Add the title.
+    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/title"
+    normal! 0v$"ly
+
+    " Underline the title as a markdown header.
+    let underline = ''
+    let title=@l
+    for item in split(title, '\zs')
+      let underline .= '='
+    endfor
+    normal! Go
+    call append(1, [underline])
+    normal! Go
+
+    " Add the author, in italics.
+    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/author"
+    normal! GI*
+    normal! A*
+    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/date"
+    normal! G2o
+
+  endif
+endfunction
+
+command! CitationNote call CitationNote()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Quitting whether Goyo is active or not
+" ca <silent> wq :w<cr>:call Quit()<cr>
+" ca <silent> q :call Quit()<cr>
+nnoremap <silent>ZZ :call Goyoquit()<cr>
+function! Goyoquit()
+    Goyo!
+    quit
+endfunction
+
+function! ReGoyo()
+  if exists('#goyo')
+    Goyo!
+    Goyo
+  endif
+endfunction
+command! ReGoyo call ReGoyo()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ StarDict direct calls (plugin wont pass args)
+function! SDCV(word)
+    Goyo!
+    " Get the bytecode.
+    let bytecode = system("sdcv " . a:word)
+
+    " Open a new split and set it up.
+    if bufexists('__StarDict__')
+      sbuffer __StarDict__
+    else
+      split __StarDict__
+    endif
+
+    normal! ggdG
+    setlocal filetype=stardict
+    setlocal buftype=nofile
+
+    " Insert the bytecode.
+    call append(0, split(bytecode, '\v\n'))
+    normal! gg
+    Goyo
+endfunction
+command! -nargs=1 Sdcv call SDCV(<f-args>)
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Custom Operators
+nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
+
+function! OpenOperator(type)
+  if a:type ==# 'v'
+      normal! `<v`>y
+  elseif a:type ==# 'char'
+      normal! `[v`]y
+  else
+      return
+  endif
+
+  exec "Start! xdg-open " . shellescape(@@)
+endfunction
+
+function! CropOperator(type)
+  if a:type ==# 'v'
+      normal! `<v`>y
+  elseif a:type ==# 'char'
+      normal! `[v`]y
+  else
+      return
+  endif
+
+  execute "Start! cropgui " . shellescape(@@)
+endfunction
+
+function! GimpOperator(type)
+  if a:type ==# 'v'
+      normal! `<v`>y
+  elseif a:type ==# 'char'
+      normal! `[v`]y
+  else
+      return
+  endif
+
+  execute "Start! gimp " . shellescape(@@)
+endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Custom Objects
+call textobj#user#plugin('file', {
+\   'file': {
+\     'pattern': '\f\+', 
+\     'select': ['af', 'if']
+\   }
+\ })
+
+call textobj#user#plugin('line', {
+\   '-': {
+\     'select-a-function': 'CurrentLineA',
+\     'select-a': 'al',
+\     'select-i-function': 'CurrentLineI',
+\     'select-i': 'il',
+\   },
+\ })
+
+function! CurrentLineA()
+  normal! 0
+  let head_pos = getpos('.')
+  normal! $
+  let tail_pos = getpos('.')
+  return ['v', head_pos, tail_pos]
+endfunction
+
+function! CurrentLineI()
+  normal! ^
+  let head_pos = getpos('.')
+  normal! g_
+  let tail_pos = getpos('.')
+  let non_blank_char_exists_p = getline('.')[head_pos[2] - 1] !~# '\s'
+  return
+  \ non_blank_char_exists_p
+  \ ? ['v', head_pos, tail_pos]
+  \ : 0
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

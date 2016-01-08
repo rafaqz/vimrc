@@ -14,9 +14,6 @@ Plug 'junegunn/goyo.vim'
 Plug 'bling/vim-airline'
 Plug 'altercation/vim-colors-solarized'
 Plug 'reedes/vim-colors-pencil'
-" Plug 'NLKNguyen/papercolor-theme'
-" Plug 'DrSpatula/vim-buddy'
-" Plug 'flazz/vim-colorschemes'
 
 "---------------------------------}}}
 " {{{ Edit
@@ -29,27 +26,30 @@ Plug 'dahu/vim-fanfingtastic'
 Plug 'haya14busa/vim-easyoperator-line'
 Plug 'michaeljsmith/vim-indent-object'
 Plug 'sjl/gundo.vim'
-Plug 'godlygeek/tabular'
+Plug 'junegunn/vim-easy-align'
+Plug 'vim-scripts/Align'
 Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 
 "---------------------------------}}}
 " {{{ Git
 
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter' { 'for': 'ruby' }
 Plug 'tpope/vim-fugitive'
 Plug 'int3/vim-extradite'
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' } 
+Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
 Plug 'vim-scripts/gitignore'
 
 "---------------------------------}}}
 " {{{ Nav
 
-Plug 'amix/open_file_under_cursor.vim'
+" Plug 'amix/open_file_under_cursor.vim'
 Plug 'Lokaltog/vim-easymotion'
-Plug 'fmoralesc/vim-pad', { 'on': 'Pad' }
 Plug 'reedes/vim-wheel'
-" Plug 'vim-scripts/taglist.vim'
+Plug 'majutsushi/tagbar'
+Plug 'junegunn/fzf'
+Plug 'rafaqz/ranger.vim'
+Plug 'vim-scripts/SearchComplete'
 
 "---------------------------------}}}
 " {{{ Misc
@@ -58,6 +58,7 @@ Plug 'reedes/vim-wheel'
 " Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'xolox/vim-misc'
 " Plug 'tmhedberg/matchit'
+Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-dispatch'
 " Plug 'kana/vim-operator-user'
 
@@ -70,8 +71,9 @@ Plug 'Shougo/neosnippet-snippets'
 "---------------------------------}}}
 " {{{ Syntax
 Plug 'scrooloose/syntastic'
-Plug 'sheerun/vim-polyglot'
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'davidhalter/jedi-vim', {'for': 'python' }
+" Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
 "-------------------------
@@ -83,7 +85,7 @@ Plug 'chrisbra/csv.vim', { 'for': 'csv' }
   Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 
 "-------------------------}}}
-" {{{ Haskell 
+" {{{ Haskell
   Plug 'dag/vim2hs', { 'for': 'haskell' }
   Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
   Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
@@ -102,9 +104,10 @@ Plug 'kmnk/vim-unite-giti'
 Plug 'ujihisa/unite-colorscheme'
 Plug 'osyo-manga/unite-airline_themes'
 Plug 'ujihisa/unite-colorscheme'
-Plug 'rafaqz/unite-bibtex'
+Plug 'rafaqz/citation.vim'
 Plug 'tsukkee/unite-tag'
-Plug 'zoncoen/unite-autojump'
+Plug 'critiqjo/unite-fasd.vim'
+Plug 'Shougo/neoinclude.vim'
 
 " And make it fast
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -113,15 +116,12 @@ Plug 'Shougo/vimproc.vim', { 'do': 'make' }
 " {{{ Writing
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'markdown' }
-Plug 'kana/vim-textobj-user', { 'for': 'markdown' }
+Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'markdown' }
 Plug 'reedes/vim-textobj-sentence', { 'for': 'markdown' }
-Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
+" Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
 Plug 'reedes/vim-wordy', { 'for': 'markdown' }
-Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown', 'on': 'TableModeToggle' }
-" Plug 'reedes/vim-lexical'
-" Plug 'reedes/vim-litecorrect', { 'for': 'markdown' }
-" Plug 'reedes/vim-pencil'
-" Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'markdown' }
+Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown', 'on': 'TableModeToggle'}
+Plug 'phongvcao/vim-stardict'
 
 "---------------------------------}}}
 
@@ -131,6 +131,7 @@ call plug#end()
 
 " {{{ Airline
 let g:airline_theme='solarized'
+let g:airline_powerline_fonts = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Extradite
@@ -142,43 +143,28 @@ let g:extradite_width = 60
 let g:goyo_width = 100
 
 " Quit Vim if this is the only remaining buffer
-function! s:goyo_enter() 
-  let b:quitting = 0 
-  let b:quitting_bang = 0 
-  autocmd QuitPre <buffer> let b:quitting = 1 
-  cabbrev <buffer> q!  let b:quitting_bang = 1 <bar> q! 
-endfunction 
+function! s:goyo_enter()
+  let b:quitting = 0
+  let b:quitting_bang = 0
+  autocmd QuitPre <buffer> let b:quitting = 1
+  cabbrev <buffer> q!  let b:quitting_bang = 1 <bar> q!
+endfunction
 
-function! s:goyo_leave() 
-  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1 
-    if b:quitting_bang 
-      qa! 
-    else 
-      qa 
-    endif 
-  endif 
-endfunction 
+function! s:goyo_leave()
+  if b:quitting && len(filter(range(1, bufnr('$')), 'buflisted(v:val)')) == 1
+    if b:quitting_bang
+      qa!
+    else
+      qa
+    endif
+  endif
+endfunction
 
-autocmd User GoyoEnter call <SID>goyo_enter() 
+autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Lexical
-
-" augroup lexical
-"   autocmd!
-"   autocmd FileType markdown,mkd call lexical#init()
-"   autocmd FileType textile call lexical#init()
-"   autocmd FileType text call lexical#init({ 'spell': 0 })
-" augroup END
-" let g:lexical#thesaurus = ['/home/raf/.vim/thesaurus/mthesaur.txt',]
-" let g:lexical#dictionary = ['/usr/share/dict/words',]
-" let g:lexical#thesaurus_key = '<leader>t'
-" let g:lexical#dictionary_key = '<leader>k'
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Neocomplete
 
-let g:neocomplete#enable_at_startup = 1
 " Disable AutoComplPop.
 let g:acp_enableAtStartup = 1
 " Use neocomplete.
@@ -210,26 +196,21 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
 let g:neosnippet#snippets_directory='~/.vim_runtime/plugins/snippet/vim-snippets/snippets'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Pad
-let g:pad#dir                         = "~/Documents/Notes"
-let g:pad#default_file_extension      = ".md"
-let g:pad#set_mappings                = 0
-let g:pad#open_in_split               = 1
-let g:pad#rename_files                = 1
-let g:pad#title_first_line            = 1
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Pandoc
 
-" let g:pandoc#filetypes#handled = ["pandoc", "markdown"]
-" let g:pandoc#filetypes#pandoc_markdown = 0
-" let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
-"
+let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
 let g:pandoc#folding#fold_yaml = 1
+let g:pandoc#keyboard#sections#header_style = 's'
 let g:pandoc#formatting#mode = 'h'
-let g:pandoc#syntax#conceal#use = 0
-let g:pandoc#modules#disabled = ["bibliographies", "completion", "menu", "toc"]
-"Other modules: ["formatting", "folding", "metadata", "executors", "keyboard", "spell", "hypertext"]
-" let g:pandoc#biblio#bibs=['/home/raf/Projects/Uni/Citations/Citations.bib']
+let g:pandoc#syntax#conceal#use = 1
+let g:pandoc#syntax#conceal#blacklist = ["atx"]
+let g:pandoc#modules#disabled = ["metadata", "bibliographies", "completion", "menu", "toc"]
+
+"Other modules: ["formatting", "folding", "executors", "keyboard", "hypertext"]
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ StarDict
+let g:stardict_split_horizontal = 1
+let g:stardict_split_size = 180
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Syntastic (syntax checker)
 
@@ -242,9 +223,9 @@ let g:syntastic_lua_checkers=['ghc-mod']
 let g:table_mode_corner_corner="+"
 let g:table_mode_header_fillchar="="
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Unite 
+" {{{ Unite
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
 call unite#filters#sorter_default#use(['sorter_rank'])
 
 " let g:unite_source_file_async_command = "locate expand('%:p:h')"
@@ -259,16 +240,41 @@ function! s:unite_settings()
   " Enable navigation with control-j and control-k in insert mode
   imap <buffer> <C-j>   <Plug>(unite_select_next_line)
   imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')  
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')  
+  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
+  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
   imap <silent><buffer><expr> <C-x> unite#do_action('split')
   nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
   imap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
 endfunction
+
+call unite#custom#profile('default', 'context', {
+	\   'ignorecase': 1,
+	\   'start_insert': 1,
+	\ })
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Unite Bibtex
-let g:unite_bibtex_bib_files=['/home/raf/Projects/Uni/Citations/Citations.bib']
+" {{{ Citation.vim 
+let g:citation_vim_note_extension='md'
+let g:citation_vim_note_dir='~/Documents/Reviews/'
+let g:citation_vim_file_path='~/.pandoc/bibtex/citations.bib'
+let g:citation_vim_file_format='bibtex'
+let g:citation_vim_file_path='/home/raf/.zotero/zotero/jgdbnvi8.default/zotero'
+let g:citation_vim_file_format='zotero'
+let g:citation_vim_outer_prefix="["
+let g:citation_vim_inner_prefix="@"
+let g:citation_vim_description_format="{}→ ′{}′ ₊{}₊ │{}{}│"
+let g:citation_vim_description_fields=["key", "title", "author", "publisher", "journal"]
+
+let g:citation_vim_description_format = "{}∶ {} \˝{}\˝ ₋{}₋ ₍{}₎"
+let g:citation_vim_description_fields = ["type", "key", "title", "author", "date"]
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Unite Fasd
+let g:unite_fasd#fasd_path='/usr/bin/fasd'
+let g:unite_fasd#fasd_cache = '~/.fasd'
+let g:unite_fasd#read_only = 0
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
 " {{{ YankRing
-let g:yankring_history_dir = '~/.vim/temp_dirs/'
+let g:yankring_history_dir = '~/.vim/'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

@@ -18,14 +18,14 @@ endfunction
 au FileType javascript call SetJavaScript()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ CoffeeScript 
+" {{{ CoffeeScript
 
 function! SetCoffeeScript()
     setl foldmethod=indent
 endfunction
 au FileType coffee call SetCoffeeScript()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Ruby 
+" {{{ Ruby
 
 function! SetRuby()
   call pathogen#infect('~/.vim_runtime/ruby_plugins/{}')
@@ -36,7 +36,7 @@ function! SetRuby()
   let ruby_fold = 1
   let g:rubycomplete_buffer_loading = 1
   let g:rubycomplete_rails = 1
-  let g:rubycomplete_buffer_loading = 1 
+  let g:rubycomplete_buffer_loading = 1
   let g:rubycomplete_classes_in_global = 1
   let g:rubycomplete_rails = 1
 endfunction
@@ -46,7 +46,6 @@ au FileType ruby call SetRuby()
 " {{{ Haskell
 
 function! SetHaskell()
-
   setlocal omnifunc=necoghc#omnifunc
   set foldmethod=indent
   set completeopt+=longest
@@ -104,46 +103,50 @@ function! SetHaskell()
   " let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
 
   " But provide (neco-ghc) omnicompletion
-  " if has("gui_running")
-  "   imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  " else " no gui
-  "   if has("unix")
-  "     inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  "   endif
-  " endif
+  if has("gui_running")
+    imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  else " no gui
+    if has("unix")
+      inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+    endif
+  endif
 
   " Type of expression under cursor
   nmap <silent> <leader>ht :GhcModType<CR>
   " Insert type of expression under cursor
-  nmap <silent> <leader>hT :GhcModTypeInsert<CR>
+  nmap <silent> <leader>hd :GhcModTypeInsert<CR>
+  " Insert type of expression under cursor
+  nmap <silent> <leader>hi :GhcModInfo<CR>
+  nmap <silent> <leader>hp :GhcModInfoPreview<CR><C-j><C-k>
   " GHC errors and warnings
-  nmap <silent> <leader>hc :SyntasticCheck ghc_mod<CR>
+  nmap <silent> <leader>hc :GhcModCheckAsync<CR>
   " Haskell Lint
-  nmap <silent> <leader>hl :SyntasticCheck hlint<CR>
+  nmap <silent> <leader>hl :GhcModLintAsync<CR>
+  nmap <leader>hh ea<C-X><C-O>
 
   " Hoogle the word under the cursor
-  nnoremap <silent> <leader>hh :Hoogle<CR>
+  nnoremap <silent> <leader>ho :Hoogle<CR>
   " Hoogle and prompt for input
-  nnoremap <leader>hH :Hoogle 
+  nnoremap <leader>hO :Hoogle
   " Hoogle for detailed documentation (e.g. "Functor")
-  nnoremap <silent> <leader>hi :HoogleInfo<CR>
+  nnoremap <silent> <leader>hd :HoogleInfo<CR>
   " Hoogle for detailed documentation and prompt for input
-  nnoremap <leader>hI :HoogleInfo 
+  nnoremap <leader>hD :HoogleInfo
   " Hoogle, close the Hoogle window
   nnoremap <silent> <leader>hz :HoogleClose<CR>
 
   " Pretty unicode haskell symbols
-  nnoremap <leader>hca :set conceallevel=1<cr>
-  nnoremap <leader>hco :set conceallevel=0<cr>
+  " nnoremap <leader>hca :set conceallevel=1<cr>
+  " nnoremap <leader>hco :set conceallevel=0<cr>
   " Generate haskell tags with codex and hscope
-  map <leader>tg :!codex update --force<CR>:call system("git hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
+  " map <leader>tg :!codex update --force<CR>:call system("git hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
 
   vnoremap <silent> <leader>h. :call Pointfree()<CR>
   vnoremap <silent> <leader>h> :call Pointful()<CR>
 
   nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 
-  " Conversion 
+  " Conversion
   function! Pointfree()
     call setline('.', split(system('pointfree '.shellescape(join(getline(a:firstline, a:lastline), "\n"))), "\n"))
   endfunction
@@ -186,8 +189,14 @@ function! SetPython()
   let python_highlight_all = 1
   syn keyword pythonDecorator True None False self
   set foldmethod=indent
+	setlocal omnifunc=jedi#completions
+	" let g:jedi#completions_enabled = 0
+	" let g:jedi#auto_vim_configuration = 0
+	let g:neocomplete#force_omni_input_patterns.python =
+	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
 endfunction
-autocmd FileType python SetPython()
+autocmd FileType python call SetPython()
 au BufNewFile,BufRead *.jinja set syntax=htmljinja
 au BufNewFile,BufRead *.mako set ft=mako
 
@@ -205,33 +214,29 @@ autocmd! FileType vim call SetVim()
 
 augroup markdown
   autocmd!
-  " autocmd BufEnter * if &filetype == "" | setlocal ft=markdown | endif
-  autocmd! Bufread,BufEnter,BufNewFile *.md 
+  autocmd! Bufread,BufEnter,BufNewFile *.md
     \   call SetLight()
-    " \ | set syntax=pandoc
   autocmd! BufLeave *.md call SetDark()
-  
+
   autocmd FileType pandoc,markdown,mkd
     \   setlocal textwidth=80
     \ | setlocal commentstring=<!--\ %s\ -->
     \ | set foldlevel=1
-    \ | set iskeyword+=_ 
-    \ | call textobj#quote#init()
+    " \ | set iskeyword+=_
+    " \ | call textobj#quote#init()
     \ | call textobj#sentence#init()
-    " \ | NeoCompleteLock
-    " \ | call litecorrect#init()
-    " \ | call pencil#init()
-    " \ | call lexical#init()
 augroup END
 
 fun! SetLight()
   set background=light
   colorscheme pencil
+  exec 'source ~/.vim/plugged/vim-pandoc-syntax/syntax/pandoc.vim'
 endfun
 
 fun! SetDark()
   set background=dark
   colorscheme solarized
+  exec 'source ~/.vim/plugged/vim-pandoc-syntax/syntax/pandoc.vim'
 endfun
 
 
