@@ -136,7 +136,7 @@ nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview    
 nnoremap <silent><leader>cO :<C-u>Unite -buffer-name=citation    -default-action=start  -auto-preview   citation/file<cr>
 nnoremap <silent><leader>cu :<C-u>Unite -buffer-name=citation    -default-action=start  -auto-preview   citation/url<cr>
 nnoremap <silent><leader>cb :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/abstract<cr>
-nnoremap <silent><leader>cN :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/notes<cr>
+" nnoremap <silent><leader>cN :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/notes<cr>
 nnoremap <silent><leader>ca :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/author<cr>
 nnoremap <silent><leader>cI :<C-u>Unite -buffer-name=citation    -default-action=preview                citation/combined<cr>
 nnoremap <silent><leader>cd :<C-u>Unite -buffer-name=citation    -default-action=append -auto-preview   citation/doi<cr>

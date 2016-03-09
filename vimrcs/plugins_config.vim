@@ -73,6 +73,7 @@ Plug 'Shougo/neosnippet-snippets'
 Plug 'scrooloose/syntastic'
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'davidhalter/jedi-vim', {'for': 'python' }
+Plug 'lambdatoast/elm.vim'
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
@@ -91,6 +92,14 @@ Plug 'davidhalter/jedi-vim', {'for': 'python' }
   Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
   Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 "-------------------------}}}
+
+
+"-------------------------}}}
+" {{{ R
+  Plug 'vim-scripts/Vim-R-plugin'
+  ", { 'for': ['r', 'markdown'] }
+"-------------------------}}}
+
 
 "---------------------------------}}}
 " {{{ Unite
@@ -130,7 +139,7 @@ call plug#end()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
 " {{{ Airline
-let g:airline_theme='solarized'
+let g:airline_theme='pencil'
 let g:airline_powerline_fonts = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -254,11 +263,12 @@ call unite#custom#profile('default', 'context', {
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim 
+let g:citation_vim_cache_path='~/.vim/temp_dirs'
 let g:citation_vim_note_extension='md'
 let g:citation_vim_note_dir='~/Documents/Reviews/'
 let g:citation_vim_file_path='~/.pandoc/bibtex/citations.bib'
 let g:citation_vim_file_format='bibtex'
-let g:citation_vim_file_path='/home/raf/.zotero/zotero/jgdbnvi8.default/zotero'
+let g:citation_vim_file_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
 let g:citation_vim_file_format='zotero'
 let g:citation_vim_outer_prefix="["
 let g:citation_vim_inner_prefix="@"

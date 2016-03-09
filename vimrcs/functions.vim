@@ -30,9 +30,9 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ DeleteTrailingWS
 function! DeleteTrailingWS()
-  exe "normal mz"
+  exe "normal! mz"
   %s/\s\+$//ge
-  exe "normal `z"
+  exe "normal! `z"
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

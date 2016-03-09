@@ -49,7 +49,7 @@ function! SetHaskell()
   setlocal omnifunc=necoghc#omnifunc
   set foldmethod=indent
   set completeopt+=longest
-  let g:haskell_conceal_wide = 1
+  let g:haskell_conceal_wide = 0
 
   " Show types in completion suggestions
   let g:necoghc_enable_detailed_browse = 1
@@ -59,7 +59,7 @@ function! SetHaskell()
 
   " Use stylish haskell instead of par for haskell buffers
   let &formatprg="stylish-haskell"
-  let g:hscoptions="𝐒𝐓𝐄𝐌xtIZB𝔻"
+  let g:hscoptions="𝐒⦂𝐓𝐄𝐌xtIZB𝔻"
   set tags=tags;/,codex.tags;/
 
   let g:tagbar_type_haskell = {
@@ -95,7 +95,7 @@ function! SetHaskell()
   \ }
 
 
-  set csprg=~/.haskell-vim-now/bin/hscope
+  set csprg=hscope
   set csto=1 " search codex tags first
   set cst
   set csverb
@@ -171,7 +171,7 @@ function! SetHaskell()
 
   augroup whitespace
     autocmd!
-    autocmd BufWrite *.hs :call DeleteTrailingWS()
+    " autocmd BufWrite *.hs :call DeleteTrailingWS()
   augroup END
 
   augroup haskell
