@@ -212,19 +212,19 @@ autocmd! FileType vim call SetVim()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Markdown
 
+
 augroup markdown
   autocmd!
   autocmd! Bufread,BufEnter,BufNewFile *.md
     \   call SetLight()
   autocmd! BufLeave *.md call SetDark()
 
-  autocmd FileType pandoc,markdown,mkd
+  autocmd FileType pandoc,markdown,mkd,rmd
     \   setlocal textwidth=80
     \ | setlocal commentstring=<!--\ %s\ -->
     \ | set foldlevel=1
-    " \ | set iskeyword+=_
-    " \ | call textobj#quote#init()
-    \ | call textobj#sentence#init()
+    \ | set nowrap
+    \ | let g:neocomplete#disable_auto_complete = 1
 augroup END
 
 fun! SetLight()

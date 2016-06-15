@@ -21,15 +21,16 @@ Plug 'reedes/vim-colors-pencil'
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tpope/vim-commentary'
+Plug 'tomtom/tcomment_vim'
+" Plug 'tpope/vim-commentary'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'haya14busa/vim-easyoperator-line'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'sjl/gundo.vim'
-Plug 'junegunn/vim-easy-align'
 Plug 'vim-scripts/Align'
 Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
+" Plug 'sjl/gundo.vim'
+" Plug 'junegunn/vim-easy-align'
 
 "---------------------------------}}}
 " {{{ Git
@@ -70,10 +71,12 @@ Plug 'Shougo/neosnippet-snippets'
 
 "---------------------------------}}}
 " {{{ Syntax
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
+
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
 Plug 'davidhalter/jedi-vim', {'for': 'python' }
-Plug 'lambdatoast/elm.vim'
+Plug 'lambdatoast/elm.vim', {'for': 'elm' }
+Plug 'vim-scripts/Vim-R-plugin', { 'for': ['r','rmd'] }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
@@ -91,15 +94,20 @@ Plug 'lambdatoast/elm.vim'
   Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
   Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
   Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-"-------------------------}}}
+  Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 
+"-------------------------}}}
+" {{{ Markdown
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': ['markdown','rmd'] }
+Plug 'vim-pandoc/vim-pandoc-after', { 'for': ['markdown','rmd'] }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
+" Plug 'reedes/vim-textobj-sentence', { 'for': 'markdown' }
+" Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
+" Plug 'reedes/vim-wordy', { 'for': 'markdown' }
 
 "-------------------------}}}
-" {{{ R
-  Plug 'vim-scripts/Vim-R-plugin'
-  ", { 'for': ['r', 'markdown'] }
-"-------------------------}}}
-
 
 "---------------------------------}}}
 " {{{ Unite
@@ -107,12 +115,11 @@ Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 Plug 'osyo-manga/unite-quickfix'
-Plug 'Shougo/neomru.vim'
+" Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-help'
 Plug 'kmnk/vim-unite-giti'
 Plug 'ujihisa/unite-colorscheme'
 Plug 'osyo-manga/unite-airline_themes'
-Plug 'ujihisa/unite-colorscheme'
 Plug 'rafaqz/citation.vim'
 Plug 'tsukkee/unite-tag'
 Plug 'critiqjo/unite-fasd.vim'
@@ -120,17 +127,6 @@ Plug 'Shougo/neoinclude.vim'
 
 " And make it fast
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-
-"---------------------------------}}}
-" {{{ Writing
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': 'markdown' }
-Plug 'vim-pandoc/vim-pandoc-after', { 'for': 'markdown' }
-Plug 'reedes/vim-textobj-sentence', { 'for': 'markdown' }
-" Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
-Plug 'reedes/vim-wordy', { 'for': 'markdown' }
-Plug 'dhruvasagar/vim-table-mode', { 'for': 'markdown', 'on': 'TableModeToggle'}
-Plug 'phongvcao/vim-stardict'
 
 "---------------------------------}}}
 
@@ -211,11 +207,11 @@ let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
 let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#keyboard#sections#header_style = 's'
 let g:pandoc#formatting#mode = 'h'
-let g:pandoc#syntax#conceal#use = 1
+let g:pandoc#syntax#conceal#use = 0
 let g:pandoc#syntax#conceal#blacklist = ["atx"]
 let g:pandoc#modules#disabled = ["metadata", "bibliographies", "completion", "menu", "toc"]
 
-"Other modules: ["formatting", "folding", "executors", "keyboard", "hypertext"]
+" Other modules: ["formatting", "folding", "executors", "keyboard", "hypertext"]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ StarDict
 let g:stardict_split_horizontal = 1
@@ -244,32 +240,47 @@ let g:unite_candidate_icon = "➜"
 let g:unite_source_yank_history_save_clipboard = 1
 
 " Custom mappings for the unite buffer
-autocmd FileType unite call s:unite_settings()
-function! s:unite_settings()
+autocmd FileType unite call s:unite_my_settings()
+function! s:unite_my_settings()
   " Enable navigation with control-j and control-k in insert mode
-  imap <buffer> <C-j>   <Plug>(unite_select_next_line)
-  imap <buffer> <C-k>   <Plug>(unite_select_previous_line)
-  imap <silent><buffer><expr> <C-t> unite#do_action('tabopen')
-  imap <silent><buffer><expr> <C-v> unite#do_action('vsplit')
-  imap <silent><buffer><expr> <C-x> unite#do_action('split')
-  nmap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
-  imap <silent> <buffer> <Esc><Esc> <Plug>(unite_exit)
+  imap     <silent><buffer> <C-j>   <Plug>(unite_select_next_line)
+  nnoremap <silent><buffer> <C-j>   <Plug>(unite_select_next_line)
+  imap     <silent><buffer> <C-k>   <Plug>(unite_select_previous_line)
+  nnoremap <silent><buffer> <C-k>   <Plug>(unite_select_previous_line)
+  nnoremap <silent><buffer> <C-l> unite#do_action('preview')
+  nnoremap <silent><buffer> <C-t> unite#do_action('tabopen')
+  imap     <silent><buffer> <C-t> unite#do_action('tabopen')
+  nnoremap <silent><buffer> <C-v> unite#do_action('vsplit')
+  imap     <silent><buffer> <C-v> unite#do_action('vsplit')
+  nnoremap <silent><buffer> <C-x> unite#do_action('split')
+  imap     <silent><buffer> <C-x> unite#do_action('split')
+  nnoremap <silent><buffer><expr> <C-i> unite#do_action('preview')
+  imap     <silent><buffer><expr> <C-i> unite#do_action('preview')
+  nnoremap <silent><buffer><expr> <C-o> unite#do_action('start')
+  imap     <silent><buffer><expr> <C-o> unite#do_action('start')
+  nmap <silent><buffer> <Esc><Esc> <Plug>(unite_exit)
+  imap <silent><buffer> <Esc><Esc> <Plug>(unite_exit)
 endfunction
 
 call unite#custom#profile('default', 'context', {
 	\   'ignorecase': 1,
 	\   'start_insert': 1,
+  \   'winheight': 40
 	\ })
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim 
-let g:citation_vim_cache_path='~/.vim/temp_dirs'
+let g:citation_vim_cache_path='~/Projects/Uni/Citations/'
 let g:citation_vim_note_extension='md'
 let g:citation_vim_note_dir='~/Documents/Reviews/'
-let g:citation_vim_file_path='~/.pandoc/bibtex/citations.bib'
+let g:citation_vim_file_path='~/Projects/Uni/Citations/Library.bib'
+let g:citation_vim_bibtex_file='~/Projects/Uni/Citations/Library.bib'
+let g:citation_vim_zotero_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
 let g:citation_vim_file_format='bibtex'
-let g:citation_vim_file_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
 let g:citation_vim_file_format='zotero'
+let g:citation_vim_mode='bibtex'
+let g:citation_vim_mode='zotero'
+let g:citation_vim_file_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
 let g:citation_vim_outer_prefix="["
 let g:citation_vim_inner_prefix="@"
 let g:citation_vim_description_format="{}→ ′{}′ ₊{}₊ │{}{}│"

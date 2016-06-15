@@ -82,7 +82,7 @@ function! NoteMidDir(parent,child)
   call inputsave()
   let path = fnamemodify(a:parent, 'h:r') . '/'
   let path = input("Dir: ", path, "dir") 
-  let path = fnamemodify(path, 'h:r') . '/' . a:child
+  let path = fnamemodify(path, 'h:r') . a:child
   call inputrestore()
 
   call Note(path)
@@ -107,10 +107,12 @@ function! Note(dir, ...)
   exec ":edit " . fnameescape(path . filename)
 
   " Insert Header
-  let name = substitute(name, "_", " ", "")
-  call append(0, [name])
+  let spaced = substitute(name, "_", " ", "g")
+  let header = substitute(spaced,'\(\<\w\+\>\)', '\u\1', 'g')
+    
+  call append(0, [header])
   let underline = ''
-  for item in split(name, '\zs')
+  for item in split(header, '\zs')
     let underline .= '='
   endfor
   call append(1, [underline])
@@ -272,4 +274,13 @@ function! CurrentLineI()
   \ : 0
 endfunction
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ ConcealToggle
+function! ConcealToggle()
+  if &conceallevel
+    set conceallevel=0
+  else
+    set conceallevel=2
+  endif
+endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
