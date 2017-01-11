@@ -35,7 +35,7 @@ Plug 'vim-scripts/YankRing.vim'
 "---------------------------------}}}
 " {{{ Git
 
-" Plug 'airblade/vim-rooter' { 'for': 'ruby' }
+Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
 Plug 'int3/vim-extradite'
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
@@ -74,9 +74,10 @@ Plug 'Shougo/neosnippet-snippets'
 " Plug 'scrooloose/syntastic'
 
 Plug 'chrisbra/csv.vim', { 'for': 'csv' }
-Plug 'davidhalter/jedi-vim', {'for': 'python' }
-Plug 'lambdatoast/elm.vim', {'for': 'elm' }
-Plug 'vim-scripts/Vim-R-plugin', { 'for': ['r','rmd'] }
+Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+
+" Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
@@ -101,8 +102,11 @@ Plug 'vim-scripts/Vim-R-plugin', { 'for': ['r','rmd'] }
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': ['markdown','rmd'] }
 Plug 'vim-pandoc/vim-pandoc-after', { 'for': ['markdown','rmd'] }
-Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
+Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
+Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
+
+
 " Plug 'reedes/vim-textobj-sentence', { 'for': 'markdown' }
 " Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
 " Plug 'reedes/vim-wordy', { 'for': 'markdown' }
@@ -213,6 +217,9 @@ let g:pandoc#modules#disabled = ["metadata", "bibliographies", "completion", "me
 
 " Other modules: ["formatting", "folding", "executors", "keyboard", "hypertext"]
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Rooter
+let g:rooter_silent_chdir = 1
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ StarDict
 let g:stardict_split_horizontal = 1
 let g:stardict_split_size = 180
@@ -271,22 +278,15 @@ call unite#custom#profile('default', 'context', {
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim 
 let g:citation_vim_cache_path='~/Projects/Uni/Citations/'
-let g:citation_vim_note_extension='md'
-let g:citation_vim_note_dir='~/Documents/Reviews/'
-let g:citation_vim_file_path='~/Projects/Uni/Citations/Library.bib'
-let g:citation_vim_bibtex_file='~/Projects/Uni/Citations/Library.bib'
+let g:citation_vim_bibtex_file='~/Projects/Uni/Citations/Citations2.bib'
 let g:citation_vim_zotero_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
-let g:citation_vim_file_format='bibtex'
-let g:citation_vim_file_format='zotero'
-let g:citation_vim_mode='bibtex'
 let g:citation_vim_mode='zotero'
-let g:citation_vim_file_path='~/.zotero/zotero/jgdbnvi8.default/zotero'
-let g:citation_vim_outer_prefix="["
-let g:citation_vim_inner_prefix="@"
-let g:citation_vim_description_format="{}→ ′{}′ ₊{}₊ │{}{}│"
+let g:citation_vim_mode='bibtex'
+let g:citation_vim_et_al_limit=2
+let g:citation_vim_description_format="{}→ ‴{}‴ ₊{}₊ │{}{}│"
 let g:citation_vim_description_fields=["key", "title", "author", "publisher", "journal"]
 
-let g:citation_vim_description_format = "{}∶ {} \˝{}\˝ ₋{}₋ ₍{}₎"
+let g:citation_vim_description_format = "{}∶ {} ‴{}‴ ₋{}₋ ₍{}₎"
 let g:citation_vim_description_fields = ["type", "key", "title", "author", "date"]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

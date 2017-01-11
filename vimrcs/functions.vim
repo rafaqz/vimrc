@@ -80,36 +80,49 @@ endfunction
 
 function! NoteMidDir(parent,child)
   call inputsave()
-  let path = fnamemodify(a:parent, 'h:r') . '/'
-  let path = input("Dir: ", path, "dir") 
-  let path = fnamemodify(path, 'h:r') . a:child
+  let path = fnamemodify(a:parent, ':r') . '/'
+  let path = input("Dir: ", path, "file") 
+  let ext = fnamemodify(path, ':e')
+  let tail = fnamemodify(path, ':h:t')
+  let head = fnamemodify(path, ':h')
+  let root = fnamemodify(path, ':t:r')
+  if ext == "md"
+    call Note(head, root) 
+  elseif tail == a:child
+    call Note(path) 
+  else
+    call Note(path . a:child)
+  endif
   call inputrestore()
-
-  call Note(path)
 endfunction
 
 function! Note(dir, ...)
-  call system('mkdir -p ' . a:dir)
-  let path = fnamemodify(a:dir, 'h:r') . '/'
+  let path = fnamemodify(a:dir . '/', ':h:r') . '/'
 
   " Input note name
   if a:0 > 0
-    let name = a:1
+    let filename = a:1
   else
     call inputsave()
-    let name = input("Note name: " . path, "", "file")
+    let filename = input("Note name: " . path, "", "file")
     call inputrestore()
   endif
 
-  if fnamemodify(name, ':r') == name
-    let filename = name . ".md"
+  if filename == ""
+    return
   endif
+
+  let stem = fnamemodify(filename, ':r')
+  if stem == filename
+    let filename = filename . ".md"
+  endif
+  call system('mkdir -p ' . a:dir)
   exec ":edit " . fnameescape(path . filename)
 
+
   " Insert Header
-  let spaced = substitute(name, "_", " ", "g")
+  let spaced = substitute(stem, "_", " ", "g")
   let header = substitute(spaced,'\(\<\w\+\>\)', '\u\1', 'g')
-    
   call append(0, [header])
   let underline = ''
   for item in split(header, '\zs')

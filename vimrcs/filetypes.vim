@@ -184,6 +184,17 @@ au FileType haskell call SetHaskell()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Python
+"
+function! SetElm()
+  call neocomplete#util#set_default_dictionary(
+    \ 'g:neocomplete#sources#omni#input_patterns',
+    \ 'elm',
+    \ '\.')
+endfunction
+autocmd FileType elm call SetElm()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Python
 
 function! SetPython()
   let python_highlight_all = 1
@@ -207,6 +218,7 @@ function! SetVim()
   " fold vimrc by categories
   set foldmethod=marker
   set foldlevel=0
+ :setlocal keywordprg=:help	
 endfunction
 autocmd! FileType vim call SetVim()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

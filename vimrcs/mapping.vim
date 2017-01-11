@@ -14,27 +14,27 @@ map <silent> <leader><cr> :noh<cr>
 " Search for pandoc @citations and images
 map <leader>1 /!\[./e<cr>
 map <leader>2 /@\(Tbl:\)\@!\(Fig:\)\@!./e<cr>
-map <leader>3 /@Fig:./e<cr>
+map <leader>3 /@fig:./e<cr>
 map <leader>4 /@Tbl:./e<cr>
 map <leader># /#fig:<C-R><C-W><cr>
 map <leader>$ /#tbl:<C-R><C-W><cr>
 map <leader>9 /\](./e<cr>
 "  Buffers
-map      <leader>bd :Bclose<cr>     " Close the current buffer
 map      <leader>ba :1,1000 bd!<cr> " Close all the buffers
 nnoremap <leader>bj :bp<cr>    " previous buffer, next buffer
 nnoremap <leader>bk :bn<cr>
 nnoremap <leader>bo <c-w>o     " close every window in current tabview but the current
-nnoremap <leader>bd :bd<cr>     " delete buffer without closing pane
+nnoremap <leader>bd :bd<cr>    " delete buffer without closing pane
 " Pandoc compilation
 " nnoremap <leader>cc :Pandoc pdf<cr>
 " Swap background color
 nnoremap <leader>dw :call DeleteTrailingWS()<cr>
 nnoremap <leader>f gwip " Format paragraph
-nnoremap <leader>i :let &background = ( &background == "dark"? "light" : "dark" )<cr>
+nnoremap <silent><leader>i :let &background = ( &background == "dark"? "light" : "dark" )<cr>
 " Urxvt
-nnoremap <leader>j :cd %:p:h<cr>:pwd<cr>:silent !urxvtr<cr>
-nnoremap <leader>l :cd %:p:h<cr>:pwd<cr>:silent !urxvtr -e rs<cr>
+nnoremap <leader>uu :cd %:p:h<cr>:pwd<cr>:silent !urxvtr<cr>
+nnoremap <leader>ur :cd %:p:h<cr>:pwd<cr>:silent !urxvtr -e rs<cr>
+nnoremap <leader>uw :cd %:p:h<cr>:pwd<cr>:silent !urxvtr -e watch<cr>
 " Remove the Windows ^M - when the encodings gets messed up
 nnoremap <leader>m mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
@@ -53,7 +53,6 @@ nmap <leader>p "+p
 nmap <leader>P "+P
 vmap <leader>p "+p
 vmap <leader>P "+P
-
 
 nnoremap <leader>tc :call ConcealToggle()<cr>
 " Ranger
@@ -76,13 +75,18 @@ nmap <leader>nu :call NoteMidDir('~/Projects/Uni','notes')<cr>
 nmap <leader>nr :call Note('~/Documents/Reviews')<cr><cr>
 
 "Opening Files
-"xdg-open
 nnoremap <leader>o :set operatorfunc=OpenOperator<cr>g@
 nnoremap <leader>x :set operatorfunc=CropOperator<cr>g@
 nnoremap <leader>g :set operatorfunc=GimpOperator<cr>g@
 
 "FZF
 nnoremap <leader>/ :FZF<cr>
+
+" Grammar
+nmap <leader>ll :GrammarousCheck<cr>
+nmap <leader>lq <Plug>(grammarous-close-info-window)<cr>
+nmap <leader>l] <Plug>(grammarous-move-to-next-error)
+nmap <leader>l[ <Plug>(grammarous-move-to-previous-error)
 
 " Spell checking
 nnoremap <leader>s  ea<C-X><C-S>
@@ -144,7 +148,7 @@ nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation/key   -default-act
 nnoremap <silent><leader>CC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=append citation/key_inner<cr>
 nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=citation/file  -default-action=append citation/file<cr>
 nnoremap <silent><leader>cU :<C-u>Unite -buffer-name=citation/url   -default-action=start  citation/url<cr>
-nnoremap <silent><leader>cI :<C-u>Unite -buffer-name=citation/combined  -default-action=preview  citation/combined<cr>
+nnoremap <silent><leader>CI :<C-u>Unite -buffer-name=citation/combined  -default-action=preview  citation/combined<cr>
 nnoremap <silent><leader>cz :<C-u>Unite -buffer-name=citation_collection citation_collection<cr>
 nnoremap <silent><leader>c<space> :<C-u>Unite -buffer-name=citation citation<cr>
 
@@ -158,9 +162,9 @@ nnoremap <silent><leader>ci :<C-u>Unite -input=<C-R><C-W> -default-action=previe
 nnoremap <silent><leader>cs :<C-u>Unite -buffer-name=citation/key -default-action=yank citation/key:<C-R><C-W><cr>
 vnoremap <silent><leader>cs :<C-u>exec "Unite -buffer-name=citation/key -default-action=yank citation/key:" . escape(@*,' ') <cr>
 nnoremap <silent><leader>cx :<C-u>exec "Unite -buffer-name=citation/key -default-action=yank citation/key:" . escape(input('Search Key : '),' ') <cr>
-nnoremap <silent><leader>cs :<C-u>Unite -buffer-name=citation/key_inner -default-action=yank citation/key:<C-R><C-W><cr>
-vnoremap <silent><leader>cs :<C-u>exec "Unite -buffer-name=citation/key_inner -default-action=yank citation/key:" . escape(@*,' ') <cr>
-nnoremap <silent><leader>cx :<C-u>exec "Unite -buffer-name=citation/key_inner -default-action=yank citation/key:" . escape(input('Search Key : '),' ') <cr>
+nnoremap <silent><leader>cS :<C-u>Unite -buffer-name=citation/key_inner -default-action=yank citation/key_inner:<C-R><C-W><cr>
+vnoremap <silent><leader>cS :<C-u>exec "Unite -buffer-name=citation/key_inner -default-action=yank citation/key_inner:" . escape(@*,' ') <cr>
+nnoremap <silent><leader>cX :<C-u>exec "Unite -buffer-name=citation/key_inner -default-action=yank citation/key_inner:" . escape(input('Search Key : '),' ') <cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Tabs get to steal t
