@@ -36,39 +36,6 @@ function! DeleteTrailingWS()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Customize Tabline
-function! CustomizedTabLine()
-    let s = ''
-    let t = tabpagenr()
-    let i = 1
-    while i <= tabpagenr('$')
-        let buflist = tabpagebuflist(i)
-        let winnr = tabpagewinnr(i)
-        let s .= '%' . i . 'T'
-        let s .= (i == t ? '%1*' : '%2*')
-        let s .= ' '
-        let s .= i . ':'
-        let s .= '%*'
-        let s .= (i == t ? '%#TabLineSel#' : '%#TabLine#')
-        let file = bufname(buflist[winnr - 1])
-        let file = fnamemodify(file, ':p:t')
-        if file == ''
-            let file = '[No Name]'
-        endif
-        let s .= file
-        let s .= ' '
-        let i = i + 1
-    endwhile
-    let s .= '%T%#TabLineFill#%='
-    let s .= (tabpagenr('$') > 1 ? '%999XX' : 'X')
-    return s
-endfunction
-
-" Always show the tabline
-set stal=2
-set tabline=%!CustomizedTabLine()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Notes
 function! NoteSubDir(parent)
   call inputsave()
@@ -81,15 +48,15 @@ endfunction
 function! NoteMidDir(parent,child)
   call inputsave()
   let path = fnamemodify(a:parent, ':r') . '/'
-  let path = input("Dir: ", path, "file") 
+  let path = input("Dir: ", path, "file")
   let ext = fnamemodify(path, ':e')
   let tail = fnamemodify(path, ':h:t')
   let head = fnamemodify(path, ':h')
   let root = fnamemodify(path, ':t:r')
   if ext == "md"
-    call Note(head, root) 
+    call Note(head, root)
   elseif tail == a:child
-    call Note(path) 
+    call Note(path)
   else
     call Note(path . a:child)
   endif
@@ -138,8 +105,8 @@ function! CitationNote()
   let input = expand("<cword>")
   exec "split " . note_dir . input . "." . extension
 
-  " Insert a header in new files 
-  if line('$') == 1 && getline(1) == '' 
+  " Insert a header in new files
+  if line('$') == 1 && getline(1) == ''
     " Add the title.
     exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/title"
     normal! 0v$"ly
@@ -253,7 +220,7 @@ endfunction
 " {{{ Custom Objects
 call textobj#user#plugin('file', {
 \   'file': {
-\     'pattern': '\f\+', 
+\     'pattern': '\f\+',
 \     'select': ['af', 'if']
 \   }
 \ })
@@ -289,6 +256,7 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ ConcealToggle
+ 
 function! ConcealToggle()
   if &conceallevel
     set conceallevel=0
@@ -296,4 +264,15 @@ function! ConcealToggle()
     set conceallevel=2
   endif
 endfunction
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ TabToggle
+function! TabToggle()
+  if &showtabline
+    silent set showtabline=0
+  else
+    silent set showtabline=1
+  endif
+endfunction
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

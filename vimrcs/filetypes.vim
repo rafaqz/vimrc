@@ -21,9 +21,10 @@ au FileType javascript call SetJavaScript()
 " {{{ CoffeeScript
 
 function! SetCoffeeScript()
-    setl foldmethod=indent
+  setl foldmethod=indent
 endfunction
 au FileType coffee call SetCoffeeScript()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Ruby
 
@@ -63,36 +64,36 @@ function! SetHaskell()
   set tags=tags;/,codex.tags;/
 
   let g:tagbar_type_haskell = {
-      \ 'ctagsbin'  : 'hasktags',
-      \ 'ctagsargs' : '-x -c -o-',
-      \ 'kinds'     : [
-          \  'm:modules:0:1',
-          \  'd:data: 0:1',
-          \  'd_gadt: data gadt:0:1',
-          \  't:type names:0:1',
-          \  'nt:new types:0:1',
-          \  'c:classes:0:1',
-          \  'cons:constructors:1:1',
-          \  'c_gadt:constructor gadt:1:1',
-          \  'c_a:constructor accessors:1:1',
-          \  'ft:function types:1:1',
-          \  'fi:function implementations:0:1',
-          \  'o:others:0:1'
-      \ ],
-      \ 'sro'        : '.',
-      \ 'kind2scope' : {
-          \ 'm' : 'module',
-          \ 'c' : 'class',
-          \ 'd' : 'data',
-          \ 't' : 'type'
-      \ },
-      \ 'scope2kind' : {
-          \ 'module' : 'm',
-          \ 'class'  : 'c',
-          \ 'data'   : 'd',
-          \ 'type'   : 't'
+        \ 'ctagsbin'  : 'hasktags',
+        \ 'ctagsargs' : '-x -c -o-',
+        \ 'kinds'     : [
+        \      'm:modules:0:1',
+        \      'd:data: 0:1',
+        \      'd_gadt: data gadt:0:1',
+        \      't:type names:0:1',
+        \      'nt:new types:0:1',
+        \      'c:classes:0:1',
+        \      'cons:constructors:1:1',
+        \      'c_gadt:constructor gadt:1:1',
+        \      'c_a:constructor accessors:1:1',
+        \      'ft:function types:1:1',
+        \      'fi:function implementations:0:1',
+        \      'o:others:0:1'
+        \     ],
+        \ 'sro'        : '.',
+        \ 'kind2scope' : {
+        \     'm' : 'module',
+        \     'c' : 'class',
+        \     'd' : 'data',
+        \     't' : 'type'
+        \ },
+        \ 'scope2kind' : {
+        \     'module' : 'm',
+        \     'class'  : 'c',
+        \     'data'   : 'd',
+        \     'type'   : 't'
+        \ }
       \ }
-  \ }
 
 
   set csprg=hscope
@@ -183,13 +184,13 @@ endfunction
 au FileType haskell call SetHaskell()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Python
+" {{{ Elm
 "
 function! SetElm()
   call neocomplete#util#set_default_dictionary(
-    \ 'g:neocomplete#sources#omni#input_patterns',
-    \ 'elm',
-    \ '\.')
+        \ 'g:neocomplete#sources#omni#input_patterns',
+        \ 'elm',
+        \ '\.')
 endfunction
 autocmd FileType elm call SetElm()
 
@@ -200,16 +201,14 @@ function! SetPython()
   let python_highlight_all = 1
   syn keyword pythonDecorator True None False self
   set foldmethod=indent
-	setlocal omnifunc=jedi#completions
-	" let g:jedi#completions_enabled = 0
-	" let g:jedi#auto_vim_configuration = 0
-	let g:neocomplete#force_omni_input_patterns.python =
-	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-	" alternative pattern: '\h\w*\|[^. \t]\.\w*'
+  setlocal omnifunc=jedi#completions
+  " let g:jedi#completions_enabled = 0
+  " let g:jedi#auto_vim_configuration = 0
+  let g:neocomplete#force_omni_input_patterns.python =
+        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+  " alternative pattern: '\h\w*\|[^. \t]\.\w*'
 endfunction
 autocmd FileType python call SetPython()
-au BufNewFile,BufRead *.jinja set syntax=htmljinja
-au BufNewFile,BufRead *.mako set ft=mako
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Vim
@@ -218,25 +217,26 @@ function! SetVim()
   " fold vimrc by categories
   set foldmethod=marker
   set foldlevel=0
- :setlocal keywordprg=:help	
+  :setlocal keywordprg=:help
 endfunction
 autocmd! FileType vim call SetVim()
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Markdown
-
 
 augroup markdown
   autocmd!
   autocmd! Bufread,BufEnter,BufNewFile *.md
-    \   call SetLight()
+        \   call SetLight()
   autocmd! BufLeave *.md call SetDark()
 
   autocmd FileType pandoc,markdown,mkd,rmd
-    \   setlocal textwidth=80
-    \ | setlocal commentstring=<!--\ %s\ -->
-    \ | set foldlevel=1
-    \ | set nowrap
-    \ | let g:neocomplete#disable_auto_complete = 1
+        \   setlocal textwidth=80
+        \ | setlocal commentstring=<!--\ %s\ -->
+        \ | set foldlevel=1
+        \ | set nowrap
+        \ | let g:neocomplete#disable_auto_complete = 1
+        \ | let g:table_mode_corner='|'
 augroup END
 
 fun! SetLight()
@@ -251,9 +251,14 @@ fun! SetDark()
   exec 'source ~/.vim/plugged/vim-pandoc-syntax/syntax/pandoc.vim'
 endfun
 
-
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Git
 
 au FileType gitcommit call setpos('.', [0, 1, 1, 0])
+
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ CSS
+
+" set omnifunc=syntaxcomplete#Complete
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+

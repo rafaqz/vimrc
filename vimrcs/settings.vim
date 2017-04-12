@@ -47,8 +47,8 @@ filetype indent on
 " Turn on the WiLd menu
 set wildmenu
 " Ignore compiled files
-set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
-set wildignore+=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+" set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
+set wildignore=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 " set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -78,6 +78,7 @@ endif
 set number      " Show line numbers
 set cmdheight=1 " Height of the command bar
 set hidden      " A buffer becomes hidden when it is abandoned
+
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Folds
@@ -216,14 +217,13 @@ set wrap "Wrap lines
 set whichwrap+=<,>,h,l,[,]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Omni complete functions
-
-" set omnifunc=syntaxcomplete#Complete
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Highlight
 
 " Last so nothing can overwrite it.
 highlight Comment cterm=italic
+" Hide the ~ for empty lines
+highlight EndOfBuffer ctermfg=black ctermbg=black
+" No underline for fold
+" hi Folded term=bold cterm=NONE
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
