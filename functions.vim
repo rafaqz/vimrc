@@ -3,10 +3,9 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" {{{Search Visual Selection
 
-" Visual mode searches for the current selection
-function! VisualSelection(direction, extra_filter) range
+fun! VisualSelection(direction, extra_filter) " {{{
+  " Visual mode searches for the current selection
   let l:saved_reg = @"
   execute "normal! vgvy"
 
@@ -25,15 +24,14 @@ function! VisualSelection(direction, extra_filter) range
 
   let @/ = l:pattern
   let @" = l:saved_reg
-endfunction
+endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ DeleteTrailingWS
-function! DeleteTrailingWS()
+fun! DeleteTrailingWS() " {{{
   exe "normal! mz"
   %s/\s\+$//ge
   exe "normal! `z"
-endfunction
+endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Notes
@@ -99,57 +97,39 @@ function! Note(dir, ...)
 
 endfunction
 
-function! CitationNote()
-  let extension = g:citation_vim_note_extension
-  let note_dir = g:citation_vim_note_dir
-  let input = expand("<cword>")
-  exec "split " . note_dir . input . "." . extension
-
-  " Insert a header in new files
-  if line('$') == 1 && getline(1) == ''
-    " Add the title.
-    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/title"
-    normal! 0v$"ly
-
-    " Underline the title as a markdown header.
-    let underline = ''
-    let title=@l
-    for item in split(title, '\zs')
-      let underline .= '='
-    endfor
-    normal! Go
-    call append(1, [underline])
-    normal! Go
-
-    " Add the author, in italics.
-    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/author"
-    normal! GI*
-    normal! A*
-    exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/date"
-    normal! G2o
-
-  endif
-endfunction
-
-command! CitationNote call CitationNote()
-
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Quitting whether Goyo is active or not
-" ca <silent> wq :w<cr>:call Quit()<cr>
-" ca <silent> q :call Quit()<cr>
-nnoremap <silent>ZZ :call Goyoquit()<cr>
-function! Goyoquit()
-    Goyo!
-    quit
-endfunction
-
-function! ReGoyo()
-  if exists('#goyo')
-    Goyo!
-    Goyo
-  endif
-endfunction
-command! ReGoyo call ReGoyo()
+" function! CitationNote()
+"   let extension = g:citation_vim_note_extension
+"   let note_dir = g:citation_vim_note_dir
+"   let input = expand("<cword>")
+"   exec "split " . note_dir . input . "." . extension
+"
+"   " Insert a header in new files
+"   if line('$') == 1 && getline(1) == ''
+"     " Add the title.
+"     exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/title"
+"     normal! 0v$"ly
+"
+"     " Underline the title as a markdown header.
+"     let underline = ''
+"     let title=@l
+"     for item in split(title, '\zs')
+"       let underline .= '='
+"     endfor
+"     normal! Go
+"     call append(1, [underline])
+"     normal! Go
+"
+"     " Add the author, in italics.
+"     exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/author"
+"     normal! GI*
+"     normal! A*
+"     exec "Unite -force-immediately -input=" . input . "  -default-action=append citation/date"
+"     normal! G2o
+"
+"   endif
+" endfunction
+"
+" command! CitationNote call CitationNote()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ StarDict direct calls (plugin wont pass args)
@@ -178,7 +158,6 @@ command! -nargs=1 Sdcv call SDCV(<f-args>)
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Custom Operators
-nnoremap <leader>g :set operatorfunc=GrepOperator<cr>g@
 
 function! OpenOperator(type)
   if a:type ==# 'v'
@@ -218,6 +197,7 @@ endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Custom Objects
+"
 call textobj#user#plugin('file', {
 \   'file': {
 \     'pattern': '\f\+',
@@ -255,24 +235,80 @@ function! CurrentLineI()
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ ConcealToggle
- 
-function! ConcealToggle()
+fun! ConcealToggle() " {{{
   if &conceallevel
     set conceallevel=0
   else
     set conceallevel=2
   endif
-endfunction
+endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ TabToggle
-function! TabToggle()
+fun! TabToggle() " {{{
   if &showtabline
     silent set showtabline=0
   else
     silent set showtabline=1
   endif
-endfunction
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! Highlight_Overlength() " {{{
+    let blacklist = ['markdown', 'pandoc']
+    if index(blacklist, &ft) < 0
+      let bg = execute('set background')
+      if bg =~ 'dark'
+        highlight OverLength ctermbg=0
+      else
+        highlight OverLength ctermbg=7
+      endif
+      match OverLength /\%81v.*/
+    endif
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! Highlight_EndOfBuffer() " {{{ 
+    let bg = execute('set background')
+    if bg =~ 'dark'
+      highlight EndOfBuffer ctermfg=0 ctermbg=0
+    else
+      highlight EndOfBuffer ctermfg=7 ctermbg=7
+    endif
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! MyFoldText() " {{{ 
+  let line = foldtext()
+  let sub = substitute(substitute(substitute(line, '+', "\ue0b1", 'g'), 'lines: ', "", 'g'), '─', "", 'g')
+  return sub
+endfun!
+set foldtext=MyFoldText()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! ToggleHideAll() " {{{
+    if s:hide_all  == 0
+        let s:hide_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+        set nonumber
+        set showtabline=0
+        set foldcolumn=0
+        hi FoldColumns ctermbg=none
+        hi FoldColumns ctermfg=none
+    else
+        let s:hide_all = 0
+        set showmode
+        set ruler
+        set showtabline=1
+        set laststatus=2
+        set showcmd
+        set foldcolumn=0
+        set number
+        hi FoldColumns ctermbg=5
+    endif
+endfun
+let s:hide_all = 0
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

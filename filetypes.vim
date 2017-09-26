@@ -3,8 +3,19 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" {{{ JavaScript
+" {{{ julia
+"
+function! SetJulia()
+  setlocal commentstring=#\ %s
+  let g:latex_to_unicode_suggestions = 0
+  hi link juliaParDelim Delimiter
+  hi juliaComma guifg=Magenta ctermfg=Magenta
+endfunction
+au FileType julia call SetJulia()
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ JavaScript
+"
 function! SetJavaScript()
   setl fen
   setl nocindent
@@ -113,28 +124,28 @@ function! SetHaskell()
   endif
 
   " Type of expression under cursor
-  nmap <silent> <leader>ht :GhcModType<CR>
+  nmap <silent> <localleader>ht :GhcModType<CR>
   " Insert type of expression under cursor
-  nmap <silent> <leader>hd :GhcModTypeInsert<CR>
+  nmap <silent> <localleader>hd :GhcModTypeInsert<CR>
   " Insert type of expression under cursor
-  nmap <silent> <leader>hi :GhcModInfo<CR>
-  nmap <silent> <leader>hp :GhcModInfoPreview<CR><C-j><C-k>
+  nmap <silent> <localleader>hi :GhcModInfo<CR>
+  nmap <silent> <localleader>hp :GhcModInfoPreview<CR><C-j><C-k>
   " GHC errors and warnings
-  nmap <silent> <leader>hc :GhcModCheckAsync<CR>
+  nmap <silent> <localleader>hc :GhcModCheckAsync<CR>
   " Haskell Lint
-  nmap <silent> <leader>hl :GhcModLintAsync<CR>
-  nmap <leader>hh ea<C-X><C-O>
+  nmap <silent> <localleader>hl :GhcModLintAsync<CR>
+  nmap <localleader>hh ea<C-X><C-O>
 
   " Hoogle the word under the cursor
-  nnoremap <silent> <leader>ho :Hoogle<CR>
+  nnoremap <silent> <localleader>ho :Hoogle<CR>
   " Hoogle and prompt for input
-  nnoremap <leader>hO :Hoogle
+  nnoremap <localleader>hO :Hoogle
   " Hoogle for detailed documentation (e.g. "Functor")
-  nnoremap <silent> <leader>hd :HoogleInfo<CR>
+  nnoremap <silent> <localleader>hd :HoogleInfo<CR>
   " Hoogle for detailed documentation and prompt for input
   nnoremap <leader>hD :HoogleInfo
   " Hoogle, close the Hoogle window
-  nnoremap <silent> <leader>hz :HoogleClose<CR>
+  nnoremap <silent> <localleader>hz :HoogleClose<CR>
 
   " Pretty unicode haskell symbols
   " nnoremap <leader>hca :set conceallevel=1<cr>
@@ -142,8 +153,8 @@ function! SetHaskell()
   " Generate haskell tags with codex and hscope
   " map <leader>tg :!codex update --force<CR>:call system("git hscope -X TemplateHaskell")<CR><CR>:call LoadHscope()<CR>
 
-  vnoremap <silent> <leader>h. :call Pointfree()<CR>
-  vnoremap <silent> <leader>h> :call Pointful()<CR>
+  vnoremap <silent> <localleader>h. :call Pointfree()<CR>
+  vnoremap <silent> <localleader>h> :call Pointful()<CR>
 
   nnoremap <silent> <C-\> :cs find c <C-R>=expand("<cword>")<CR><CR>
 
@@ -177,7 +188,7 @@ function! SetHaskell()
 
   augroup haskell
     autocmd!
-    map <silent> <leader><cr> :noh<cr>:GhcModTypeClear<cr>:SyntasticReset<cr>
+    map <silent> <localleader><cr> :noh<cr>:GhcModTypeClear<cr>:SyntasticReset<cr>
     setlocal omnifunc=necoghc#omnifunc
   augroup END
 endfunction
@@ -204,8 +215,8 @@ function! SetPython()
   setlocal omnifunc=jedi#completions
   " let g:jedi#completions_enabled = 0
   " let g:jedi#auto_vim_configuration = 0
-  let g:neocomplete#force_omni_input_patterns.python =
-        \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+  " let g:neocomplete#force_omni_input_patterns.python =
+  "       \ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
   " alternative pattern: '\h\w*\|[^. \t]\.\w*'
 endfunction
 autocmd FileType python call SetPython()
@@ -224,41 +235,66 @@ autocmd! FileType vim call SetVim()
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Markdown
 
+function! SetMarkdown()
+  setlocal textwidth=80
+  setlocal commentstring=<!--\ %s\ -->
+  set foldlevel=1
+  set nowrap
+  let g:table_mode_corner='|'
+endfunction
+
 augroup markdown
   autocmd!
-  autocmd! Bufread,BufEnter,BufNewFile *.md
-        \   call SetLight()
-  autocmd! BufLeave *.md call SetDark()
+  " autocmd! Bufread,BufEnter,BufNewFile *.md
+  "       \   call SetLight()
+  " autocmd! BufLeave *.md call SetDark()
 
-  autocmd FileType pandoc,markdown,mkd,rmd
-        \   setlocal textwidth=80
-        \ | setlocal commentstring=<!--\ %s\ -->
-        \ | set foldlevel=1
-        \ | set nowrap
-        \ | let g:neocomplete#disable_auto_complete = 1
-        \ | let g:table_mode_corner='|'
+  autocmd FileType pandoc,markdown,mkd,rmd call SetMarkdown()
+  autocmd FileType rmd setlocal commentstring=#\ %s
 augroup END
 
 fun! SetLight()
   set background=light
   colorscheme pencil
   exec 'source ~/.vim/plugged/vim-pandoc-syntax/syntax/pandoc.vim'
+  exec 'AirlineRefresh'
 endfun
 
 fun! SetDark()
   set background=dark
   colorscheme solarized
-  exec 'source ~/.vim/plugged/vim-pandoc-syntax/syntax/pandoc.vim'
+  exec 'AirlineRefresh'
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Git
 
-au FileType gitcommit call setpos('.', [0, 1, 1, 0])
+augroup git
+  au FileType gitcommit call setpos('.', [0, 1, 1, 0])
+augroup END
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ CSS
 
-" set omnifunc=syntaxcomplete#Complete
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+augroup css
+  " set omnifunc=syntaxcomplete#Complete
+  autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+augroup END
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ CSV
+
+function! SetCSV()
+  nnoremap <buffer> <leader>f :%CSVArrangeColumn<cr>
+  nnoremap <localleader>va :CSVAddColumn<cr>
+  nnoremap <localleader>vd :CSVDeleteColumn<cr>
+  nnoremap <localleader>vi :CSVInit<cr>
+  nnoremap <localleader>vh :CSVHeaderToggle<cr>
+  nnoremap <localleader>vs :CSVSort<cr>
+  nnoremap <localleader>vr :CSVSort!<cr>
+  nnoremap <localleader>vm :CSVMove<cr>
+  nnoremap <localleader>vf :CSVFilter
+endfunction
+autocmd FileType csv call SetCSV()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

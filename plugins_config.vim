@@ -11,18 +11,22 @@ call plug#begin()
 " {{{ Bling
 
 Plug 'junegunn/goyo.vim'
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
 Plug 'reedes/vim-colors-pencil'
+Plug 'ryanoasis/vim-devicons'
 
 "---------------------------------}}}
 " {{{ Edit
 
+Plug 'wikitopian/hardmode'
 Plug 'Shougo/neocomplete.vim'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
-Plug 'tomtom/tcomment_vim'
-" Plug 'tpope/vim-commentary'
+" Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-commentary'
+Plug 'tpope/vim-unimpaired'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'haya14busa/vim-easyoperator-line'
 Plug 'michaeljsmith/vim-indent-object'
@@ -31,8 +35,10 @@ Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/vis'
+
+Plug 'vim-scripts/VisIncr'
 " Plug 'Raimondi/delimitMate'
-" Plug 'junegunn/vim-easy-align'
+Plug 'junegunn/vim-easy-align'
 
 "---------------------------------}}}
 " {{{ Git
@@ -41,7 +47,9 @@ Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
 Plug 'int3/vim-extradite'
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
-Plug 'vim-scripts/gitignore'
+Plug 'junegunn/gv.vim'
+Plug 'gregsexton/gitv'
+" Plug 'vim-scripts/gitignore'
 
 "---------------------------------}}}
 " {{{ Nav
@@ -50,9 +58,10 @@ Plug 'vim-scripts/gitignore'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'reedes/vim-wheel'
 " Plug 'majutsushi/tagbar'
-Plug 'junegunn/fzf'
+" Plug 'junegunn/fzf'
 Plug 'rafaqz/ranger.vim'
 Plug 'vim-scripts/SearchComplete'
+Plug 'AndrewRadev/linediff.vim'
 
 "---------------------------------}}}
 " {{{ Misc
@@ -63,7 +72,9 @@ Plug 'vim-scripts/SearchComplete'
 " Plug 'tmhedberg/matchit'
 Plug 'kana/vim-textobj-user'
 Plug 'tpope/vim-dispatch'
+Plug 'benekastah/neomake'
 " Plug 'kana/vim-operator-user'
+Plug 'jalvesaq/vimcmdline'
 
 "---------------------------------}}}
 " {{{ Snippet
@@ -75,22 +86,30 @@ Plug 'Shougo/neosnippet-snippets'
 " {{{ Syntax
 " Plug 'scrooloose/syntastic'
 
-Plug 'chrisbra/csv.vim', { 'for': 'csv' }
+Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 Plug 'davidhalter/jedi-vim', { 'for': 'python' }
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
-Plug 'jalvesaq/Nvim-R', { 'for': ['r', 'rmd'] }
+Plug 'jalvesaq/Nvim-R'
+Plug 'baskerville/vim-sxhkdrc'
 
 " Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
 "-------------------------
+" {{{ julia
+"
+Plug 'zyedidia/julialint.vim'
+Plug 'JuliaEditorSupport/julia-vim'
+"-------------------------}}}
+
+"-------------------------
 " {{{ Ruby
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'tpope/vim-bundler', { 'for': 'ruby' }
-Plug 'tpope/vim-rake', { 'for': 'ruby' }
-Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
+" Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+" Plug 'tpope/vim-rails', { 'for': 'ruby' }
+" Plug 'tpope/vim-bundler', { 'for': 'ruby' }
+" Plug 'tpope/vim-rake', { 'for': 'ruby' }
+" Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
 
 "-------------------------}}}
 " {{{ Haskell
@@ -104,13 +123,13 @@ Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 " {{{ Markdown
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': ['markdown','rmd'] }
-Plug 'vim-pandoc/vim-pandoc-after', { 'for': ['markdown','rmd'] }
+" Plug 'vim-pandoc/vim-pandoc-after' ", { 'for': ['markdown','rmd'] }
+" Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd'] }
 Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-Plug 'rhysd/vim-grammarous', { 'for': ['markdown','rmd'], 'on': 'GrammarousCheck' }
+Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
 
-
-" Plug 'reedes/vim-textobj-sentence', { 'for': 'markdown' }
+Plug 'reedes/vim-textobj-sentence'
 " Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
 " Plug 'reedes/vim-wordy', { 'for': 'markdown' }
 
@@ -122,9 +141,8 @@ Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 " Plug 'osyo-manga/unite-quickfix'
-" Plug 'Shougo/neomru.vim'
 Plug 'tsukkee/unite-help'
-Plug 'kmnk/vim-unite-giti'
+" Plug 'kmnk/vim-unite-giti'
 Plug 'ujihisa/unite-colorscheme'
 Plug 'osyo-manga/unite-airline_themes'
 Plug 'rafaqz/citation.vim'
@@ -132,6 +150,7 @@ Plug 'rafaqz/citation.vim'
 Plug 'critiqjo/unite-fasd.vim'
 Plug 'Shougo/neoinclude.vim'
 Plug 'naquad/unite-digraphs'
+Plug 'ujihisa/unite-locate'
 
 " And make it fast
 Plug 'Shougo/vimproc.vim', { 'do': 'make' }
@@ -143,22 +162,53 @@ call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
+runtime macros/matchit.vim
+
 " {{{ Airline
  
-let g:airline_theme='pencil'
+let g:airline_theme='zenburn'
 let g:airline_powerline_fonts = 1
-let g:airline_left_sep = "\ue0bc"
-let g:airline_right_sep = "\ue0ba"
-let g:airline_left_alt_sep = "\ue0bb"
-let g:airline_right_alt_sep = "\ue0b9"
 let g:airline#extensions#tabline#enabled = 1
+let g:airline#extensions#tabline#show_tabs = 1
+let g:airline#extensions#tabline#show_tab_nr = 0
+let g:airline#extensions#tabline#show_buffers = 0
+let g:airline#extensions#tabline#tab_min_count = 0 
+let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
+let g:airline#extensions#tabline#fnamemod = ':t'
+let g:airline_right_alt_sep = "\ue0b9"
+let g:airline_right_sep     = "\ue0ba"
+let g:airline_left_alt_sep  = "\ue0bb"
+let g:airline_left_sep      = "\ue0bc"
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
 let g:airline_symbols.linenr = "\ue612"
 let g:airline_symbols.maxlinenr = ""
-let g:airline_symbols.crypt = "????"
+let g:airline_symbols.crypt = "?"
 let g:airline_symbols.whitespace = 'Ξ'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ cmdlin
+
+" vimcmdline mappings
+let cmdline_map_start          = "<LocalLeader>s"
+let cmdline_map_send           = "<LocalLeader>d"
+let cmdline_map_send_and_stay  = "<LocalLeader>l"
+let cmdline_map_source_fun     = "<LocalLeader>f"
+let cmdline_map_send_paragraph = "<LocalLeader>p"
+let cmdline_map_send_block     = "<LocalLeader>b"
+let cmdline_map_quit           = "<LocalLeader>q"
+
+" vimcmdline options
+let cmdline_vsplit             = 1      " Split the window vertically
+let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim terminal
+let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
+let cmdline_term_height        = 15     " Initial height of interpreter window or pane
+let cmdline_term_width         = 80     " Initial width of interpreter window or pane
+let cmdline_tmp_dir            = '.' " Temporary directory to save files
+let cmdline_outhl              = 1      " Syntax highlight the output
+let cmdline_external_term_cmd  = "urxvtcd -e %s"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Extradite
@@ -218,97 +268,97 @@ let g:neocomplete#sources#dictionary#dictionaries = {
       \ }
 
 " Define keyword.
-if !exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns['default'] = '\h\w*'
+" if !exists('g:neocomplete#keyword_patterns')
+"   let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns['default'] = '\h\w*'
 
 
-" Do not autocomplete/cache in sensitive file patterns
-let g:neocomplete#sources#buffer#disabled_pattern =
-      \ '\/private\/var\/\|\/shm\/\|\/tmp\/\|\.vault\.vim'
+" " Do not autocomplete/cache in sensitive file patterns
+" let g:neocomplete#sources#buffer#disabled_pattern =
+"       \ '\/private\/var\/\|\/shm\/\|\/tmp\/\|\.vault\.vim'
 
-let g:neocomplete#lock_buffer_name_pattern =
-      \ g:neocomplete#sources#buffer#disabled_pattern
+" let g:neocomplete#lock_buffer_name_pattern =
+"       \ g:neocomplete#sources#buffer#disabled_pattern
 
-" Keyword patterns completion
-" ---
+" " Keyword patterns completion
+" " ---
 
-" Define a default keyword pattern
-if ! exists('g:neocomplete#keyword_patterns')
-  let g:neocomplete#keyword_patterns = {}
-endif
-let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
+" " Define a default keyword pattern
+" if ! exists('g:neocomplete#keyword_patterns')
+"   let g:neocomplete#keyword_patterns = {}
+" endif
+" let g:neocomplete#keyword_patterns._ = '\h\k*(\?'
 
-" Enable omni-completion
-" ---
+" " Enable omni-completion
+" " ---
 
-if ! exists('g:neocomplete#sources#omni#input_patterns')
-  let g:neocomplete#sources#omni#input_patterns = {}
-endif
+" if ! exists('g:neocomplete#sources#omni#input_patterns')
+"   let g:neocomplete#sources#omni#input_patterns = {}
+" endif
 
-let g:neocomplete#sources#omni#input_patterns.coffee =
-      \ '[[:alpha:]./"''$]\+'
-let g:neocomplete#sources#omni#input_patterns.go =
-      \ '[^.[:digit:] *\t]\.\w*'
-"let g:neocomplete#sources#omni#input_patterns.c =
-"	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
-"let g:neocomplete#sources#omni#input_patterns.cpp =
-"	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-let g:neocomplete#sources#omni#input_patterns.ruby =
-      \ '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#sources#omni#input_patterns.python =
-      \ '[^. *\t]\.\w*\|\h\w*'
-let g:neocomplete#sources#omni#input_patterns.r = '\$'
+" let g:neocomplete#sources#omni#input_patterns.coffee =
+"       \ '[[:alpha:]./"''$]\+'
+" let g:neocomplete#sources#omni#input_patterns.go =
+"       \ '[^.[:digit:] *\t]\.\w*'
+" "let g:neocomplete#sources#omni#input_patterns.c =
+" "	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?'
+" "let g:neocomplete#sources#omni#input_patterns.cpp =
+" "	\ '[^.[:digit:] *\t]\%(\.\|->\)\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+" let g:neocomplete#sources#omni#input_patterns.ruby =
+"       \ '[^. *\t]\.\w*\|\h\w*::'
+" let g:neocomplete#sources#omni#input_patterns.python =
+"       \ '[^. *\t]\.\w*\|\h\w*'
+" let g:neocomplete#sources#omni#input_patterns.r = '\$'
 
-" Force omni-completion input patterns
-" ---
+" " Force omni-completion input patterns
+" " ---
 
-if ! exists('g:neocomplete#force_omni_input_patterns')
-  let g:neocomplete#force_omni_input_patterns = {}
-endif
+" if ! exists('g:neocomplete#force_omni_input_patterns')
+"   let g:neocomplete#force_omni_input_patterns = {}
+" endif
 
-let g:neocomplete#force_omni_input_patterns.javascript =
-      \ '[^. \t]\.\w*'
-let g:neocomplete#force_omni_input_patterns.typescript =
-      \ '[^. *\t]\.\w*\|\h\w*::'
-let g:neocomplete#force_omni_input_patterns.php =
-      \ '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
-"let g:neocomplete#force_omni_input_patterns.python =
-"	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
-" Alternative pattern: \ '\h\w*\|[^. \t]\.\w*'
-let g:neocomplete#force_omni_input_patterns.r = '\$'
+" let g:neocomplete#force_omni_input_patterns.javascript =
+"       \ '[^. \t]\.\w*'
+" let g:neocomplete#force_omni_input_patterns.typescript =
+"       \ '[^. *\t]\.\w*\|\h\w*::'
+" let g:neocomplete#force_omni_input_patterns.php =
+"       \ '\h\w*\|[^. \t]->\%(\h\w*\)\?\|\h\w*::\%(\h\w*\)\?'
+" "let g:neocomplete#force_omni_input_patterns.python =
+" "	\ '\%([^. \t]\.\|^\s*@\|^\s*from\s.\+import \|^\s*from \|^\s*import \)\w*'
+" " Alternative pattern: \ '\h\w*\|[^. \t]\.\w*'
+" let g:neocomplete#force_omni_input_patterns.r = '\$'
 
 
-call neocomplete#custom#source('_', 'converters',
-      \ ['converter_add_paren', 'converter_remove_overlap',
-      \  'converter_delimiter', 'converter_abbr'])
+" call neocomplete#custom#source('_', 'converters',
+"       \ ['converter_add_paren', 'converter_remove_overlap',
+"       \  'converter_delimiter', 'converter_abbr'])
 
 " Mappings
 " --------
 
-let g:neocomplete#fallback_mappings = [ "\<C-x>\<C-o>", "\<C-x>\<C-n>" ]
+" let g:neocomplete#fallback_mappings = [ "\<C-x>\<C-o>", "\<C-x>\<C-n>" ]
 
 " Movement within 'ins-completion-menu'
-imap <expr><C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
-imap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
-imap <expr><C-f>   pumvisible() ? "\<PageDown>" : "\<Right>"
-imap <expr><C-b>   pumvisible() ? "\<PageUp>" : "\<Left>"
-imap <expr><C-d>   pumvisible() ? "\<PageDown>" : "\<Right>"
-imap <expr><C-u>   pumvisible() ? "\<PageUp>" : "\<Left>"
+" imap <expr><C-j>   pumvisible() ? "\<C-n>" : "\<C-j>"
+" imap <expr><C-k>   pumvisible() ? "\<C-p>" : "\<C-k>"
+" imap <expr><C-f>   pumvisible() ? "\<PageDown>" : "\<Right>"
+" imap <expr><C-b>   pumvisible() ? "\<PageUp>" : "\<Left>"
+" imap <expr><C-d>   pumvisible() ? "\<PageDown>" : "\<Right>"
+" imap <expr><C-u>   pumvisible() ? "\<PageUp>" : "\<Left>"
 
 " <C-n>: neocomplete.
-imap <expr> <C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>\<Down>"
+" imap <expr> <C-n>  pumvisible() ? "\<C-n>" : "\<C-x>\<C-u>\<C-p>\<Down>"
 " <C-p>: keyword completion.
-imap <expr> <C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
+" imap <expr> <C-p>  pumvisible() ? "\<C-p>" : "\<C-p>\<C-n>"
 
 " Special plugin key-mappings
 "inoremap <expr><C-l>  neocomplete#mappings#complete_common_string()
-inoremap <expr><C-l>  neocomplete#mappings#refresh()
-inoremap <expr><C-g>   neocomplete#undo_completion()
+" inoremap <expr><C-l> neocomplete#mappings#refresh()
+" inoremap <expr><C-g> neocomplete#undo_completion()
 
 " Start file completion TODO Not working all the time
-imap <silent><expr> <C-x><C-f> neocomplete#start_manual_complete('file')
+" imap <silent><expr> <C-x><C-f> neocomplete#start_manual_complete('file')
 
 " <CR>: If popup menu visible, expand snippet or close popup with selection,
 "       Otherwise, check if within empty pair and use delimitMate.
@@ -321,17 +371,17 @@ imap <silent><expr> <C-x><C-f> neocomplete#start_manual_complete('file')
 " 2. Otherwise, if within a snippet, jump to next input
 " 3. Otherwise, if preceding chars are whitespace, insert tab char
 " 4. Otherwise, start manual autocomplete
-imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-      \ : (<SID>is_whitespace() ? "\<Tab>"
-      \ : neocomplete#start_manual_complete()))
+" imap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+"       \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+"       \ : (<SID>is_whitespace() ? "\<Tab>"
+"       \ : neocomplete#start_manual_complete()))
 
-smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
-      \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
-      \ : (<SID>is_whitespace() ? "\<Tab>"
-      \ : neocomplete#start_manual_complete()))
+" smap <silent><expr><Tab> pumvisible() ? "\<C-n>"
+"       \ : (neosnippet#jumpable() ? "\<Plug>(neosnippet_jump)"
+"       \ : (<SID>is_whitespace() ? "\<Tab>"
+"       \ : neocomplete#start_manual_complete()))
 
-inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
+" inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
 function! s:is_whitespace() "{{{
   let col = col('.') - 1
@@ -351,19 +401,25 @@ let g:neosnippet#enable_snipmate_compatibility = 1
 let g:neosnippet#snippets_directory='~/.vim_runtime/plugins/snippet/vim-snippets/snippets'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ julia-vim
+  let g:latex_to_unicode_suggestions = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Nvim-R
  
 let R_assign = 0
+let R_in_buffer = 0
+let R_tmpdir = "."
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Pandoc
 
-let g:pandoc#after#modules#enabled = ["tablemode", "neosnippets"]
+let g:pandoc#after#modules#enabled = ["tablemode"]
 let g:pandoc#folding#fold_yaml = 1
 let g:pandoc#keyboard#sections#header_style = 's'
 let g:pandoc#formatting#mode = 'h'
 let g:pandoc#syntax#conceal#use = 0
-let g:pandoc#syntax#conceal#blacklist = ["atx"]
+" let g:pandoc#syntax#conceal#blacklist = ["atx"]
 let g:pandoc#modules#disabled = ["folding", "metadata", "bibliographies", "completion", "menu", "toc"]
 " Other modules: ['formatting', 'folding', 'executors', 'keyboard', 'hypertext']
 
@@ -388,8 +444,10 @@ let g:syntastic_lua_checkers=['ghc-mod']
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Table Mode
 
-let g:table_mode_corner_corner="+"
-let g:table_mode_header_fillchar="="
+" let g:table_mode_corner_corner="|"
+" let g:table_mode_header_fillchar="-"
+let g:table_mode_auto_align = 1
+let g:table_mode_update_time = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
@@ -456,3 +514,13 @@ let g:unite_fasd#read_only = 0
 let g:yankring_history_dir = '~/.vim/'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Ranger.vim
+"
+let g:ranger_terminal = "urxvt -e"
+ 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
