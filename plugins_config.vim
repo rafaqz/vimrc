@@ -11,6 +11,7 @@ call plug#begin()
 " {{{ Bling
 
 Plug 'junegunn/goyo.vim'
+Plug 'junegunn/limelight.vim'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
@@ -20,8 +21,15 @@ Plug 'ryanoasis/vim-devicons'
 "---------------------------------}}}
 " {{{ Edit
 
+
 Plug 'wikitopian/hardmode'
 Plug 'Shougo/neocomplete.vim'
+" Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+" Plug 'roxma/nvim-completion-manager'
+" Plug 'jiangmiao/auto-pairs'
+
+
+Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 " Plug 'tomtom/tcomment_vim'
@@ -30,26 +38,29 @@ Plug 'tpope/vim-unimpaired'
 Plug 'dahu/vim-fanfingtastic'
 Plug 'haya14busa/vim-easyoperator-line'
 Plug 'michaeljsmith/vim-indent-object'
-Plug 'vim-scripts/Align'
-Plug 'terryma/vim-expand-region'
+" Plug 'vim-scripts/Align'
+Plug 'tommcdo/vim-lion'
+" Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'sjl/gundo.vim'
 Plug 'vim-scripts/vis'
-
 Plug 'vim-scripts/VisIncr'
 " Plug 'Raimondi/delimitMate'
-Plug 'junegunn/vim-easy-align'
+" Plug 'junegunn/vim-easy-align'
+" Plug 'Shougo/echodoc.vim'
+
 
 "---------------------------------}}}
 " {{{ Git
 
 Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
+Plug 'tpope/vim-rhubarb'
 Plug 'int3/vim-extradite'
 Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
 Plug 'junegunn/gv.vim'
 Plug 'gregsexton/gitv'
-" Plug 'vim-scripts/gitignore'
+Plug 'vim-scripts/gitignore'
 
 "---------------------------------}}}
 " {{{ Nav
@@ -57,53 +68,55 @@ Plug 'gregsexton/gitv'
 " Plug 'amix/open_file_under_cursor.vim'
 Plug 'Lokaltog/vim-easymotion'
 Plug 'reedes/vim-wheel'
-" Plug 'majutsushi/tagbar'
-" Plug 'junegunn/fzf'
+" " Plug 'majutsushi/tagbar'
+" " Plug 'junegunn/fzf'
 Plug 'rafaqz/ranger.vim'
-Plug 'vim-scripts/SearchComplete'
+" Plug 'vim-scripts/SearchComplete'
 Plug 'AndrewRadev/linediff.vim'
-
+"
 "---------------------------------}}}
 " {{{ Misc
-"
-" Plug 'vim-scripts/tlib'
+
+" Plug 'vim-scripts/tlib
 " Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'xolox/vim-misc'
 " Plug 'tmhedberg/matchit'
 Plug 'kana/vim-textobj-user'
-Plug 'tpope/vim-dispatch'
-Plug 'benekastah/neomake'
+" Plug 'tpope/vim-dispatch'
+" Plug 'benekastah/neomake'
 " Plug 'kana/vim-operator-user'
 Plug 'jalvesaq/vimcmdline'
+" Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
 "---------------------------------}}}
 " {{{ Snippet
-Plug 'honza/vim-snippets'
-Plug 'Shougo/neosnippet.vim'
-Plug 'Shougo/neosnippet-snippets'
+" Plug 'honza/vim-snippets'
+" Plug 'Shougo/neosnippet.vim'
+" Plug 'Shougo/neosnippet-snippets'
 
 "---------------------------------}}}
 " {{{ Syntax
 " Plug 'scrooloose/syntastic'
 
 Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
-Plug 'davidhalter/jedi-vim', { 'for': 'python' }
+" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'jalvesaq/Nvim-R'
 Plug 'baskerville/vim-sxhkdrc'
 
-" Plug 'lambdatoast/elm.vim', {'for': 'elm' }
+Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
 "-------------------------
 " {{{ julia
 "
-Plug 'zyedidia/julialint.vim'
+" Plug 'zyedidia/julialint.vim'
+" Plug 'AtsushiSakai/julia.vim'
 Plug 'JuliaEditorSupport/julia-vim'
-"-------------------------}}}
+" Plug 'JuliaEditorSupport/deoplete-julia'
 
-"-------------------------
+"-------------------------}}}
 " {{{ Ruby
 " Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 " Plug 'tpope/vim-rails', { 'for': 'ruby' }
@@ -115,8 +128,8 @@ Plug 'JuliaEditorSupport/julia-vim'
 " {{{ Haskell
 Plug 'dag/vim2hs', { 'for': 'haskell' }
 Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
-Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
-Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
+" Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
+" Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 
 "-------------------------}}}
@@ -124,12 +137,12 @@ Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': ['markdown','rmd'] }
 " Plug 'vim-pandoc/vim-pandoc-after' ", { 'for': ['markdown','rmd'] }
-" Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd'] }
-Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
+Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd'] }
+" Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
-Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
+" Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
 
-Plug 'reedes/vim-textobj-sentence'
+" Plug 'reedes/vim-textobj-sentence'
 " Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
 " Plug 'reedes/vim-wordy', { 'for': 'markdown' }
 
@@ -137,7 +150,7 @@ Plug 'reedes/vim-textobj-sentence'
 
 "---------------------------------}}}
 " {{{ Unite
-Plug 'Shougo/neoyank.vim'
+" Plug 'Shougo/neoyank.vim'
 Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 " Plug 'osyo-manga/unite-quickfix'
@@ -165,17 +178,24 @@ call plug#end()
 runtime macros/matchit.vim
 
 " {{{ Airline
- 
+
+let g:airline#extensions#disable_rtp_load = 1
 let g:airline_theme='zenburn'
-let g:airline_powerline_fonts = 1
+
+" Tabline
+let g:airline#extensions#tabline#tabs_label = ''
+let g:airline#extensions#tabline#show_splits = 0
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#show_tabs = 1
 let g:airline#extensions#tabline#show_tab_nr = 0
 let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#tab_min_count = 0 
-let g:airline#extensions#tabline#show_close_button = 1
+let g:airline#extensions#tabline#tab_min_count = 0
+let g:airline#extensions#tabline#show_close_button = 0
 let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
 let g:airline#extensions#tabline#fnamemod = ':t'
+
+" Powerline Fonts
+let g:airline_powerline_fonts = 1
 let g:airline_right_alt_sep = "\ue0b9"
 let g:airline_right_sep     = "\ue0ba"
 let g:airline_left_alt_sep  = "\ue0bb"
@@ -183,13 +203,26 @@ let g:airline_left_sep      = "\ue0bc"
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
-let g:airline_symbols.linenr = "\ue612"
+let g:airline_symbols.linenr = "\uE612"
 let g:airline_symbols.maxlinenr = ""
 let g:airline_symbols.crypt = "?"
-let g:airline_symbols.whitespace = 'Ξ'
+let g:airline_symbols.whitespace = "\uF096"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ cmdlin
+" {{{ Citation.vim
+"
+let g:citation_vim_cache_path='~/.cache'
+let g:citation_vim_bibtex_file='~/Uni/Citations/Library.bib'
+let g:citation_vim_collection=""
+let g:citation_vim_zotero_path='~/Zotero'
+let g:citation_vim_zotero_version=5
+" let g:citation_vim_mode='bibtex'
+let g:citation_vim_key_format="{zotero_key}#{author}{date}{title}#"
+call unite#util#set_default('g:citation_vim_description_format',  "{}∶ {} ‴{}‴ ₋{}₋ ₍{}₎ ┊{}┊") 
+call unite#util#set_default('g:citation_vim_description_fields', ["type", "key", "title", "author", "date", "publication"])
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ cmdline
 
 " vimcmdline mappings
 let cmdline_map_start          = "<LocalLeader>s"
@@ -199,6 +232,8 @@ let cmdline_map_source_fun     = "<LocalLeader>f"
 let cmdline_map_send_paragraph = "<LocalLeader>p"
 let cmdline_map_send_block     = "<LocalLeader>b"
 let cmdline_map_quit           = "<LocalLeader>q"
+let cmdline_app                = {}
+let cmdline_app['julia']       = 'julia -O3'
 
 " vimcmdline options
 let cmdline_vsplit             = 1      " Split the window vertically
@@ -206,7 +241,7 @@ let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim t
 let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
 let cmdline_term_height        = 15     " Initial height of interpreter window or pane
 let cmdline_term_width         = 80     " Initial width of interpreter window or pane
-let cmdline_tmp_dir            = '.' " Temporary directory to save files
+" let cmdline_tmp_dir            = '/' " Temporary directory to save files
 let cmdline_outhl              = 1      " Syntax highlight the output
 let cmdline_external_term_cmd  = "urxvtcd -e %s"
 
@@ -242,30 +277,77 @@ autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Neocomplete
+" {{{ julia-vim
+let g:latex_to_unicode_suggestions = 0
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ julia language server
+" let g:LanguageClient_autoStart = 1
+
+" let g:default_julia_version = '0.6'
+" let g:LanguageClient_serverCommands = {
+"  \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
+"  \       using LanguageServer;
+"  \       server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false);
+"  \       server.rootPath = "~/Uni/Masters/code/plant_model_julia";
+"  \       server.runlinter = true;
+"  \       run(server);
+"  \   '],
+"  \ }
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Limelight
+
+" Color name (:help cterm-colors) or ANSI code
+let g:limelight_conceal_ctermfg = 'gray'
+let g:limelight_conceal_ctermfg = 240
+
+" Color name (:help gui-colors) or RGB color
+let g:limelight_conceal_guifg = 'DarkGray'
+let g:limelight_conceal_guifg = '#777777'
+
+" Default: 0.5
+let g:limelight_default_coefficient = 0.4
+
+" Number of preceding/following paragraphs to include (default: 0)
+let g:limelight_paragraph_span = 1
+
+" Beginning/end of paragraph
+"   When there's no empty line between the paragraphs
+"   and each paragraph starts with indentation
+" let g:limelight_bop = '^\s'
+" let g:limelight_eop = '\ze\n^\s'
+
+" Highlighting priority (default: 10)
+"   Set it to -1 not to overrule hlsearch
+let g:limelight_priority = -1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Neocomplete/Deoplete
+" let g:deoplete#enable_at_startup = 1
 
 "Note: This option must be set in .vimrc(_vimrc).  NOT IN .gvimrc(_gvimrc)!
 " Disable AutoComplPop.
-let g:acp_enableAtStartup = 0
+" let g:acp_enableAtStartup = 0
 " Use neocomplete.
-let g:neocomplete#enable_at_startup = 1
+" let g:neocomplete#enable_at_startup = 1
 " Use smartcase.
-let g:neocomplete#enable_smart_case = 1
-let g:neocomplete#enable_camel_case = 1
-let g:neocomplete#enable_fuzzy_completion = 1
-let g:neocomplete#manual_completion_start_length = 0
-let g:neocomplete#auto_completion_start_length = 3
-let g:neocomplete#sources#syntax#min_keyword_length = 3
-let g:neocomplete#enable_auto_delimiter = 1
-let g:neocomplete#enable_auto_close_preview = 1
-let g:neocomplete#skip_auto_completion_time = ''
-let g:neocomplete#max_list = 150
-let g:neocomplete#fallback_mappings = [ "\<C-x>\<C-o>", "\<C-x>\<C-n>" ]
+" let g:neocomplete#enable_smart_case = 1
+" let g:neocomplete#enable_camel_case = 1
+" let g:neocomplete#enable_fuzzy_completion = 1
+" let g:neocomplete#manual_completion_start_length = 0
+" let g:neocomplete#auto_completion_start_length = 3
+" let g:neocomplete#sources#syntax#min_keyword_length = 3
+" let g:neocomplete#enable_auto_delimiter = 1
+" let g:neocomplete#enable_auto_close_preview = 1
+" let g:neocomplete#skip_auto_completion_time = ''
+" let g:neocomplete#max_list = 150
+" let g:neocomplete#fallback_mappings = [ "\<C-x>\<C-o>", "\<C-x>\<C-n>" ]
 
 " Define dictionary.
-let g:neocomplete#sources#dictionary#dictionaries = {
-      \ 'default' : '',
-      \ }
+" let g:neocomplete#sources#dictionary#dictionaries = {
+"       \ 'default' : '',
+"       \ }
 
 " Define keyword.
 " if !exists('g:neocomplete#keyword_patterns')
@@ -383,33 +465,29 @@ let g:neocomplete#sources#dictionary#dictionaries = {
 
 " inoremap <expr><S-Tab>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
-function! s:is_whitespace() "{{{
-  let col = col('.') - 1
-  return ! col || getline('.')[col - 1] =~? '\s'
-endfunction "}}}
+" function! s:is_whitespace() "{{{
+"   let col = col('.') - 1
+"   return ! col || getline('.')[col - 1] =~? '\s'
+" endfunction "}}}
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ NeoSnippet
 
 " For conceal markers.
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
 " Enable snipMate compatibility feature.
-let g:neosnippet#enable_snipmate_compatibility = 1
+" let g:neosnippet#enable_snipmate_compatibility = 1
 " Tell Neosnippet about the other snippets
-let g:neosnippet#snippets_directory='~/.vim_runtime/plugins/snippet/vim-snippets/snippets'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ julia-vim
-  let g:latex_to_unicode_suggestions = 0
+" let g:neosnippet#snippets_directory='~/.vim_runtime/plugins/snippet/vim-snippets/snippets'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Nvim-R
- 
+
 let R_assign = 0
 let R_in_buffer = 0
-let R_tmpdir = "."
+let R_tmpdir = "/tmp/Nvim-R"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Pandoc
@@ -424,8 +502,13 @@ let g:pandoc#modules#disabled = ["folding", "metadata", "bibliographies", "compl
 " Other modules: ['formatting', 'folding', 'executors', 'keyboard', 'hypertext']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Ranger.vim
+"
+" let g:ranger_terminal = "urxvtcd -e"
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Rooter
- 
+
 let g:rooter_silent_chdir = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -441,12 +524,12 @@ let g:syntastic_python_checkers=['pyflakes']
 let g:syntastic_lua_checkers=['luac']
 let g:syntastic_lua_checkers=['ghc-mod']
 
+let g:syntastic_enable_r_lintr_checker = 1
+let g:syntastic_r_checkers = ['lintr']
+
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Table Mode
-
-" let g:table_mode_corner_corner="|"
-" let g:table_mode_header_fillchar="-"
-let g:table_mode_auto_align = 1
+let g:table_mode_auto_align = 0
 let g:table_mode_update_time = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -491,17 +574,6 @@ call unite#custom#profile('default', 'context', {
       \ })
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Citation.vim
-"
-let g:citation_vim_cache_path='~/Projects/Uni/Citations/'
-let g:citation_vim_bibtex_file='~/Projects/Uni/Citations/Library.bib'
-let g:citation_vim_collection=""
-let g:citation_vim_zotero_path='~/Zotero'
-let g:citation_vim_zotero_version=5
-" let g:citation_vim_mode='bibtex'
-let g:citation_vim_key_format="{author}{date}{title}"
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite Fasd
 "
 let g:unite_fasd#fasd_path='/usr/bin/fasd'
@@ -512,12 +584,6 @@ let g:unite_fasd#read_only = 0
 " {{{ YankRing
 "
 let g:yankring_history_dir = '~/.vim/'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Ranger.vim
-"
-let g:ranger_terminal = "urxvt -e"
- 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 

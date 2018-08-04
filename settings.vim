@@ -8,6 +8,7 @@
 
 "Shell
 set shell=bash
+set ttyfast
 " Use Unix as the standard file type
 set ffs=unix,dos,mac
 " Set utf8 as standard encoding and en_US as the standard language
@@ -52,6 +53,12 @@ set wildignore=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 " set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Nvim
+
+" Yank to clipboard
+set clipboard=unnamed
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Movement
 
 " Show matching brackets when text indicator is over them
@@ -94,7 +101,13 @@ set foldnestmax=10
 set t_Co=256
 let g:solarized_termcolors=16
 colorscheme solarized
-set background=dark
+
+if GetFileLine("/home/raf/.background_color", 1) == "dark"
+  set background=dark
+else
+  set background=light
+endif
+
 syntax enable
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -102,6 +115,7 @@ syntax enable
 
 " Always show the status line
 set laststatus=2
+set noshowmode
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ GUI
@@ -133,9 +147,6 @@ set incsearch
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Files
 
-" Startup dir
-cd ~/Documents
-
 " Turn backup files off
 set nobackup
 set nowb
@@ -155,7 +166,7 @@ autocmd BufReadPost *
      \   exe "normal! g`\"" |
      \ endif
 " Remember info about open buffers on close
-" set viminfo^=%
+set viminfo^=%
 
 " Put config files in nicer places
 "
@@ -186,18 +197,21 @@ set nowrap "dont wrap lines
 set whichwrap+=<,>,h,l,[,]
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Highlight 
- 
+" {{{ Highlight
+
+" set cursorline!
+
 " Italic comments
 highlight Comment cterm=italic
-" Hide the ~ for empty lines
-highlight EndOfBuffer ctermfg=black ctermbg=black
 " No underline for fold
 hi Folded term=bold cterm=NONE
-"
+" let &colorcolumn=join(range(81,999),",")
+
 augroup highlight_things
   autocmd BufEnter * call Highlight_Overlength()
+  " autocmd BufEnter,ColorScheme * call Highlight_Split()
   autocmd BufEnter,ColorScheme * call Highlight_EndOfBuffer()
 augroup END
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

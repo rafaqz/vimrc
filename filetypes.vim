@@ -7,9 +7,16 @@
 "
 function! SetJulia()
   setlocal commentstring=#\ %s
+  set shiftwidth=4
+  set tabstop=4
   let g:latex_to_unicode_suggestions = 0
   hi link juliaParDelim Delimiter
   hi juliaComma guifg=Magenta ctermfg=Magenta
+  syn include juliaHighlight_r syntax/r.vim
+  " syn include juliaHighlight_matlab syntax/matlab.vim
+  syn region juliaHighlight_r matchgroup=juliaCodeDelimiter start='R"""' end='"""' keepend contains=@juliaHighlight_r
+  " syn region juliaHighlight_matlab matchgroup=juliaCodeDelimiter start='mat"""' end='"""' keepend contains=@juliaHighlight_matlab
+
 endfunction
 au FileType julia call SetJulia()
 
@@ -115,13 +122,13 @@ function! SetHaskell()
   " let g:SuperTabDefaultCompletionType = '<c-x><c-p>'
 
   " But provide (neco-ghc) omnicompletion
-  if has("gui_running")
-    imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-  else " no gui
-    if has("unix")
-      inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
-    endif
-  endif
+  " if has("gui_running")
+  "   imap <c-space> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  " else " no gui
+  "   if has("unix")
+  "     inoremap <Nul> <c-r>=SuperTabAlternateCompletion("\<lt>c-x>\<lt>c-o>")<cr>
+  "   endif
+  " endif
 
   " Type of expression under cursor
   nmap <silent> <localleader>ht :GhcModType<CR>
@@ -233,9 +240,21 @@ endfunction
 autocmd! FileType vim call SetVim()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Markdown
+" {{{ R
 
+function! SetR()
+  nmap <silent> <LocalLeader>k :call RKnit()<CR>
+  nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
+  nmap <silent> <LocalLeader>H :call RAction("head")<CR>
+  nmap <silent> <LocalLeader>h :call RAction("head", "@,48-57,_,.")<CR>
+endfunction
+autocmd! FileType rmd call SetR()
+autocmd! FileType r call SetR()
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Markdown
 function! SetMarkdown()
+  nnoremap <localleader>f gwip
   setlocal textwidth=80
   setlocal commentstring=<!--\ %s\ -->
   set foldlevel=1
@@ -285,15 +304,17 @@ augroup END
 " {{{ CSV
 
 function! SetCSV()
-  nnoremap <buffer> <leader>f :%CSVArrangeColumn<cr>
-  nnoremap <localleader>va :CSVAddColumn<cr>
-  nnoremap <localleader>vd :CSVDeleteColumn<cr>
-  nnoremap <localleader>vi :CSVInit<cr>
-  nnoremap <localleader>vh :CSVHeaderToggle<cr>
-  nnoremap <localleader>vs :CSVSort<cr>
-  nnoremap <localleader>vr :CSVSort!<cr>
-  nnoremap <localleader>vm :CSVMove<cr>
-  nnoremap <localleader>vf :CSVFilter
+  nnoremap <buffer> <localleader>f :%CSVArrangeColumn!<cr>
+  nnoremap <buffer> <localleader>va :CSVAddColumn<cr>
+  nnoremap <buffer> <localleader>vd :CSVDeleteColumn<cr>
+  nnoremap <buffer> <localleader>vi :CSVInit<cr>
+  nnoremap <buffer> <localleader>vh :CSVHeaderToggle<cr>
+  nnoremap <buffer> <localleader>vs :CSVSort<cr>
+  nnoremap <buffer> <localleader>vr :CSVSort!<cr>
+  nnoremap <buffer> <localleader>vf :VertFold<cr>
+  nnoremap <buffer> <localleader>vF :VertFold!<cr>
+  nnoremap <buffer> <localleader>vm :CSVMove<cr>
+  nnoremap <buffer> <localleader>vf :CSVFilter
 endfunction
 autocmd FileType csv call SetCSV()
 

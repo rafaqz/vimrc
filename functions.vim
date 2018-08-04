@@ -27,11 +27,35 @@ fun! VisualSelection(direction, extra_filter) " {{{
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
 fun! DeleteTrailingWS() " {{{
   exe "normal! mz"
   %s/\s\+$//ge
   exe "normal! `z"
 endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! BufferIsEmpty() " {{{
+    if line('$') == 1 && getline(1) == '' 
+        return 1
+    else
+        return 0
+    endif
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+function! DeleteEmptyBuffers() " {{{
+    let [i, n; empty] = [1, bufnr('$')]
+    while i <= n
+        if bufexists(i) && bufname(i) == ''
+            call add(empty, i)
+        endif
+        let i += 1
+    endwhile
+    if len(empty) > 0
+        exe 'bdelete' join(empty)
+    endif
+endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Notes
@@ -134,25 +158,25 @@ endfunction
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ StarDict direct calls (plugin wont pass args)
 function! SDCV(word)
-    Goyo!
-    " Get the bytecode.
-    let bytecode = system("sdcv " . a:word)
+  Goyo!
+  " Get the bytecode.
+  let bytecode = system("sdcv " . a:word)
 
-    " Open a new split and set it up.
-    if bufexists('__StarDict__')
-      sbuffer __StarDict__
-    else
-      split __StarDict__
-    endif
+  " Open a new split and set it up.
+  if bufexists('__StarDict__')
+    sbuffer __StarDict__
+  else
+    split __StarDict__
+  endif
 
-    normal! ggdG
-    setlocal filetype=stardict
-    setlocal buftype=nofile
+  normal! ggdG
+  setlocal filetype=stardict
+  setlocal buftype=nofile
 
-    " Insert the bytecode.
-    call append(0, split(bytecode, '\v\n'))
-    normal! gg
-    Goyo
+  " Insert the bytecode.
+  call append(0, split(bytecode, '\v\n'))
+  normal! gg
+  Goyo
 endfunction
 command! -nargs=1 Sdcv call SDCV(<f-args>)
 
@@ -161,58 +185,58 @@ command! -nargs=1 Sdcv call SDCV(<f-args>)
 
 function! OpenOperator(type)
   if a:type ==# 'v'
-      normal! `<v`>y
+    normal! `<v`>y
   elseif a:type ==# 'char'
-      normal! `[v`]y
+    normal! `[v`]y
   else
-      return
+    return
   endif
 
-  exec "Start! xdg-open " . shellescape(@@)
+  exec "!xdg-open " . shellescape(@@)
 endfunction
 
 function! CropOperator(type)
   if a:type ==# 'v'
-      normal! `<v`>y
+    normal! `<v`>y
   elseif a:type ==# 'char'
-      normal! `[v`]y
+    normal! `[v`]y
   else
-      return
+    return
   endif
 
-  execute "Start! cropgui " . shellescape(@@)
+  execute "!cropgui " . shellescape(@@)
 endfunction
 
 function! GimpOperator(type)
   if a:type ==# 'v'
-      normal! `<v`>y
+    normal! `<v`>y
   elseif a:type ==# 'char'
-      normal! `[v`]y
+    normal! `[v`]y
   else
-      return
+    return
   endif
 
-  execute "Start! gimp " . shellescape(@@)
+  execute "!gimp " . shellescape(@@)
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Custom Objects
 "
 call textobj#user#plugin('file', {
-\   'file': {
-\     'pattern': '\f\+',
-\     'select': ['af', 'if']
-\   }
-\ })
+      \   'file': {
+      \     'pattern': '\f\+',
+      \     'select': ['af', 'if']
+      \   }
+      \ })
 
 call textobj#user#plugin('line', {
-\   '-': {
-\     'select-a-function': 'CurrentLineA',
-\     'select-a': 'al',
-\     'select-i-function': 'CurrentLineI',
-\     'select-i': 'il',
-\   },
-\ })
+      \   '-': {
+      \     'select-a-function': 'CurrentLineA',
+      \     'select-a': 'al',
+      \     'select-i-function': 'CurrentLineI',
+      \     'select-i': 'il',
+      \   },
+      \ })
 
 function! CurrentLineA()
   normal! 0
@@ -229,9 +253,9 @@ function! CurrentLineI()
   let tail_pos = getpos('.')
   let non_blank_char_exists_p = getline('.')[head_pos[2] - 1] !~# '\s'
   return
-  \ non_blank_char_exists_p
-  \ ? ['v', head_pos, tail_pos]
-  \ : 0
+        \ non_blank_char_exists_p
+        \ ? ['v', head_pos, tail_pos]
+        \ : 0
 endfunction
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
@@ -254,30 +278,39 @@ endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 fun! Highlight_Overlength() " {{{
-    let blacklist = ['markdown', 'pandoc']
-    if index(blacklist, &ft) < 0
-      let bg = execute('set background')
-      if bg =~ 'dark'
-        highlight OverLength ctermbg=0
-      else
-        highlight OverLength ctermbg=7
-      endif
-      match OverLength /\%81v.*/
-    endif
+  let bg = execute('set background')
+  if bg =~ 'dark'
+    highlight OverLength ctermbg=0
+  else
+    highlight OverLength ctermbg=7
+  endif
+  match OverLength /\%93v.*/
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-fun! Highlight_EndOfBuffer() " {{{ 
-    let bg = execute('set background')
-    if bg =~ 'dark'
-      highlight EndOfBuffer ctermfg=0 ctermbg=0
-    else
-      highlight EndOfBuffer ctermfg=7 ctermbg=7
-    endif
+fun! Highlight_EndOfBuffer() " {{{
+  let bg = execute('set background')
+  if bg =~ 'dark'
+    highlight EndOfBuffer ctermfg=0 ctermbg=0
+  else
+    highlight EndOfBuffer ctermfg=7 ctermbg=7
+  endif
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-fun! MyFoldText() " {{{ 
+" fun! Highlight_Split() " {{{
+"   let bg = execute('set background')
+"   if bg =~ 'dark'
+"     highlight VertSplit ctermfg=0 ctermbg=0
+"     highlight Split ctermfg=0 ctermbg=0
+"   else
+"     highlight VertSplit ctermfg=7 ctermbg=7
+"     highlight Split ctermfg=7 ctermbg=7
+"   endif
+" endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! MyFoldText() " {{{
   let line = foldtext()
   let sub = substitute(substitute(substitute(line, '+', "\ue0b1", 'g'), 'lines: ', "", 'g'), '─', "", 'g')
   return sub
@@ -285,30 +318,57 @@ endfun!
 set foldtext=MyFoldText()
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! GetFileLine(filename, line) " {{{
+  return readfile(a:filename,'',a:line)[a:line-1]
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 fun! ToggleHideAll() " {{{
-    if s:hide_all  == 0
-        let s:hide_all = 1
-        set noshowmode
-        set noruler
-        set laststatus=0
-        set noshowcmd
-        set nonumber
-        set showtabline=0
-        set foldcolumn=0
-        hi FoldColumns ctermbg=none
-        hi FoldColumns ctermfg=none
-    else
-        let s:hide_all = 0
-        set showmode
-        set ruler
-        set showtabline=1
-        set laststatus=2
-        set showcmd
-        set foldcolumn=0
-        set number
-        hi FoldColumns ctermbg=5
-    endif
+  exec "AirlineToggle"
+  if s:hide_all  == 0
+    let s:hide_all = 1
+    set noshowmode
+    set noruler
+    set laststatus=0
+    set noshowcmd
+    set nonumber
+    set showtabline=0
+    set foldcolumn=0
+    hi FoldColumns ctermbg=none
+    hi FoldColumns ctermfg=none
+  else
+    let s:hide_all = 0
+    set showmode
+    set ruler
+    set showtabline=1
+    set laststatus=2
+    set showcmd
+    set foldcolumn=0
+    set number
+    hi FoldColumns ctermbg=5
+  endif
 endfun
 let s:hide_all = 0
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! ToggleBackground() " {{{
+  silent exec "!i " . &background
+  let &background = ( &background == "dark"? "light" : "dark" )
+  redraw!
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! TableGrid() " {{{
+  let g:table_mode_corner="+"
+  let g:table_mode_corner_corner="+"
+  let g:table_mode_header_fillchar="="
+endfun
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+fun! TablePipe() " {{{
+  let g:table_mode_corner="|"
+  let g:table_mode_corner_corner="|"
+  let g:table_mode_header_fillchar="-"
+endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

@@ -7,7 +7,7 @@
 
 let mapleader = "\<space>"
 let g:mapleader = "\<space>"
-let maplocalleader = ","
+let maplocalleader = "\\"
 
 " Use easymotion on leader
 map <Leader> <Plug>(easymotion-prefix)
@@ -15,40 +15,58 @@ map <Leader> <Plug>(easymotion-prefix)
 map <silent> <leader><cr> :noh<cr>
 " Goyo reset
 nmap <leader>a <c-w>=
-" Format paragraph
-nnoremap <localleader>f gwip
 " Delete white space
 nnoremap <leader>dw :call DeleteTrailingWS()<cr>
+nnoremap <leader>de :%s///g<cr>
 
 "  Buffers
-" map      <leader>ba :1,100 bd!<cr> " Close all the buffers
-" nnoremap <leader>bj :bprevious<cr> 
-" nnoremap <leader>bk :bnext<cr>
-" nnoremap <leader>bh :bfirst<cr>
-" nnoremap <leader>bl :blast<cr>
-" nnoremap <leader>bo <c-w>o     " close every window in current tabview but the current
-" nnoremap <leader>bd :bd<cr>    " delete buffer without closing pane
+map      <leader>ba :1,100 bd!<cr> " Close all the buffers
+nnoremap <leader>bj :bprevious<cr>
+nnoremap <leader>bk :bnext<cr>
+nnoremap <leader>bh :bfirst<cr>
+nnoremap <leader>bl :blast<cr>
+nnoremap <leader>bo <c-w>o     " close every window in current tabview but the current
+nnoremap <leader>bd :bd<cr>    " delete buffer without closing pane
 " Git
-nnoremap <leader>gd :Gdiff HEAD<cr>
-nnoremap <leader>gh :Gdiff HEAD~
 nnoremap <leader>gb :Gblame<cr>
+nnoremap <leader>gc :Gcommit<cr>
+nnoremap <leader>gd :Gdiff<space>
 nnoremap <leader>ge :Extradite<cr>
-nmap     <leader>gs :copen<cr>:GGrep
+nnoremap <leader>gh :Gbrowse<cr>
+nnoremap <leader>gl :silent! Glog<cr>:bot copen<cr>
+nnoremap <leader>gm :Gmove<space>
+nnoremap <leader>go :Git checkout<space>
+nnoremap <leader>gs :Gstatus<cr>
+nnoremap <leader>gr :Gread<cr>
+nnoremap <leader>gw :Gwrite<cr>
+nnoremap <leader>gv :Gitv!<cr>
+nnoremap <leader>gV :Gitv<cr>
+" nmap     <leader>gs :copen<cr>:GGrep
 nmap     <leader>gg :GitGutterToggle<cr>
+nmap     <leader>gga :GitGutterStageHunk<cr>
+nmap     <leader>ggd :GitGutterPreviewHunk<cr>
+nmap     <leader>ggh :GitGutterLineHighlightsToggle<cr>
+
+xnoremap dp :diffput<cr>
+xnoremap do :diffget<cr>
 
 "Open files in gimp with a string operator
-nnoremap <leader>g :set operatorfunc=GimpOperator<cr>g@
+" nnoremap <leader>g :set operatorfunc=GimpOperator<cr>g@
 
 " Hide tabs and status etc
-nnoremap <leader>h :call ToggleHideAll()<CR>
+nnoremap <leader>h :call ToggleHideAll()<cr>
 " Swap background color
-nnoremap <silent><leader>i :let &background = ( &background == "dark"? "light" : "dark" )<cr>
+" nnoremap <silent><leader>i :let &background = ( &background == "dark"? "light" : "dark" )<cr>
+nnoremap <silent><leader>i :call ToggleBackground()<cr>
 
+nmap <Leader>ll :Limelight!!<cr>
+nmap <Leader>ls <Plug>(Limelight)
+xmap <Leader>ls <Plug>(Limelight)
 " Grammar
-nmap <leader>ll :GrammarousCheck<cr>
-nmap <leader>lq <Plug>(grammarous-close-info-window)<cr>
-nmap <leader>l] <Plug>(grammarous-move-to-next-error)
-nmap <leader>l[ <Plug>(grammarous-move-to-previous-error)
+" nmap <leader>ll :GrammarousCheck<cr>
+" nmap <leader>lq <Plug>(grammarous-close-info-window)<cr>
+" nmap <leader>l] <Plug>(grammarous-move-to-next-error)
+" nmap <leader>l[ <Plug>(grammarous-move-to-previous-error)
 
 nmap <leader>m :mark
 
@@ -76,18 +94,6 @@ nmap <leader>P "+P
 vmap <leader>p "+p
 vmap <leader>P "+P
 
-" Splits
-nnoremap <leader>sh :leftabove  vnew<cr>
-nnoremap <leader>sl :rightbelow vnew<cr>
-nnoremap <leader>sk :leftabove  new<cr>
-nnoremap <leader>sj :rightbelow new<cr>
-
-" urxvtcd
-nnoremap <leader>uu :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd<cr>
-nnoremap <leader>ur :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e rs<cr>
-nnoremap <leader>uR :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e ranger<cr>
-nnoremap <leader>uw :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e watch %:e<cr>
-nnoremap <leader>ut :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e tig<cr>
 " Remove the Windows ^M - when the encodings gets messed up
 nnoremap <leader>dm mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
@@ -106,9 +112,9 @@ map <leader>rt :RangerTab<cr>
 map <leader>rd :RangerCD<cr>
 map <leader>rl :RangerLCD<cr>
 
+map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
 
 " Spell checking
-nnoremap <leader>s  ea<C-X><C-S>
 nnoremap <leader>ss ea<C-X><C-S>
 nnoremap <leader>sx :setlocal spell!<cr>
 nnoremap <leader>sa zg
@@ -118,18 +124,36 @@ nnoremap <leader>sd :Sdcv <C-R><C-W><cr>
 nnoremap <leader>st :Sdcv --data-dir ~/.stardict/thesaurus -u "Moby Thesaurus II" <C-R><C-W><cr>
 nnoremap <leader>sw :Sdcv<space>
 
+" Splits
+nnoremap <leader>sh :leftabove  vnew<cr>
+nnoremap <leader>sl :rightbelow vnew<cr>
+nnoremap <leader>sk :leftabove  new<cr>
+nnoremap <leader>sj :rightbelow new<cr>
+
 " Titlecase selection
 vmap <leader>ti :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<cr>
 " Show/hide concealable things
 nnoremap <leader>tc :call ConcealToggle()<cr>
 " Table Mode
 nnoremap <leader>tm :TableModeToggle<cr>
+nnoremap <leader>tg :call TableGrid()<cr>
+nnoremap <leader>tp :call TablePipe()<cr>
 " Undo tree
 nnoremap <leader>tu :GundoToggle<cr>
 " Wrap on off
 nnoremap <leader>tw :set wrap!<cr>
+" Wrap on off
+nnoremap <leader>ts :SyntasticToggleMode<cr>
 " Refresh filetype
 nmap <leader>td :filetype detect<cr>
+
+" urxvtcd
+nnoremap <leader>us :sh<cr>
+nnoremap <leader>uu :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd<cr>
+nnoremap <leader>ur :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e rs<cr>
+nnoremap <leader>uR :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e ranger<cr>
+nnoremap <leader>uw :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e watch_doc %:e<cr>
+nnoremap <leader>ut :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e tig<cr>
 
 " Search for pandoc @citations and images
 " map <leader>1 /!\[./e<cr>
@@ -149,7 +173,7 @@ nnoremap <silent> <leader>z :Goyo<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
 
-nmap m [unite]
+nmap , [unite]
 nnoremap [unite] <nop>
 
 nnoremap <silent>[unite]<space> :UniteResume<cr>
@@ -158,26 +182,28 @@ nnoremap <silent>[unite]u   :<C-u>Unite                                         
 nnoremap <silent>[unite]f   :<C-u>Unite -buffer-name=files                                 file<cr>
 nnoremap <silent>[unite]F   :<C-u>Unite -buffer-name=file_rec                              file_rec/async:!<cr>
 nnoremap <silent>[unite]b   :<C-u>Unite -buffer-name=buffer                                buffer<cr>
-nnoremap <silent>[unite]h   :<C-u>Unite -buffer-name=help      -vertical                   help<cr>
+nnoremap <silent>[unite]h   :<C-u>Unite -buffer-name=help                                  help<cr>
 nnoremap <silent>[unite]r   :<C-u>Unite -buffer-name=fasd                                  fasd<cr>
 nnoremap <silent>[unite]g   :<C-u>Unite -buffer-name=giti                                  giti<cr>
 nnoremap <silent>[unite]s   :<C-u>Unite -buffer-name=grep                                  grep<cr>
-nnoremap <silent>[unite]/   :<C-u>Unite -buffer-name=locate    -vertical                   locate<cr>
-nnoremap <silent>[unite]l   :<C-u>Unite -buffer-name=line      -vertical                   line<cr>
+nnoremap <silent>[unite]/   :<C-u>Unite -buffer-name=locate                                locate<cr>
+nnoremap <silent>[unite]l   :<C-u>Unite -buffer-name=line                                  line<cr>
 nnoremap <silent>[unite]k   :<C-u>Unite -buffer-name=mapping                               mapping<cr>
-nnoremap <silent>[unite]:   :<C-u>Unite -buffer-name=command   -vertical                   command<cr>
-nnoremap <silent>[unite];   :<C-u>Unite -buffer-name=command   -vertical                   command<cr>
+nnoremap <silent>[unite]:   :<C-u>Unite -buffer-name=command                               command<cr>
+nnoremap <silent>[unite];   :<C-u>Unite -buffer-name=command                               command<cr>
 nnoremap <silent>[unite]i   :<C-u>Unite -buffer-name=history                               history/unite<cr>
-nnoremap <silent>[unite]o   :<C-u>Unite -buffer-name=outline   -vertical                   outline<cr>
-nnoremap <silent>[unite]j   :<C-u>Unite -buffer-name=jump      -vertical -no-start-insert  jump<cr>
+nnoremap <silent>[unite]o   :<C-u>Unite -buffer-name=outline                               outline<cr>
+nnoremap <silent>[unite]j   :<C-u>Unite -buffer-name=jump      -no-start-insert            jump<cr>
 nnoremap <silent>[unite]p   :<C-u>Unite -buffer-name=yank      -default-action=append      history/yank<cr>
 nnoremap <silent>[unite]P   :<C-u>Unite -buffer-name=yank      -default-action=insert      history/yank<cr>
 nnoremap <silent>[unite]d   :<C-u>Unite -buffer-name=digraphs  -default-action=insert      digraphs<cr>
 nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
 nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
-nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation/key   -default-action=append citation/key<cr>
-nnoremap <silent><leader>cC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=append citation/key_inner<cr>
-nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=citation/file  -default-action=append citation/file<cr>
+nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation/key   -default-action=insert citation/key<cr>
+nnoremap <silent><leader>cC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=insert citation/key_inner<cr>
+nnoremap <silent><leader>CC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=insert citation/key_inner<cr>
+nnoremap <silent><leader>cT :<C-u>Unite -buffer-name=citation/title   -default-action=insert citation/title<cr>
+nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=citation/file  -default-action=insert citation/file<cr>
 nnoremap <silent><leader>cO :<C-u>Unite -buffer-name=citation/file  -default-action=start  citation/file<cr>
 nnoremap <silent><leader>cU :<C-u>Unite -buffer-name=citation/url   -default-action=start  citation/url<cr>
 nnoremap <silent><leader>cI :<C-u>Unite -buffer-name=citation/combined  -default-action=preview  citation/combined<cr>
@@ -186,9 +212,10 @@ nnoremap <silent><leader>cz :<C-u>Unite -buffer-name=citation_collection citatio
 " Use unite matching to open citation files and urls
 nnoremap <silent><leader>cw :<C-u>UniteWithCursorWord -default-action=yank citation/key<cr>
 nnoremap <silent><leader>co :<C-u>UniteWithCursorWord -default-action=start -force-immediately citation/file<cr>
-nnoremap <silent><leader>cf :<C-u>UniteWithCursorWord -default-action=file -force-immediately citation/file<cr>
+nnoremap <silent><leader>cf :<C-u>UniteWithCursorWord -default-action=files -force-immediately citation/file<cr>
 nnoremap <silent><leader>cu :<C-u>UniteWithCursorWord -default-action=start -force-immediately citation/url<cr>
 nnoremap <silent><leader>ci :<C-u>UniteWithCursorWord -default-action=preview -force-immediately citation/combined<cr>
+nnoremap <silent><leader>ct :<C-u>UniteWithCursorWord -default-action=yank -force-immediately citation/title<cr>
 " nnoremap <silent><leader>cn :<C-u>UniteWithCursorWord -force-immediately -default-action=yank citation/key_raw<cr>:!urxvtcd -e zotcli add-note <C-R>0<cr>
 nnoremap <silent><leader>cn :CitationNote<cr>
 
@@ -230,9 +257,10 @@ nnoremap <silent>t] <C-w><C-]><C-w>T
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Other
+"
 
 " Kill Ex mode.
-nnoremap Q <nop> 
+nnoremap Q <nop>
 " Next/Previous error/buffer etc
 nnoremap ]] :cnext<cr>
 nnoremap [[ :cprevious<cr>
@@ -246,15 +274,38 @@ command W w !sudo tee % > /dev/null
 vnoremap <silent> * :call VisualSelection('f', '')<cr>
 vnoremap <silent> # :call VisualSelection('b', '')<cr>
 
-" Arrows move text
-" nmap <Left> <<
-" nmap <Right> >>
-" vmap <Left> <gv
-" vmap <Right> >gv
-" nmap <Up> [e
-" nmap <Down> ]e
-" vmap <Up> [egv
-" vmap <Down> ]egv
+" Format paragraph
+" nnoremap <localleader>f gwip
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Neovim specific
+" tnoremap  <C-\><C-n>
+
+" tnoremap <A-h> <C-\><C-N><C-w>h
+" tnoremap <A-j> <C-\><C-N><C-w>j
+" tnoremap <A-k> <C-\><C-N><C-w>k
+" tnoremap <A-l> <C-\><C-N><C-w>l
+" inoremap <A-h> <C-\><C-N><C-w>h
+" inoremap <A-j> <C-\><C-N><C-w>j
+" inoremap <A-k> <C-\><C-N><C-w>k
+" inoremap <A-l> <C-\><C-N><C-w>l
+" nnoremap <A-h> <C-w>h
+" nnoremap <A-j> <C-w>j
+" nnoremap <A-k> <C-w>k
+" nnoremap <A-l> <C-w>l
+
+" tnoremap <A-H> <C-\><C-N><C-w>H
+" tnoremap <A-J> <C-\><C-N><C-w>J
+" tnoremap <A-K> <C-\><C-N><C-w>K
+" tnoremap <A-L> <C-\><C-N><C-w>L
+" inoremap <A-H> <C-\><C-N><C-w>H
+" inoremap <A-J> <C-\><C-N><C-w>J
+" inoremap <A-K> <C-\><C-N><C-w>K
+" inoremap <A-L> <C-\><C-N><C-w>L
+" nnoremap <A-H> <C-w>H
+" nnoremap <A-J> <C-w>J
+" nnoremap <A-K> <C-w>K
+" nnoremap <A-L> <C-w>L
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Additional subscript digraphs
