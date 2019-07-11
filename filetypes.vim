@@ -255,6 +255,8 @@ autocmd! FileType r call SetR()
 " {{{ Markdown
 function! SetMarkdown()
   nnoremap <localleader>f gwip
+  set shiftwidth=2
+  set tabstop=2
   setlocal textwidth=80
   setlocal commentstring=<!--\ %s\ -->
   set foldlevel=1

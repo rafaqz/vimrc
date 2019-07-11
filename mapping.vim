@@ -199,15 +199,19 @@ nnoremap <silent>[unite]P   :<C-u>Unite -buffer-name=yank      -default-action=i
 nnoremap <silent>[unite]d   :<C-u>Unite -buffer-name=digraphs  -default-action=insert      digraphs<cr>
 nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
 nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
-nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation/key   -default-action=insert citation/key<cr>
-nnoremap <silent><leader>cC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=insert citation/key_inner<cr>
-nnoremap <silent><leader>CC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=insert citation/key_inner<cr>
-nnoremap <silent><leader>cT :<C-u>Unite -buffer-name=citation/title   -default-action=insert citation/title<cr>
+nnoremap <silent><leader>ca :<C-u>Unite -buffer-name=citation/author   -default-action=append citation/author<cr>
+" nnoremap <silent><leader>cb :<C-u>Unite -buffer-name=citation/abstract   -default-action=append citation/abstract<cr>
+nnoremap <silent><leader>cn :<C-u>Unite -buffer-name=citation/notes   -default-action=append citation/notes<cr>
+nnoremap <silent><leader>cc :<C-u>Unite -buffer-name=citation/key   -default-action=append citation/key<cr>
+nnoremap <silent><leader>cC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=append citation/key_inner<cr>
+nnoremap <silent><leader>CC :<C-u>Unite -buffer-name=citation/key_inner   -default-action=append citation/key_inner<cr>
+nnoremap <silent><leader>cT :<C-u>Unite -buffer-name=citation/title   -default-action=append citation/title<cr>
 nnoremap <silent><leader>cF :<C-u>Unite -buffer-name=citation/file  -default-action=insert citation/file<cr>
 nnoremap <silent><leader>cO :<C-u>Unite -buffer-name=citation/file  -default-action=start  citation/file<cr>
 nnoremap <silent><leader>cU :<C-u>Unite -buffer-name=citation/url   -default-action=start  citation/url<cr>
 nnoremap <silent><leader>cI :<C-u>Unite -buffer-name=citation/combined  -default-action=preview  citation/combined<cr>
 nnoremap <silent><leader>cz :<C-u>Unite -buffer-name=citation_collection citation_collection<cr>
+
 
 " Use unite matching to open citation files and urls
 nnoremap <silent><leader>cw :<C-u>UniteWithCursorWord -default-action=yank citation/key<cr>
@@ -216,8 +220,7 @@ nnoremap <silent><leader>cf :<C-u>UniteWithCursorWord -default-action=files -for
 nnoremap <silent><leader>cu :<C-u>UniteWithCursorWord -default-action=start -force-immediately citation/url<cr>
 nnoremap <silent><leader>ci :<C-u>UniteWithCursorWord -default-action=preview -force-immediately citation/combined<cr>
 nnoremap <silent><leader>ct :<C-u>UniteWithCursorWord -default-action=yank -force-immediately citation/title<cr>
-" nnoremap <silent><leader>cn :<C-u>UniteWithCursorWord -force-immediately -default-action=yank citation/key_raw<cr>:!urxvtcd -e zotcli add-note <C-R>0<cr>
-nnoremap <silent><leader>cn :CitationNote<cr>
+nnoremap <silent><leader>cn :<C-u>UniteWithCursorWord -default-action=yank -force-immediately citation/title<cr><cr>:!zotcli add-note "<C-R>0"<cr>
 
 " Use zotero fulltext search to filter before unite
 nnoremap <silent><leader>cs :<C-u>Unite -buffer-name=citation/key -default-action=yank citation/key:<C-R><C-W><cr>

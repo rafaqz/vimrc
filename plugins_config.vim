@@ -27,7 +27,7 @@ Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'jiangmiao/auto-pairs'
-
+" Plug 'jalvesaq/zotcite'
 
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
@@ -57,10 +57,10 @@ Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'int3/vim-extradite'
-Plug 'airblade/vim-gitgutter', { 'on': 'GitGutterToggle' }
+Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
 Plug 'gregsexton/gitv'
-Plug 'vim-scripts/gitignore'
+" Plug 'vim-scripts/gitignore'
 
 "---------------------------------}}}
 " {{{ Nav
@@ -175,6 +175,7 @@ call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
+
 runtime macros/matchit.vim
 
 " {{{ Airline
@@ -196,10 +197,10 @@ let g:airline#extensions#tabline#fnamemod = ':t'
 
 " Powerline Fonts
 let g:airline_powerline_fonts = 1
-let g:airline_right_alt_sep = "\ue0b9"
-let g:airline_right_sep     = "\ue0ba"
-let g:airline_left_alt_sep  = "\ue0bb"
-let g:airline_left_sep      = "\ue0bc"
+let g:airline_right_alt_sep = "\ue0b7"
+let g:airline_right_sep     = "\ue0b6"
+let g:airline_left_alt_sep  = "\ue0b5"
+let g:airline_left_sep      = "\ue0b4"
 if !exists('g:airline_symbols')
   let g:airline_symbols = {}
 endif
@@ -217,9 +218,13 @@ let g:citation_vim_collection=""
 let g:citation_vim_zotero_path='~/Zotero'
 let g:citation_vim_zotero_version=5
 " let g:citation_vim_mode='bibtex'
-let g:citation_vim_key_format="{zotero_key}#{author}{date}{title}#"
+" let g:citation_vim_key_format="{author}{date}{title}"
 call unite#util#set_default('g:citation_vim_description_format',  "{}∶ {} ‴{}‴ ₋{}₋ ₍{}₎ ┊{}┊") 
 call unite#util#set_default('g:citation_vim_description_fields', ["type", "key", "title", "author", "date", "publication"])
+
+let $ZCitationTemplate = '{author}{year}{title}'
+let $ZoteroSQLpath = '~/Zotero/zotero.sqlite'
+let $Zotcite_tmpdir = '~/.cache'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ cmdline
@@ -233,7 +238,10 @@ let cmdline_map_send_paragraph = "<LocalLeader>p"
 let cmdline_map_send_block     = "<LocalLeader>b"
 let cmdline_map_quit           = "<LocalLeader>q"
 let cmdline_app                = {}
-let cmdline_app['julia']       = 'julia -O3'
+let cmdline_app['julia']       = '/opt/julia/bin/julia -O3'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 --project=.'
+let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 -p3'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 --check-bound=yes'
 
 " vimcmdline options
 let cmdline_vsplit             = 1      " Split the window vertically
@@ -241,7 +249,7 @@ let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim t
 let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
 let cmdline_term_height        = 15     " Initial height of interpreter window or pane
 let cmdline_term_width         = 80     " Initial width of interpreter window or pane
-" let cmdline_tmp_dir            = '/' " Temporary directory to save files
+let cmdline_tmp_dir            = '/tmp' " Temporary directory to save files
 let cmdline_outhl              = 1      " Syntax highlight the output
 let cmdline_external_term_cmd  = "urxvtcd -e %s"
 
@@ -504,7 +512,7 @@ let g:pandoc#modules#disabled = ["folding", "metadata", "bibliographies", "compl
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Ranger.vim
 "
-" let g:ranger_terminal = "urxvtcd -e"
+let g:ranger_terminal = "urxvtcd -h"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Rooter

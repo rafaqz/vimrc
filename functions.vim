@@ -284,7 +284,7 @@ fun! Highlight_Overlength() " {{{
   else
     highlight OverLength ctermbg=7
   endif
-  match OverLength /\%93v.*/
+  match OverLength /\%>92c.*/
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
