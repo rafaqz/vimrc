@@ -17,6 +17,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
 Plug 'reedes/vim-colors-pencil'
 Plug 'ryanoasis/vim-devicons'
+Plug 'rakr/vim-one'
 
 "---------------------------------}}}
 " {{{ Edit
@@ -42,9 +43,9 @@ Plug 'michaeljsmith/vim-indent-object'
 Plug 'tommcdo/vim-lion'
 " Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
-Plug 'sjl/gundo.vim'
-Plug 'vim-scripts/vis'
-Plug 'vim-scripts/VisIncr'
+Plug 'mbbill/undotree'
+" Plug 'vim-scripts/vis'
+" Plug 'vim-scripts/VisIncr'
 " Plug 'Raimondi/delimitMate'
 " Plug 'junegunn/vim-easy-align'
 " Plug 'Shougo/echodoc.vim'
@@ -96,14 +97,15 @@ Plug 'jalvesaq/vimcmdline'
 
 "---------------------------------}}}
 " {{{ Syntax
-" Plug 'scrooloose/syntastic'
+" Plug 'vim-syntastic/syntastic'
 
 Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'jalvesaq/Nvim-R'
-Plug 'baskerville/vim-sxhkdrc'
-
+" Plug 'baskerville/vim-sxhkdrc'
+Plug 'hashivim/vim-terraform'
+"
+Plug 'ElmCast/elm-vim', { 'for': 'elm' }
 Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
@@ -135,7 +137,7 @@ Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 "-------------------------}}}
 " {{{ Markdown
 Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax', { 'for': ['markdown','rmd'] }
+Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'vim-pandoc/vim-pandoc-after' ", { 'for': ['markdown','rmd'] }
 Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd'] }
 " Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
@@ -238,10 +240,12 @@ let cmdline_map_send_paragraph = "<LocalLeader>p"
 let cmdline_map_send_block     = "<LocalLeader>b"
 let cmdline_map_quit           = "<LocalLeader>q"
 let cmdline_app                = {}
-let cmdline_app['julia']       = '/opt/julia/bin/julia -O3'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 --project=.'
-let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 -p3'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia -O3 --check-bound=yes'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia'
+let cmdline_app['julia']       = '/bin/bash -c "JULIA_NUM_THREADS=3 /opt/julia/bin/julia -O3"'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia --project=.'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia -p3'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia --check-bound=yes'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia --inline=no'
 
 " vimcmdline options
 let cmdline_vsplit             = 1      " Split the window vertically
@@ -251,7 +255,7 @@ let cmdline_term_height        = 15     " Initial height of interpreter window o
 let cmdline_term_width         = 80     " Initial width of interpreter window or pane
 let cmdline_tmp_dir            = '/tmp' " Temporary directory to save files
 let cmdline_outhl              = 1      " Syntax highlight the output
-let cmdline_external_term_cmd  = "urxvtcd -e %s"
+let cmdline_external_term_cmd  = "alacritty -e %s &"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Extradite
@@ -496,6 +500,7 @@ let g:limelight_priority = -1
 let R_assign = 0
 let R_in_buffer = 0
 let R_tmpdir = "/tmp/Nvim-R"
+let R_external_term = 'alacritty -e'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Pandoc
@@ -512,7 +517,7 @@ let g:pandoc#modules#disabled = ["folding", "metadata", "bibliographies", "compl
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Ranger.vim
 "
-let g:ranger_terminal = "urxvtcd -h"
+let g:ranger_terminal = "alacritty -h"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Rooter
@@ -534,6 +539,7 @@ let g:syntastic_lua_checkers=['ghc-mod']
 
 let g:syntastic_enable_r_lintr_checker = 1
 let g:syntastic_r_checkers = ['lintr']
+let g:syntastic_cpp_checkers = ['cppcheck']
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Table Mode

@@ -279,12 +279,15 @@ endfun
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 fun! Highlight_Overlength() " {{{
   let bg = execute('set background')
-  if bg =~ 'dark'
-    highlight OverLength ctermbg=0
+  if &buftype ==# 'terminal'
   else
-    highlight OverLength ctermbg=7
-  endif
-  match OverLength /\%>92c.*/
+    if bg =~ 'dark'
+      highlight OverLength ctermbg=0
+    else
+      highlight OverLength ctermbg=7
+    endif
+    match OverLength /\%>92c.*/
+  end
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

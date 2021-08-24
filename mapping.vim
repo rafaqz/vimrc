@@ -139,7 +139,7 @@ nnoremap <leader>tm :TableModeToggle<cr>
 nnoremap <leader>tg :call TableGrid()<cr>
 nnoremap <leader>tp :call TablePipe()<cr>
 " Undo tree
-nnoremap <leader>tu :GundoToggle<cr>
+nnoremap <leader>tu :UndotreeToggle<cr>
 " Wrap on off
 nnoremap <leader>tw :set wrap!<cr>
 " Wrap on off
@@ -149,11 +149,10 @@ nmap <leader>td :filetype detect<cr>
 
 " urxvtcd
 nnoremap <leader>us :sh<cr>
-nnoremap <leader>uu :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd<cr>
-nnoremap <leader>ur :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e rs<cr>
-nnoremap <leader>uR :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e ranger<cr>
-nnoremap <leader>uw :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e watch_doc %:e<cr>
-nnoremap <leader>ut :cd %:p:h<cr>:pwd<cr>:silent !urxvtcd -e tig<cr>
+nnoremap <leader>uu :cd %:p:h<cr>:pwd<cr>:silent !alacritty &<cr>
+nnoremap <leader>ur :cd %:p:h<cr>:pwd<cr>:silent !alacritty -e ranger &<cr>
+nnoremap <leader>uw :cd %:p:h<cr>:pwd<cr>:silent !alacritty -e watch_doc %:e &<cr>
+nnoremap <leader>ut :cd %:p:h<cr>:pwd<cr>:silent !alacritty -e tig &<cr>
 
 " Search for pandoc @citations and images
 " map <leader>1 /!\[./e<cr>
@@ -189,6 +188,7 @@ nnoremap <silent>[unite]s   :<C-u>Unite -buffer-name=grep                       
 nnoremap <silent>[unite]/   :<C-u>Unite -buffer-name=locate                                locate<cr>
 nnoremap <silent>[unite]l   :<C-u>Unite -buffer-name=line                                  line<cr>
 nnoremap <silent>[unite]k   :<C-u>Unite -buffer-name=mapping                               mapping<cr>
+nnoremap <silent>[unite]m   :<C-u>Unite -buffer-name=mapping                               mapping<cr>
 nnoremap <silent>[unite]:   :<C-u>Unite -buffer-name=command                               command<cr>
 nnoremap <silent>[unite];   :<C-u>Unite -buffer-name=command                               command<cr>
 nnoremap <silent>[unite]i   :<C-u>Unite -buffer-name=history                               history/unite<cr>
@@ -197,8 +197,8 @@ nnoremap <silent>[unite]j   :<C-u>Unite -buffer-name=jump      -no-start-insert 
 nnoremap <silent>[unite]p   :<C-u>Unite -buffer-name=yank      -default-action=append      history/yank<cr>
 nnoremap <silent>[unite]P   :<C-u>Unite -buffer-name=yank      -default-action=insert      history/yank<cr>
 nnoremap <silent>[unite]d   :<C-u>Unite -buffer-name=digraphs  -default-action=insert      digraphs<cr>
-nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
-nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
+" nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
+" nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
 nnoremap <silent><leader>ca :<C-u>Unite -buffer-name=citation/author   -default-action=append citation/author<cr>
 " nnoremap <silent><leader>cb :<C-u>Unite -buffer-name=citation/abstract   -default-action=append citation/abstract<cr>
 nnoremap <silent><leader>cn :<C-u>Unite -buffer-name=citation/notes   -default-action=append citation/notes<cr>
@@ -276,6 +276,16 @@ command W w !sudo tee % > /dev/null
 " Visual mode pressing * or # searches for the current selection
 vnoremap <silent> * :call VisualSelection('f', '')<cr>
 vnoremap <silent> # :call VisualSelection('b', '')<cr>
+
+" Splits
+nnoremap <C-J> <C-W><C-J>
+nnoremap <C-K> <C-W><C-K>
+nnoremap <C-L> <C-W><C-L>
+nnoremap <C-H> <C-W><C-H>
+
+set splitbelow
+set splitright
+
 
 " Format paragraph
 " nnoremap <localleader>f gwip

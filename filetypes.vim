@@ -247,6 +247,7 @@ function! SetR()
   nmap <silent> <LocalLeader>t :call RAction("tail")<CR>
   nmap <silent> <LocalLeader>H :call RAction("head")<CR>
   nmap <silent> <LocalLeader>h :call RAction("head", "@,48-57,_,.")<CR>
+  set shiftwidth=2
 endfunction
 autocmd! FileType rmd call SetR()
 autocmd! FileType r call SetR()
@@ -264,13 +265,15 @@ function! SetMarkdown()
   let g:table_mode_corner='|'
 endfunction
 
+autocmd BufRead,BufNewFile *.jmd set filetype=markdown
+
 augroup markdown
   autocmd!
   " autocmd! Bufread,BufEnter,BufNewFile *.md
   "       \   call SetLight()
   " autocmd! BufLeave *.md call SetDark()
 
-  autocmd FileType pandoc,markdown,mkd,rmd call SetMarkdown()
+  autocmd FileType pandoc,markdown,mkd,jmd,rmd call SetMarkdown()
   autocmd FileType rmd setlocal commentstring=#\ %s
 augroup END
 
@@ -320,4 +323,15 @@ function! SetCSV()
 endfunction
 autocmd FileType csv call SetCSV()
 
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Cpp
+" autocmd BufWrite *.cpp :! cppcheck %
+" autocmd BufWrite *.h :! cppcheck %
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Terminal
+" au TermOpen * setlocal listchars= nonumber norelativenumber
+" au TermOpen * startinsert
+" au BufEnter,BufWinEnter,WinEnter term://* startinsert
+" au BufLeave term://* stopinsert
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

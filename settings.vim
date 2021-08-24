@@ -99,8 +99,9 @@ set foldnestmax=10
 
 " 256 color mode
 set t_Co=256
-let g:solarized_termcolors=16
-colorscheme solarized
+" let g:solarized_termcolors=16
+" colorscheme solarized
+colorscheme one
 
 if GetFileLine("/home/raf/.background_color", 1) == "dark"
   set background=dark
@@ -208,10 +209,9 @@ hi Folded term=bold cterm=NONE
 " let &colorcolumn=join(range(81,999),",")
 
 augroup highlight_things
-  autocmd BufEnter * call Highlight_Overlength()
+  " autocmd BufEnter * call Highlight_Overlength()
   " autocmd BufEnter,ColorScheme * call Highlight_Split()
   autocmd BufEnter,ColorScheme * call Highlight_EndOfBuffer()
 augroup END
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
