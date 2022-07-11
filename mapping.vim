@@ -167,7 +167,7 @@ nnoremap <leader>ut :cd %:p:h<cr>:pwd<cr>:silent !alacritty -e tig &<cr>
 nnoremap <leader>x :set operatorfunc=CropOperator<cr>g@
 
 " Goyo
-nnoremap <silent> <leader>z :Goyo<cr>
+" nnoremap <silent> <leader>z :Goyo<cr>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
@@ -319,6 +319,8 @@ set splitright
 " nnoremap <A-J> <C-w>J
 " nnoremap <A-K> <C-w>K
 " nnoremap <A-L> <C-w>L
+
+:tnoremap <Esc> <C-\><C-n>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Additional subscript digraphs

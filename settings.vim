@@ -4,55 +4,55 @@
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ General
+"" {{{ General
 
-"Shell
-set shell=bash
-set ttyfast
-" Use Unix as the standard file type
-set ffs=unix,dos,mac
-" Set utf8 as standard encoding and en_US as the standard language
-set encoding=utf8
+""Shell
+"set shell=bash
+"set ttyfast
+"" Use Unix as the standard file type
+"set ffs=unix,dos,mac
+"" Set utf8 as standard encoding and en_US as the standard language
+"set encoding=utf8
 
-" Sets how many lines of history VIM has to remember
-set history=700
-" Tags - search down to root to find them.
-set tags=./tags;/
-" Don't redraw while executing macros (good performance config)
-set lazyredraw
-" For regular expressions turn magic on
-set magic
-" Specify the behavior when switching between buffers
-try
-  set switchbuf=useopen,usetab,newtab
-  set stal=2
-catch
-endtry
+"" Sets how many lines of history VIM has to remember
+"set history=700
+"" Tags - search down to root to find them.
+"set tags=./tags;/
+"" Don't redraw while executing macros (good performance config)
+"set lazyredraw
+"" For regular expressions turn magic on
+"set magic
+"" Specify the behavior when switching between buffers
+"try
+"  set switchbuf=useopen,usetab,newtab
+"  set stal=2
+"catch
+"endtry
 
-" set dir to current file
-autocmd BufEnter * silent! lcd %:p:h
+"" set dir to current file
+"autocmd BufEnter * silent! lcd %:p:h
 
-" No annoying sound on errors
-set noerrorbells
-set novisualbell
-set t_vb=
-set tm=500
+"" No annoying sound on errors
+"set noerrorbells
+"set novisualbell
+"set t_vb=
+"set tm=500
 
-" No annoying promtps
-set shortmess=aoOtI
+"" No annoying promtps
+"set shortmess=aoOtI
 
-" Enable filetype plugins
-filetype plugin on
-filetype indent on
+"" Enable filetype plugins
+"filetype plugin on
+"filetype indent on
 
-" Turn on the WiLd menu
-set wildmenu
-" Ignore compiled files
-" set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
-set wildignore=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
-" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+"" Turn on the WiLd menu
+"set wildmenu
+"" Ignore compiled files
+"" set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
+"set wildignore=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
+"" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Nvim
 
 " Yank to clipboard
@@ -62,9 +62,9 @@ set clipboard=unnamed
 " {{{ Movement
 
 " Show matching brackets when text indicator is over them
-set showmatch
+" set showmatch
 " How many tenths of a second to blink when matching brackets
-set mat=2
+" set mat=2
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 " Leader key timeout
@@ -89,10 +89,10 @@ set hidden      " A buffer becomes hidden when it is abandoned
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Folds
 
-set foldlevelstart=20
-set foldcolumn=0
-set foldmethod=syntax
-set foldnestmax=10
+" set foldlevelstart=20
+" set foldcolumn=0
+" set foldmethod=syntax
+" set foldnestmax=10
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Colors
@@ -148,6 +148,9 @@ set incsearch
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Files
 
+" Set directory to current file
+set autochdir
+
 " Turn backup files off
 set nobackup
 set nowb
@@ -196,6 +199,7 @@ set tw=500
 
 set nowrap "dont wrap lines
 set whichwrap+=<,>,h,l,[,]
+set synmaxcol=500
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Highlight
@@ -213,5 +217,7 @@ augroup highlight_things
   " autocmd BufEnter,ColorScheme * call Highlight_Split()
   autocmd BufEnter,ColorScheme * call Highlight_EndOfBuffer()
 augroup END
+
+set redrawtime=10000
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

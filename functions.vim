@@ -375,3 +375,5 @@ fun! TablePipe() " {{{
 endfun
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
+command! ReverseLine call setline('.', join(reverse(split(getline('.')))))

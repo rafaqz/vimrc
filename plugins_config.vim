@@ -10,26 +10,25 @@ call plug#begin()
 "---------------------------------
 " {{{ Bling
 
-Plug 'junegunn/goyo.vim'
-Plug 'junegunn/limelight.vim'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
-Plug 'altercation/vim-colors-solarized'
-Plug 'reedes/vim-colors-pencil'
-Plug 'ryanoasis/vim-devicons'
+" Plug 'junegunn/goyo.vim'
+" Plug 'junegunn/limelight.vim'
+Plug 'rbong/vim-crystalline'
+" Plug 'altercation/vim-colors-solarized'
+" Plug 'reedes/vim-colors-pencil'
+" Plug 'ryanoasis/vim-devicons'
 Plug 'rakr/vim-one'
 
 "---------------------------------}}}
 " {{{ Edit
 
 
-Plug 'wikitopian/hardmode'
+" Plug 'wikitopian/hardmode'
 Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 " Plug 'roxma/nvim-completion-manager'
 " Plug 'jiangmiao/auto-pairs'
 " Plug 'jalvesaq/zotcite'
-
+Plug 'intuited/visdo'
 Plug 'ervandew/supertab'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
@@ -37,7 +36,7 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-unimpaired'
 Plug 'dahu/vim-fanfingtastic'
-Plug 'haya14busa/vim-easyoperator-line'
+" Plug 'haya14busa/vim-easyoperator-line'
 Plug 'michaeljsmith/vim-indent-object'
 " Plug 'vim-scripts/Align'
 Plug 'tommcdo/vim-lion'
@@ -54,13 +53,13 @@ Plug 'mbbill/undotree'
 "---------------------------------}}}
 " {{{ Git
 
-Plug 'airblade/vim-rooter'
+" Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
 Plug 'tpope/vim-rhubarb'
 Plug 'int3/vim-extradite'
 Plug 'airblade/vim-gitgutter'
 Plug 'junegunn/gv.vim'
-Plug 'gregsexton/gitv'
+" Plug 'gregsexton/gitv'
 " Plug 'vim-scripts/gitignore'
 
 "---------------------------------}}}
@@ -73,7 +72,7 @@ Plug 'reedes/vim-wheel'
 " " Plug 'junegunn/fzf'
 Plug 'rafaqz/ranger.vim'
 " Plug 'vim-scripts/SearchComplete'
-Plug 'AndrewRadev/linediff.vim'
+" Plug 'AndrewRadev/linediff.vim'
 "
 "---------------------------------}}}
 " {{{ Misc
@@ -86,7 +85,8 @@ Plug 'kana/vim-textobj-user'
 " Plug 'tpope/vim-dispatch'
 " Plug 'benekastah/neomake'
 " Plug 'kana/vim-operator-user'
-Plug 'jalvesaq/vimcmdline'
+" Plug 'jalvesaq/vimcmdline'
+Plug 'axvr/zepl.vim'
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
 "---------------------------------}}}
@@ -103,10 +103,10 @@ Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'jalvesaq/Nvim-R'
 " Plug 'baskerville/vim-sxhkdrc'
-Plug 'hashivim/vim-terraform'
+" Plug 'hashivim/vim-terraform'
 "
-Plug 'ElmCast/elm-vim', { 'for': 'elm' }
-Plug 'lambdatoast/elm.vim', {'for': 'elm' }
+" Plug 'ElmCast/elm-vim', { 'for': 'elm' }
+" Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
 
@@ -128,18 +128,18 @@ Plug 'JuliaEditorSupport/julia-vim'
 
 "-------------------------}}}
 " {{{ Haskell
-Plug 'dag/vim2hs', { 'for': 'haskell' }
-Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
+" Plug 'dag/vim2hs', { 'for': 'haskell' }
+" Plug 'Twinside/vim-hoogle', { 'for': 'haskell' }
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 " Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
-Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
+" Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
 
 "-------------------------}}}
 " {{{ Markdown
-Plug 'vim-pandoc/vim-pandoc'
-Plug 'vim-pandoc/vim-pandoc-syntax'
+" Plug 'vim-pandoc/vim-pandoc'
+" Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'vim-pandoc/vim-pandoc-after' ", { 'for': ['markdown','rmd'] }
-Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd'] }
+Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd','Rmd'] }
 " Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 " Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
@@ -159,7 +159,6 @@ Plug 'Shougo/unite-outline'
 Plug 'tsukkee/unite-help'
 " Plug 'kmnk/vim-unite-giti'
 Plug 'ujihisa/unite-colorscheme'
-Plug 'osyo-manga/unite-airline_themes'
 Plug 'rafaqz/citation.vim'
 " Plug 'tsukkee/unite-tag'
 Plug 'critiqjo/unite-fasd.vim'
@@ -180,36 +179,17 @@ call plug#end()
 
 runtime macros/matchit.vim
 
-" {{{ Airline
+" {{{ Chrystaline
+function! StatusLine(...)
+  return crystalline#mode() . crystalline#right_mode_sep('')
+        \ . ' %f%h%w%m%r ' . crystalline#right_sep('', 'Fill') . '%='
+        \ . crystalline#left_sep('', 'Fill') . ' %{&ft}[%{&fenc!=#""?&fenc:&enc}][%{&ff}] %l/%L %c%V %P '
+endfunction
 
-let g:airline#extensions#disable_rtp_load = 1
-let g:airline_theme='zenburn'
-
-" Tabline
-let g:airline#extensions#tabline#tabs_label = ''
-let g:airline#extensions#tabline#show_splits = 0
-let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tabline#show_tabs = 1
-let g:airline#extensions#tabline#show_tab_nr = 0
-let g:airline#extensions#tabline#show_buffers = 0
-let g:airline#extensions#tabline#tab_min_count = 0
-let g:airline#extensions#tabline#show_close_button = 0
-let g:airline#extensions#tabline#formatter = 'unique_tail_improved'
-let g:airline#extensions#tabline#fnamemod = ':t'
-
-" Powerline Fonts
-let g:airline_powerline_fonts = 1
-let g:airline_right_alt_sep = "\ue0b7"
-let g:airline_right_sep     = "\ue0b6"
-let g:airline_left_alt_sep  = "\ue0b5"
-let g:airline_left_sep      = "\ue0b4"
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.linenr = "\uE612"
-let g:airline_symbols.maxlinenr = ""
-let g:airline_symbols.crypt = "?"
-let g:airline_symbols.whitespace = "\uF096"
+let g:crystalline_enable_sep = 1
+let g:crystalline_statusline_fn = 'StatusLine'
+let g:crystalline_theme = 'default'
+set laststatus=2
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim
@@ -240,8 +220,10 @@ let cmdline_map_send_paragraph = "<LocalLeader>p"
 let cmdline_map_send_block     = "<LocalLeader>b"
 let cmdline_map_quit           = "<LocalLeader>q"
 let cmdline_app                = {}
-" let cmdline_app['julia']       = '/opt/julia/bin/julia'
-let cmdline_app['julia']       = '/bin/bash -c "JULIA_NUM_THREADS=3 /opt/julia/bin/julia -O3"'
+let cmdline_app['julia']       = '/opt/julia/bin/julia'
+" let cmdline_app['julia']       = '/opt/julia/bin/julia -t 8'
+" let cmdline_app['julia']       = '/bin/zsh -c "JULIA_NUM_THREADS=4 /opt/julia/bin/julia"'
+let cmdline_app['julia']       = '/bin/zsh -c "/opt/julia/bin/julia"'
 " let cmdline_app['julia']       = '/opt/julia/bin/julia --project=.'
 " let cmdline_app['julia']       = '/opt/julia/bin/julia -p3'
 " let cmdline_app['julia']       = '/opt/julia/bin/julia --check-bound=yes'
@@ -253,7 +235,8 @@ let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim t
 let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
 let cmdline_term_height        = 15     " Initial height of interpreter window or pane
 let cmdline_term_width         = 80     " Initial width of interpreter window or pane
-let cmdline_tmp_dir            = '/tmp' " Temporary directory to save files
+let cmdline_tmp_dir            = '.' 
+"'/tmp' " Temporary directory to save files
 let cmdline_outhl              = 1      " Syntax highlight the output
 let cmdline_external_term_cmd  = "alacritty -e %s &"
 
@@ -291,6 +274,8 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ julia-vim
 let g:latex_to_unicode_suggestions = 0
+let g:julia_blocks = 0
+let g:julia_indent_align_funcargs = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ julia language server
@@ -518,11 +503,12 @@ let g:pandoc#modules#disabled = ["folding", "metadata", "bibliographies", "compl
 " {{{ Ranger.vim
 "
 let g:ranger_terminal = "alacritty -h"
+let g:ranger_insert_format = '.'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Rooter
 
-let g:rooter_silent_chdir = 1
+" let g:rooter_silent_chdir = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ StarDict
@@ -600,6 +586,19 @@ let g:unite_fasd#read_only = 0
 let g:yankring_history_dir = '~/.vim/'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Zepl.vim
+
+
+command! -bar -nargs=0 ReplClear :call zepl#send("\<C-l>", 1)
+command! -bar -nargs=0 ReplClose :call zepl#send("\<C-d><cr>", 1)
+nnoremap <silent> <localleader>zz :call zepl#jump()<cr>
+nnoremap <silent> <localleader>zj :Repl julia<cr>
+nnoremap <silent> <localleader>zr :Repl<cr>
+nnoremap <silent> <localleader>zq :ReplClose<cr>
+nnoremap <silent> <localleader>zc :ReplClear<cr>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
 
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

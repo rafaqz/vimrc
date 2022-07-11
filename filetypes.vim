@@ -9,6 +9,8 @@ function! SetJulia()
   setlocal commentstring=#\ %s
   set shiftwidth=4
   set tabstop=4
+
+  nnoremap <C-K> :ReplClear <cr> :call zepl#send('?' .. expand('<cword>')) <cr> :call zepl#send('\n') <cr>
   let g:latex_to_unicode_suggestions = 0
   hi link juliaParDelim Delimiter
   hi juliaComma guifg=Magenta ctermfg=Magenta
