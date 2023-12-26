@@ -7,12 +7,12 @@
 "" {{{ General
 
 ""Shell
-"set shell=bash
-"set ttyfast
+set shell=bash
+set ttyfast
 "" Use Unix as the standard file type
-"set ffs=unix,dos,mac
+set ffs=unix,dos,mac
 "" Set utf8 as standard encoding and en_US as the standard language
-"set encoding=utf8
+set encoding=utf8
 
 "" Sets how many lines of history VIM has to remember
 "set history=700
@@ -30,11 +30,11 @@
 "endtry
 
 "" set dir to current file
-"autocmd BufEnter * silent! lcd %:p:h
+" autocmd BufEnter * silent! lcd %:p:h
 
 "" No annoying sound on errors
-"set noerrorbells
-"set novisualbell
+set noerrorbells
+set novisualbell
 "set t_vb=
 "set tm=500
 
@@ -62,9 +62,9 @@ set clipboard=unnamedplus
 " {{{ Movement
 
 " Show matching brackets when text indicator is over them
-" set showmatch
+set showmatch
 " How many tenths of a second to blink when matching brackets
-" set mat=2
+set mat=2
 " Set 7 lines to the cursor - when moving vertically using j/k
 set so=7
 " Leader key timeout

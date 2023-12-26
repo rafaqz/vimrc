@@ -87,12 +87,16 @@ nnoremap <leader>PO "*P
 nnoremap <leader>PP "+P
 nnoremap <leader>pO "*P
 nnoremap <leader>pP "+P
-vmap <leader>y "+y
 vmap <leader>d "+d
 nmap <leader>p "+p
 nmap <leader>P "+P
 vmap <leader>p "+p
 vmap <leader>P "+P
+" Copy to clipboard
+vnoremap  <leader>y  "+y
+nnoremap  <leader>Y  "+yg_
+nnoremap  <leader>y  "+y
+nnoremap  <leader>yy  "+yy
 
 " Remove the Windows ^M - when the encodings gets messed up
 nnoremap <leader>dm mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
