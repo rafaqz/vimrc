@@ -56,7 +56,7 @@
 " {{{ Nvim
 
 " Yank to clipboard
-set clipboard=unnamed
+set clipboard=unnamedplus
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Movement
@@ -220,4 +220,17 @@ augroup END
 
 set redrawtime=10000
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ LanguageServer
+lua << EOF
+  require'lspconfig'.julials.setup{}
+EOF
+
+
+autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
+
+nnoremap <silent> <c-]> <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> K     <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gr    <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> g0    <cmd>lua vim.lsp.buf.document_symbol()<CR>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}

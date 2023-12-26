@@ -43,6 +43,7 @@ Plug 'tommcdo/vim-lion'
 " Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'mbbill/undotree'
+Plug 'Exafunction/codeium.vim'
 " Plug 'vim-scripts/vis'
 " Plug 'vim-scripts/VisIncr'
 " Plug 'Raimondi/delimitMate'
@@ -66,7 +67,7 @@ Plug 'junegunn/gv.vim'
 " {{{ Nav
 
 " Plug 'amix/open_file_under_cursor.vim'
-Plug 'Lokaltog/vim-easymotion'
+" Plug 'Lokaltog/vim-easymotion'
 Plug 'reedes/vim-wheel'
 " " Plug 'majutsushi/tagbar'
 " " Plug 'junegunn/fzf'
@@ -87,6 +88,7 @@ Plug 'kana/vim-textobj-user'
 " Plug 'kana/vim-operator-user'
 " Plug 'jalvesaq/vimcmdline'
 Plug 'axvr/zepl.vim'
+Plug 'samjwill/nvim-unception'
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
 "---------------------------------}}}
@@ -102,6 +104,7 @@ Plug 'axvr/zepl.vim'
 Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'jalvesaq/Nvim-R'
+Plug 'neovim/nvim-lspconfig'
 " Plug 'baskerville/vim-sxhkdrc'
 " Plug 'hashivim/vim-terraform'
 "
@@ -115,6 +118,7 @@ Plug 'jalvesaq/Nvim-R'
 "
 " Plug 'zyedidia/julialint.vim'
 " Plug 'AtsushiSakai/julia.vim'
+Plug 'neovim/nvim-lsp'
 Plug 'JuliaEditorSupport/julia-vim'
 " Plug 'JuliaEditorSupport/deoplete-julia'
 
@@ -180,16 +184,71 @@ call plug#end()
 runtime macros/matchit.vim
 
 " {{{ Chrystaline
-function! StatusLine(...)
-  return crystalline#mode() . crystalline#right_mode_sep('')
-        \ . ' %f%h%w%m%r ' . crystalline#right_sep('', 'Fill') . '%='
-        \ . crystalline#left_sep('', 'Fill') . ' %{&ft}[%{&fenc!=#""?&fenc:&enc}][%{&ff}] %l/%L %c%V %P '
+
+function! g:GroupSuffix()
+  if mode() ==# 'i' && &paste
+    return '2'
+  endif
+  if &modified
+    return '1'
+  endif
+  return ''
 endfunction
 
-let g:crystalline_enable_sep = 1
-let g:crystalline_statusline_fn = 'StatusLine'
-let g:crystalline_theme = 'default'
+function! g:CrystallineStatuslineFn(winnr)
+  let g:crystalline_group_suffix = g:GroupSuffix()
+  let l:curr = a:winnr == winnr()
+  let l:s = ''
+
+  if l:curr
+    let l:s .= crystalline#ModeSection(0, 'A', 'B')
+  else
+    let l:s .= crystalline#HiItem('Fill')
+  endif
+  let l:s .= ' %f%h%w%m%r '
+  if l:curr
+    let l:s .= crystalline#Sep(0, 'B', 'Fill') . ' %{fugitive#Head()}'
+  endif
+
+  let l:s .= '%='
+  if l:curr
+    let l:s .= crystalline#Sep(1, 'Fill', 'B') . '%{&paste ? " PASTE " : " "}'
+    let l:s .= crystalline#Sep(1, 'B', 'A')
+  endif
+  if winwidth(a:winnr) > 80
+    let l:s .= ' %{&ft} %l/%L %2v '
+  else
+    let l:s .= ' '
+  endif
+
+  return l:s
+endfunction
+
+function! g:CrystallineTablineFn()
+  let l:max_width = &columns
+  let l:right = '%='
+
+  let l:right .= crystalline#Sep(1, 'TabFill', 'TabType')
+  let l:max_width -= 1
+
+  let l:vimlabel = has('nvim') ?  ' NVIM ' : ' VIM '
+  let l:right .= l:vimlabel
+  let l:max_width -= strchars(l:vimlabel)
+
+  let l:max_tabs = 23
+
+  return crystalline#DefaultTabline({
+        \ 'enable_sep': 1,
+        \ 'max_tabs': l:max_tabs,
+        \ 'max_width': l:max_width
+        \ }) . l:right
+endfunction
+
+set showtabline=2
+set guioptions-=e
 set laststatus=2
+let g:crystalline_auto_prefix_groups = 1
+
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim
@@ -201,7 +260,7 @@ let g:citation_vim_zotero_path='~/Zotero'
 let g:citation_vim_zotero_version=5
 " let g:citation_vim_mode='bibtex'
 " let g:citation_vim_key_format="{author}{date}{title}"
-call unite#util#set_default('g:citation_vim_description_format',  "{}∶ {} ‴{}‴ ₋{}₋ ₍{}₎ ┊{}┊") 
+call unite#util#set_default('g:citation_vim_description_format',  "{}∶ {} ‴{}‴ ₋{}₋ ₍{}₎ ┊{}┊")
 call unite#util#set_default('g:citation_vim_description_fields', ["type", "key", "title", "author", "date", "publication"])
 
 let $ZCitationTemplate = '{author}{year}{title}'
@@ -212,33 +271,33 @@ let $Zotcite_tmpdir = '~/.cache'
 " {{{ cmdline
 
 " vimcmdline mappings
-let cmdline_map_start          = "<LocalLeader>s"
-let cmdline_map_send           = "<LocalLeader>d"
-let cmdline_map_send_and_stay  = "<LocalLeader>l"
-let cmdline_map_source_fun     = "<LocalLeader>f"
-let cmdline_map_send_paragraph = "<LocalLeader>p"
-let cmdline_map_send_block     = "<LocalLeader>b"
-let cmdline_map_quit           = "<LocalLeader>q"
-let cmdline_app                = {}
-let cmdline_app['julia']       = '/opt/julia/bin/julia'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia -t 8'
-" let cmdline_app['julia']       = '/bin/zsh -c "JULIA_NUM_THREADS=4 /opt/julia/bin/julia"'
-let cmdline_app['julia']       = '/bin/zsh -c "/opt/julia/bin/julia"'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia --project=.'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia -p3'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia --check-bound=yes'
-" let cmdline_app['julia']       = '/opt/julia/bin/julia --inline=no'
+" let cmdline_map_start          = "<LocalLeader>s"
+" let cmdline_map_send           = "<LocalLeader>d"
+" let cmdline_map_send_and_stay  = "<LocalLeader>l"
+" let cmdline_map_source_fun     = "<LocalLeader>f"
+" let cmdline_map_send_paragraph = "<LocalLeader>p"
+" let cmdline_map_send_block     = "<LocalLeader>b"
+" let cmdline_map_quit           = "<LocalLeader>q"
+" let cmdline_app                = {}
+" let cmdline_app['julia']       = '/opt/julia/bin/julia'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia -t 8'
+" " let cmdline_app['julia']       = '/bin/zsh -c "JULIA_NUM_THREADS=4 /opt/julia/bin/julia"'
+" let cmdline_app['julia']       = '/bin/zsh -c "/opt/julia/bin/julia"'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia --project=.'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia -p3'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia --check-bound=yes'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia --inline=no'
 
-" vimcmdline options
-let cmdline_vsplit             = 1      " Split the window vertically
-let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim terminal
-let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
-let cmdline_term_height        = 15     " Initial height of interpreter window or pane
-let cmdline_term_width         = 80     " Initial width of interpreter window or pane
-let cmdline_tmp_dir            = '.' 
-"'/tmp' " Temporary directory to save files
-let cmdline_outhl              = 1      " Syntax highlight the output
-let cmdline_external_term_cmd  = "alacritty -e %s &"
+" " vimcmdline options
+" let cmdline_vsplit             = 1      " Split the window vertically
+" let cmdline_esc_term           = 1      " Remap <Esc> to :stopinsert in Neovim terminal
+" let cmdline_in_buffer          = 1      " Start the interpreter in a Neovim buffer
+" let cmdline_term_height        = 15     " Initial height of interpreter window or pane
+" let cmdline_term_width         = 80     " Initial width of interpreter window or pane
+" let cmdline_tmp_dir            = '.'
+" "'/tmp' " Temporary directory to save files
+" let cmdline_outhl              = 1      " Syntax highlight the output
+" let cmdline_external_term_cmd  = "alacritty -e %s &"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Extradite
@@ -276,21 +335,6 @@ autocmd User GoyoLeave call <SID>goyo_leave()
 let g:latex_to_unicode_suggestions = 0
 let g:julia_blocks = 0
 let g:julia_indent_align_funcargs = 1
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ julia language server
-" let g:LanguageClient_autoStart = 1
-
-" let g:default_julia_version = '0.6'
-" let g:LanguageClient_serverCommands = {
-"  \   'julia': ['julia', '--startup-file=no', '--history-file=no', '-e', '
-"  \       using LanguageServer;
-"  \       server = LanguageServer.LanguageServerInstance(STDIN, STDOUT, false);
-"  \       server.rootPath = "~/Uni/Masters/code/plant_model_julia";
-"  \       server.runlinter = true;
-"  \       run(server);
-"  \   '],
-"  \ }
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Limelight
@@ -589,13 +633,16 @@ let g:yankring_history_dir = '~/.vim/'
 " {{{ Zepl.vim
 
 
-command! -bar -nargs=0 ReplClear :call zepl#send("\<C-l>", 1)
+command! -bar -nargs=0 ReplClear :call zepl#sendtif_paths ("\<C-l>", 1)
 command! -bar -nargs=0 ReplClose :call zepl#send("\<C-d><cr>", 1)
 nnoremap <silent> <localleader>zz :call zepl#jump()<cr>
-nnoremap <silent> <localleader>zj :Repl julia<cr>
+nnoremap <silent> <localleader>zj :Repl julia --threads auto<cr>
+nnoremap <silent> <localleader>zp :Repl python<cr>
 nnoremap <silent> <localleader>zr :Repl<cr>
 nnoremap <silent> <localleader>zq :ReplClose<cr>
 nnoremap <silent> <localleader>zc :ReplClear<cr>
+
+vmap <silent> gz <Plug>ReplSend_Visual<CR>gv<Esc>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
