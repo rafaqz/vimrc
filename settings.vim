@@ -46,11 +46,13 @@ set novisualbell
 "filetype indent on
 
 "" Turn on the WiLd menu
-"set wildmenu
+set wildmenu
 "" Ignore compiled files
 "" set wildignore=*.o,*~,*.pyc,*/tmp/*,*.so,*.swp,*.zip
 "set wildignore=*/.git/*,*/.hg/*,*/.svn/*,*/.DS_Store
 "" set wildignore+=*/tmp/*,*.so,*.swp,*.zip
+" set wildmenu ""
+" set wildchar <Tab>
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Nvim
