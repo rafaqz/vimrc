@@ -47,6 +47,7 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
+Plug 'petertriho/cmp-git'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'Exafunction/codeium.nvim'
@@ -168,7 +169,7 @@ Plug 'Shougo/unite.vim'
 Plug 'Shougo/unite-outline'
 " Plug 'osyo-manga/unite-quickfix'
 Plug 'tsukkee/unite-help'
-" Plug 'kmnk/vim-unite-giti'
+Plug 'kmnk/vim-unite-giti'
 Plug 'ujihisa/unite-colorscheme'
 Plug 'rafaqz/citation.vim'
 " Plug 'tsukkee/unite-tag'
@@ -268,14 +269,13 @@ lua << EOF
   require("codeium").setup({})
 EOF
 
-let g:codeium_idle_delay = 75
-" let g:codeium_tab_fallback = "\t"
-
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ cmp
 
 lua <<EOF
+  vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#FF0000" })
+
   -- Set up nvim-cmp.
   local cmp = require'cmp'
   cmp.setup({
@@ -289,9 +289,13 @@ lua <<EOF
       end,
     },
     window = {
-      -- completion = cmp.config.window.bordered(),
-      -- documentation = cmp.config.window.bordered(),
+       completion = cmp.config.window.bordered(),
+       documentation = cmp.config.window.bordered(),
     },
+    enabled = function()
+        vim.notify(vim.fn.expand("%"))
+        return not string.find(vim.fn.expand("%"), "unite")
+    end,
     mapping = cmp.mapping.preset.insert({
       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
       ['<C-f>'] = cmp.mapping.scroll_docs(4),
@@ -313,17 +317,16 @@ lua <<EOF
             fallback()
           end
         end, {"i", "s"}),
-      }),
-      sources = cmp.config.sources({
-        { name = 'nvim_lsp' },
-        { name = 'vsnip' }, -- For vsnip users.
-        { name = 'buffer' },
-        { name = 'codeium' },
-        -- { name = 'luasnip' }, -- For luasnip users.
-        -- { name = 'ultisnips' }, -- For ultisnips users.
-        -- { name = 'snippy' }, -- For snippy users.
-      }, {
-    })
+    }),
+    sources = cmp.config.sources({
+      { name = 'buffer' },
+      { name = 'nvim_lsp' },
+      { name = 'vsnip' }, -- For vsnip users.
+      { name = 'codeium' },
+      -- { name = 'luasnip' }, -- For luasnip users.
+      -- { name = 'ultisnips' }, -- For ultisnips users.
+      -- { name = 'snippy' }, -- For snippy users.
+    }, { })
   })
 
   -- Set configuration for specific filetype.
@@ -743,6 +746,7 @@ let g:yankring_history_dir = '~/.vim/'
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Zepl.vim
 
+let g:zepl_default_maps = 0
 
 command! -bar -nargs=0 ReplClear :call zepl#sendtif_paths ("\<C-l>", 1)
 command! -bar -nargs=0 ReplClose :call zepl#send("\<C-d><cr>", 1)
@@ -753,7 +757,10 @@ nnoremap <silent> <localleader>zr :Repl<cr>
 nnoremap <silent> <localleader>zq :ReplClose<cr>
 nnoremap <silent> <localleader>zc :ReplClear<cr>
 
-vmap <silent> gz <Plug>ReplSend_Visual<CR>gv<Esc>
+nmap <silent> gz <Plug>ReplSend_Motion
+nmap <silent> gzz gz_
+" Jump to the bottom of the block after visual send
+vmap <silent> gz <Plug>ReplSend_Visual<cr>gv<Esc>j
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
