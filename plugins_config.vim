@@ -96,6 +96,7 @@ Plug 'kana/vim-textobj-user'
 " Plug 'kana/vim-operator-user'
 " Plug 'jalvesaq/vimcmdline'
 Plug 'axvr/zepl.vim'
+Plug 'andythigpen/nvim-coverage'
 
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 
@@ -366,7 +367,7 @@ EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim
-"
+
 let g:citation_vim_cache_path='~/.cache'
 let g:citation_vim_bibtex_file='~/Uni/Citations/Library.bib'
 let g:citation_vim_collection=""
@@ -394,9 +395,9 @@ let $Zotcite_tmpdir = '~/.cache'
 " let cmdline_map_quit           = "<LocalLeader>q"
 " let cmdline_app                = {}
 " let cmdline_app['julia']       = '/opt/julia/bin/julia'
-" " let cmdline_app['julia']       = '/opt/julia/bin/julia -t 8'
-" " let cmdline_app['julia']       = '/bin/zsh -c "JULIA_NUM_THREADS=4 /opt/julia/bin/julia"'
-" let cmdline_app['julia']       = '/bin/zsh -c "/opt/julia/bin/julia"'
+" " let cmdline_app['julia']       = '/opt/julia/bin/julia -t 6'
+" " let cmdline_app['julia']       = '/bin/zsh -c "JULIA_NUM_THREADS=6 /opt/julia/bin/julia"'
+" let cmdline_app['julia']       = '/bin/zsh -c "/opt/julia/bin/julia -t 6"'
 " " let cmdline_app['julia']       = '/opt/julia/bin/julia --project=.'
 " " let cmdline_app['julia']       = '/opt/julia/bin/julia -p3'
 " " let cmdline_app['julia']       = '/opt/julia/bin/julia --check-bound=yes'

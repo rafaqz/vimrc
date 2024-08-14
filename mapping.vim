@@ -13,8 +13,6 @@ let maplocalleader = "\\"
 map <Leader> <Plug>(easymotion-prefix)
 " Remove find highlight
 map <silent> <leader><cr> :noh<cr>
-" Goyo reset
-nmap <leader>a <c-w>=
 " Delete white space
 nnoremap <leader>dw :call DeleteTrailingWS()<cr>
 nnoremap <leader>de :%s///g<cr>
@@ -62,11 +60,6 @@ nnoremap <silent><leader>i :call ToggleBackground()<cr>
 nmap <Leader>ll :Limelight!!<cr>
 nmap <Leader>ls <Plug>(Limelight)
 xmap <Leader>ls <Plug>(Limelight)
-" Grammar
-" nmap <leader>ll :GrammarousCheck<cr>
-" nmap <leader>lq <Plug>(grammarous-close-info-window)<cr>
-" nmap <leader>l] <Plug>(grammarous-move-to-next-error)
-" nmap <leader>l[ <Plug>(grammarous-move-to-previous-error)
 
 nmap <leader>m :mark
 
@@ -116,17 +109,10 @@ map <leader>rt :RangerTab<cr>
 map <leader>rd :RangerCD<cr>
 map <leader>rl :RangerLCD<cr>
 
-map <F4> :execute "vimgrep /" . expand("<cword>") . "/j **" <Bar> cw<CR>
-
 " Spell checking
-nnoremap <leader>ss ea<C-X><C-S>
-nnoremap <leader>sx :setlocal spell!<cr>
-nnoremap <leader>sa zg
-nnoremap <leader>sd zug
+nnoremap <leader>ss :setlocal spell!<cr>
+nnoremap <leader>sx ea<C-X><C-S>
 nnoremap <leader>s? z=
-nnoremap <leader>sd :Sdcv <C-R><C-W><cr>
-nnoremap <leader>st :Sdcv --data-dir ~/.stardict/thesaurus -u "Moby Thesaurus II" <C-R><C-W><cr>
-nnoremap <leader>sw :Sdcv<space>
 
 " Splits
 nnoremap <leader>sh :leftabove  vnew<cr>
@@ -139,15 +125,15 @@ vmap <leader>ti :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<cr>
 " Show/hide concealable things
 nnoremap <leader>tc :call ConcealToggle()<cr>
 " Table Mode
-nnoremap <leader>tm :TableModeToggle<cr>
-nnoremap <leader>tg :call TableGrid()<cr>
-nnoremap <leader>tp :call TablePipe()<cr>
+" nnoremap <leader>tm :TableModeToggle<cr>
+" nnoremap <leader>tg :call TableGrid()<cr>
+" nnoremap <leader>tp :call TablePipe()<cr>
 " Undo tree
 nnoremap <leader>tu :UndotreeToggle<cr>
 " Wrap on off
 nnoremap <leader>tw :set wrap!<cr>
 " Wrap on off
-nnoremap <leader>ts :SyntasticToggleMode<cr>
+" nnoremap <leader>ts :SyntasticToggleMode<cr>
 " Refresh filetype
 nmap <leader>td :filetype detect<cr>
 
@@ -172,6 +158,8 @@ nnoremap <leader>x :set operatorfunc=CropOperator<cr>g@
 
 " Goyo
 " nnoremap <silent> <leader>z :Goyo<cr>
+" Goyo reset
+" nmap <leader>a <c-w>=
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
@@ -205,7 +193,7 @@ nnoremap <silent>[unite]j   :<C-u>Unite -buffer-name=jump      -no-start-insert 
 nnoremap <silent>[unite]p   :<C-u>Unite -buffer-name=yank      -default-action=append      history/yank<cr>
 nnoremap <silent>[unite]P   :<C-u>Unite -buffer-name=yank      -default-action=insert      history/yank<cr>
 nnoremap <silent>[unite]d   :<C-u>Unite -buffer-name=digraphs  -default-action=insert      digraphs<cr>
-" nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
+nnoremap <silent>[unite]t   :<C-u>Unite -buffer-name=colorscheme    -auto-preview               colorscheme<cr>
 " nnoremap <silent>[unite]a   :<C-u>Unite -buffer-name=airline   -auto-preview               airline_themes<cr>
 nnoremap <silent><leader>ca :<C-u>Unite -buffer-name=citation/author   -default-action=append citation/author<cr>
 " nnoremap <silent><leader>cb :<C-u>Unite -buffer-name=citation/abstract   -default-action=append citation/abstract<cr>
@@ -331,22 +319,3 @@ set splitright
 :tnoremap <Esc> <C-\><C-n>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Additional subscript digraphs
-execute "digraphs ks " . 0x2096
-execute "digraphs as " . 0x2090
-execute "digraphs es " . 0x2091
-execute "digraphs hs " . 0x2095
-execute "digraphs is " . 0x1D62
-execute "digraphs js " . 0x2C7C
-execute "digraphs ks " . 0x2096
-execute "digraphs ls " . 0x2097
-execute "digraphs ms " . 0x2098
-execute "digraphs ns " . 0x2099
-execute "digraphs os " . 0x2092
-execute "digraphs ps " . 0x209A
-execute "digraphs rs " . 0x1D63
-execute "digraphs ss " . 0x209B
-execute "digraphs ts " . 0x209C
-execute "digraphs us " . 0x1D64
-execute "digraphs vs " . 0x1D65
-execute "digraphs xs " . 0x2093

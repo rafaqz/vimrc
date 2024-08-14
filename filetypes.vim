@@ -18,6 +18,9 @@ function! SetJulia()
   " syn include juliaHighlight_matlab syntax/matlab.vim
   syn region juliaHighlight_r matchgroup=juliaCodeDelimiter start='R"""' end='"""' keepend contains=@juliaHighlight_r
   " syn region juliaHighlight_matlab matchgroup=juliaCodeDelimiter start='mat"""' end='"""' keepend contains=@juliaHighlight_matlab
+  
+  " Fix up
+  nnoremap <C-K> <C-W><C-K>
 
 endfunction
 au FileType julia call SetJulia()
