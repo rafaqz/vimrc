@@ -47,9 +47,9 @@ Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
-Plug 'petertriho/cmp-git'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp'
+Plug 'petertriho/cmp-git'
 Plug 'Exafunction/codeium.nvim'
 Plug 'samjwill/nvim-unception'
 " Plug 'vim-scripts/vis'
@@ -114,6 +114,9 @@ Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 " Plug 'zchee/deoplete-jedi', { 'for': 'python' }
 Plug 'jalvesaq/Nvim-R'
 Plug 'neovim/nvim-lspconfig'
+" Plug 'jmbuhr/otter.nvim'
+" Plug 'nvim-treesitter/nvim-treesitter'
+" Plug 'quarto-dev/quarto-nvim'
 " Plug 'baskerville/vim-sxhkdrc'
 " Plug 'hashivim/vim-terraform'
 "
@@ -320,7 +323,12 @@ lua <<EOF
         end, {"i", "s"}),
     }),
     sources = cmp.config.sources({
-      { name = 'buffer' },
+      { name = 'buffer',
+        get_bufnrs = function()
+          return vim.api.nvim_list_bufs()
+        end
+      },
+      { name = 'git' },
       { name = 'nvim_lsp' },
       { name = 'vsnip' }, -- For vsnip users.
       { name = 'codeium' },
@@ -665,11 +673,41 @@ let g:ranger_terminal = "alacritty -h"
 let g:ranger_insert_format = '.'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Quarto
+
+lua << EOF
+require('quarto').setup{
+  debug = false,
+  closePreviewOnExit = true,
+  lspFeatures = {
+    enabled = true,
+    chunks = "curly",
+    languages = { "julia", "bash", "html" },
+    diagnostics = {
+      enabled = true,
+      triggers = { "BufWritePost" },
+    },
+    completion = {
+      enabled = true,
+    },
+  },
+  codeRunner = {
+    enabled = false,
+    default_method = nil, -- 'molten' or 'slime'
+    ft_runners = {}, -- filetype to runner, ie. `{ python = "molten" }`.
+                     -- Takes precedence over `default_method`
+    never_run = { "yaml" }, -- filetypes which are never sent to a code runner
+  },
+}
+EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Rooter
 
 " let g:rooter_silent_chdir = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+
 " {{{ StarDict
 
 let g:stardict_split_horizontal = 1
