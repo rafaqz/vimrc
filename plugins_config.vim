@@ -116,7 +116,7 @@ Plug 'jalvesaq/Nvim-R'
 Plug 'neovim/nvim-lspconfig'
 " Plug 'jmbuhr/otter.nvim'
 " Plug 'nvim-treesitter/nvim-treesitter'
-" Plug 'quarto-dev/quarto-nvim'
+Plug 'quarto-dev/quarto-nvim'
 " Plug 'baskerville/vim-sxhkdrc'
 " Plug 'hashivim/vim-terraform'
 "
@@ -199,6 +199,7 @@ call plug#end()
 runtime macros/matchit.vim
 
 " {{{ Chrystaline
+"
 
 function! g:GroupSuffix()
   if mode() ==# 'i' && &paste
@@ -263,7 +264,7 @@ set showtabline=2
 set guioptions-=e
 set laststatus=2
 let g:crystalline_auto_prefix_groups = 1
-
+let g:crystalline_theme = 'onedark'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Codeium
