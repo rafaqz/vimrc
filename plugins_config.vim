@@ -9,19 +9,16 @@ call plug#begin()
 
 "---------------------------------
 " {{{ Bling
-
 " Plug 'junegunn/goyo.vim'
 " Plug 'junegunn/limelight.vim'
 Plug 'rbong/vim-crystalline'
 " Plug 'altercation/vim-colors-solarized'
 " Plug 'reedes/vim-colors-pencil'
-" Plug 'ryanoasis/vim-devicons'
+Plug 'ryanoasis/vim-devicons'
+Plug 'm00qek/baleia.nvim' " ansii code theme
 Plug 'rakr/vim-one'
-
 "---------------------------------}}}
 " {{{ Edit
-
-
 " Plug 'wikitopian/hardmode'
 " Plug 'Shougo/neocomplete.vim'
 " Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -43,25 +40,21 @@ Plug 'tommcdo/vim-lion'
 " Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/YankRing.vim'
 Plug 'mbbill/undotree'
-Plug 'hrsh7th/cmp-nvim-lsp'
+" Plug 'hrsh7th/cmp-nvim-lsp'
 Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'petertriho/cmp-git'
-Plug 'Exafunction/codeium.nvim'
 Plug 'samjwill/nvim-unception'
 " Plug 'vim-scripts/vis'
 " Plug 'vim-scripts/VisIncr'
 " Plug 'Raimondi/delimitMate'
 " Plug 'junegunn/vim-easy-align'
 " Plug 'Shougo/echodoc.vim'
-
-
 "---------------------------------}}}
 " {{{ Git
-
 " Plug 'airblade/vim-rooter'
 Plug 'tpope/vim-fugitive'
 " Plug 'tpope/vim-rhubarb'
@@ -70,10 +63,8 @@ Plug 'airblade/vim-gitgutter'
 " Plug 'junegunn/gv.vim'
 " Plug 'gregsexton/gitv'
 " Plug 'vim-scripts/gitignore'
-
 "---------------------------------}}}
 " {{{ Nav
-
 " Plug 'amix/open_file_under_cursor.vim'
 " Plug 'Lokaltog/vim-easymotion'
 Plug 'reedes/vim-wheel'
@@ -82,10 +73,8 @@ Plug 'reedes/vim-wheel'
 Plug 'rafaqz/ranger.vim'
 " Plug 'vim-scripts/SearchComplete'
 " Plug 'AndrewRadev/linediff.vim'
-"
 "---------------------------------}}}
 " {{{ Misc
-
 " Plug 'vim-scripts/tlib
 " Plug 'MarcWeber/vim-addon-mw-utils'
 " Plug 'xolox/vim-misc'
@@ -95,45 +84,38 @@ Plug 'kana/vim-textobj-user'
 " Plug 'benekastah/neomake'
 " Plug 'kana/vim-operator-user'
 " Plug 'jalvesaq/vimcmdline'
-Plug 'axvr/zepl.vim'
+Plug 'Vigemus/iron.nvim'
 Plug 'andythigpen/nvim-coverage'
-
+Plug 'olimorris/codecompanion.nvim'
+Plug 'ravitemer/mcphub.nvim'
+Plug 'nvim-lua/plenary.nvim' " needed for codecompanion
 " Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-
 "---------------------------------}}}
 " {{{ Snippet
 " Plug 'honza/vim-snippets'
 " Plug 'Shougo/neosnippet.vim'
 " Plug 'Shougo/neosnippet-snippets'
-
 "---------------------------------}}}
 " {{{ Syntax
-" Plug 'vim-syntastic/syntastic'
-
-Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
-" Plug 'zchee/deoplete-jedi', { 'for': 'python' }
-Plug 'jalvesaq/Nvim-R'
-Plug 'neovim/nvim-lspconfig'
+Plug 'neovim/nvim-lsp'
+" Plug 'neovim/nvim-lspconfig'
 " Plug 'jmbuhr/otter.nvim'
-" Plug 'nvim-treesitter/nvim-treesitter'
+Plug 'nvim-treesitter/nvim-treesitter'
 Plug 'quarto-dev/quarto-nvim'
+Plug 'chrisbra/csv.vim'," { 'for': 'csv' }
 " Plug 'baskerville/vim-sxhkdrc'
 " Plug 'hashivim/vim-terraform'
-"
-" Plug 'ElmCast/elm-vim', { 'for': 'elm' }
-" Plug 'lambdatoast/elm.vim', {'for': 'elm' }
 " Plug 'sheerun/vim-polyglot'
 " Plug 'joonty/vdebug'
-
 "-------------------------
+" {{{ R
+Plug 'jalvesaq/Nvim-R'
+"-------------------------}}}
 " {{{ julia
-"
 " Plug 'zyedidia/julialint.vim'
 " Plug 'AtsushiSakai/julia.vim'
-Plug 'neovim/nvim-lsp'
-Plug 'JuliaEditorSupport/julia-vim'
+" Plug 'JuliaEditorSupport/julia-vim'
 " Plug 'JuliaEditorSupport/deoplete-julia'
-
 "-------------------------}}}
 " {{{ Ruby
 " Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
@@ -141,7 +123,6 @@ Plug 'JuliaEditorSupport/julia-vim'
 " Plug 'tpope/vim-bundler', { 'for': 'ruby' }
 " Plug 'tpope/vim-rake', { 'for': 'ruby' }
 " Plug 'ecomba/vim-ruby-refactoring', { 'for': 'ruby' }
-
 "-------------------------}}}
 " {{{ Haskell
 " Plug 'dag/vim2hs', { 'for': 'haskell' }
@@ -149,7 +130,6 @@ Plug 'JuliaEditorSupport/julia-vim'
 " Plug 'eagletmt/neco-ghc', { 'for': 'haskell' }
 " Plug 'eagletmt/ghcmod-vim', { 'for': 'haskell' }
 " Plug 'Twinside/vim-syntax-haskell-cabal', { 'for': 'cabal' }
-
 "-------------------------}}}
 " {{{ Markdown
 " Plug 'vim-pandoc/vim-pandoc'
@@ -159,13 +139,13 @@ Plug 'vim-pandoc/vim-rmarkdown', { 'for': ['markdown','rmd','Rmd'] }
 " Plug 'phongvcao/vim-stardict', { 'for': ['markdown','rmd'] }
 Plug 'dhruvasagar/vim-table-mode', { 'on': 'TableModeToggle' }
 " Plug 'rhysd/vim-grammarous', { 'on': 'GrammarousCheck' }
-
 " Plug 'reedes/vim-textobj-sentence'
 " Plug 'reedes/vim-textobj-quote', { 'for': 'markdown' }
 " Plug 'reedes/vim-wordy', { 'for': 'markdown' }
-
 "-------------------------}}}
-
+" {{{ Lua
+Plug 'nvim-lua/plenary.nvim'
+"---------------------------------}}}
 "---------------------------------}}}
 " {{{ Unite
 " Plug 'Shougo/neoyank.vim'
@@ -181,12 +161,7 @@ Plug 'critiqjo/unite-fasd.vim'
 Plug 'Shougo/neoinclude.vim'
 Plug 'naquad/unite-digraphs'
 Plug 'ujihisa/unite-locate'
-
-" And make it fast
-Plug 'Shougo/vimproc.vim', { 'do': 'make' }
-"---------------------------------}}}
-" {{{ Lua
-Plug 'nvim-lua/plenary.nvim'
+Plug 'Shougo/vimproc.vim', { 'do': 'make' } " Make Unite fast
 "---------------------------------}}}
 
 " Add plugins to &runtimepath
@@ -194,10 +169,21 @@ call plug#end()
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 
-
-
 runtime macros/matchit.vim
 
+" {{{ baleia
+lua <<EOF
+vim.api.nvim_create_autocmd("FileType", {
+   pattern = "iron",
+   callback = function()
+     -- Enable baleia's ANSI color processing for this buffer
+     vim.b.baleia_ansii_colors = 1
+   end,
+   desc = "Enable baleia ANSI colors for iron buffers",
+})
+EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Chrystaline
 "
 
@@ -267,113 +253,103 @@ let g:crystalline_auto_prefix_groups = 1
 let g:crystalline_theme = 'onedark'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Codeium
-
-
-lua << EOF
-  require("codeium").setup({})
-EOF
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ cmp
 
-lua <<EOF
-  vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#FF0000" })
-
-  -- Set up nvim-cmp.
-  local cmp = require'cmp'
-  cmp.setup({
-    snippet = {
-      -- REQUIRED - you must specify a snippet engine
-      expand = function(args)
-        vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-      end,
-    },
-    window = {
-       completion = cmp.config.window.bordered(),
-       documentation = cmp.config.window.bordered(),
-    },
-    enabled = function()
-        vim.notify(vim.fn.expand("%"))
-        return not string.find(vim.fn.expand("%"), "unite")
-    end,
-    mapping = cmp.mapping.preset.insert({
-      ['<C-b>'] = cmp.mapping.scroll_docs(-4),
-      ['<C-f>'] = cmp.mapping.scroll_docs(4),
-      ['<C-Space>'] = cmp.mapping.complete(),
-      ['<C-e>'] = cmp.mapping.abort(),
-      ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
-			["<Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_next_item()
-          else
-            fallback()
-          end
-        end, {"i", "s"}),
-    
-        ["<S-Tab>"] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.select_prev_item()
-          else
-            fallback()
-          end
-        end, {"i", "s"}),
-    }),
-    sources = cmp.config.sources({
-      { name = 'buffer',
-        get_bufnrs = function()
-          return vim.api.nvim_list_bufs()
-        end
-      },
-      { name = 'git' },
-      { name = 'nvim_lsp' },
-      { name = 'vsnip' }, -- For vsnip users.
-      { name = 'codeium' },
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
-    }, { })
-  })
-
-  -- Set configuration for specific filetype.
-  cmp.setup.filetype('gitcommit', {
-    sources = cmp.config.sources({
-      { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
-    }, {
-      { name = 'buffer' },
-    })
-  })
-
-  -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline({ '/', '?' }, {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = {
-      { name = 'buffer' }
-    }
-  })
-
-  -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
-  cmp.setup.cmdline(':', {
-    mapping = cmp.mapping.preset.cmdline(),
-    sources = cmp.config.sources({
-      { name = 'path' }
-    }, {
-      { name = 'cmdline' }
-    })
-  })
-
-  -- Set up lspconfig.
-  local capabilities = require('cmp_nvim_lsp').default_capabilities()
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --   capabilities = capabilities
-  -- }
-EOF
-
+" lua <<EOF
+"   vim.api.nvim_set_hl(0, "CmpNormal", { bg = "#FF0000" })
+" 
+"   -- Set up nvim-cmp.
+"   local cmp = require'cmp'
+"   cmp.setup({
+"     snippet = {
+"       -- REQUIRED - you must specify a snippet engine
+"       expand = function(args)
+"         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
+"         -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
+"         -- require('snippy').expand_snippet(args.body) -- For `snippy` users.
+"         -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
+"       end,
+"     },
+"     window = {
+"        completion = cmp.config.window.bordered(),
+"        documentation = cmp.config.window.bordered(),
+"     },
+"     enabled = function()
+"         vim.notify(vim.fn.expand("%"))
+"         return not string.find(vim.fn.expand("%"), "unite")
+"     end,
+"     mapping = cmp.mapping.preset.insert({
+"       ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+"       ['<C-f>'] = cmp.mapping.scroll_docs(4),
+"       ['<C-Space>'] = cmp.mapping.complete(),
+"       ['<C-e>'] = cmp.mapping.abort(),
+"       ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+" 			["<Tab>"] = cmp.mapping(function(fallback)
+"           if cmp.visible() then
+"             cmp.select_next_item()
+"           else
+"             fallback()
+"           end
+"         end, {"i", "s"}),
+"     
+"         ["<S-Tab>"] = cmp.mapping(function(fallback)
+"           if cmp.visible() then
+"             cmp.select_prev_item()
+"           else
+"             fallback()
+"           end
+"         end, {"i", "s"}),
+"     }),
+"     sources = cmp.config.sources({
+"       { name = 'buffer',
+"         get_bufnrs = function()
+"           return vim.api.nvim_list_bufs()
+"         end
+"       },
+"       { name = 'git' },
+"       { name = 'nvim_lsp' },
+"       { name = 'vsnip' }, -- For vsnip users.
+"       { name = 'codeium' },
+"       -- { name = 'luasnip' }, -- For luasnip users.
+"       -- { name = 'ultisnips' }, -- For ultisnips users.
+"       -- { name = 'snippy' }, -- For snippy users.
+"     }, { })
+"   })
+" 
+"   -- Set configuration for specific filetype.
+"   cmp.setup.filetype('gitcommit', {
+"     sources = cmp.config.sources({
+"       { name = 'git' }, -- You can specify the `git` source if [you were installed it](https://github.com/petertriho/cmp-git).
+"     }, {
+"       { name = 'buffer' },
+"     })
+"   })
+" 
+"   -- Use buffer source for `/` and `?` (if you enabled `native_menu`, this won't work anymore).
+"   cmp.setup.cmdline({ '/', '?' }, {
+"     mapping = cmp.mapping.preset.cmdline(),
+"     sources = {
+"       { name = 'buffer' }
+"     }
+"   })
+" 
+"   -- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+"   cmp.setup.cmdline(':', {
+"     mapping = cmp.mapping.preset.cmdline(),
+"     sources = cmp.config.sources({
+"       { name = 'path' }
+"     }, {
+"       { name = 'cmdline' }
+"     })
+"   })
+" 
+"   -- Set up lspconfig.
+"   local capabilities = require('cmp_nvim_lsp').default_capabilities()
+"   -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+"   -- require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
+"   --   capabilities = capabilities
+"   -- }
+" EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Citation.vim
 
@@ -424,6 +400,28 @@ let $Zotcite_tmpdir = '~/.cache'
 " let cmdline_external_term_cmd  = "alacritty -e %s &"
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Codecompanion
+
+lua << EOF
+require("codecompanion").setup({
+  adapters = {
+    acp = {
+      gemini_cli = function()
+        return require("codecompanion.adapters").extend("gemini_cli", {
+          defaults = {
+            auth_method = "gemini-api-key", -- "oauth-personal"|"gemini-api-key"|"vertex-ai"
+          },
+          env = {
+            GEMINI_API_KEY = "cmd:op read op://personal/Gemini_API/credential --no-newline",
+          },
+        })
+      end,
+    },
+  },
+})
+EOF
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Extradite
 
 let g:extradite_width = 60
@@ -454,6 +452,116 @@ endfunction
 autocmd User GoyoEnter call <SID>goyo_enter()
 autocmd User GoyoLeave call <SID>goyo_leave()
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Iron.vim
+lua << EOF
+local iron = require("iron.core")
+local view = require("iron.view")
+local common = require("iron.fts.common")
+
+iron.setup {
+  config = {
+    -- Whether a repl should be discarded or not
+    scratch_repl = false,
+    -- Your repl definitions come here
+    repl_definition = {
+      sh = {
+        -- Can be a table or a function that
+        -- returns a table (see below)
+        command = {"zsh"}
+      },
+      python = {
+        command = { "python3" },  -- or { "ipython", "--no-autoindent" }
+        format = common.bracketed_paste_python,
+        block_dividers = { "# %%", "#%%" },
+        env = {PYTHON_BASIC_REPL = "1"} --this is needed for python3.13 and up.
+      }
+    },
+    -- set the file type of the newly created repl to ft
+    -- bufnr is the buffer id of the REPL and ft is the filetype of the 
+    -- language being used for the REPL. 
+    repl_filetype = function(bufnr, ft)
+      -- or return a string name such as the following
+      return "iron"
+    end,
+    -- Send selections to the DAP repl if an nvim-dap session is running.
+    dap_integration = true,
+    -- How the repl window will be displayed
+    -- See below for more information
+    repl_open_cmd = view.split.botright("%45"),
+
+    -- repl_open_cmd can also be an array-style table so that multiple 
+    -- repl_open_commands can be given.
+    -- When repl_open_cmd is given as a table, the first command given will
+    -- be the command that `IronRepl` initially toggles.
+    -- Moreover, when repl_open_cmd is a table, each key will automatically
+    -- be available as a keymap (see `keymaps` below) with the names 
+    -- toggle_repl_with_cmd_1, ..., toggle_repl_with_cmd_k
+    -- For example,
+    -- 
+    -- repl_open_cmd = {
+    --   view.split.vertical.rightbelow("%40"), -- cmd_1: open a repl to the right
+    --   view.split.rightbelow("%25")  -- cmd_2: open a repl below
+    -- }
+  },
+  -- Iron doesn't set keymaps by default anymore.
+  -- You can set them here or manually add keymaps to the functions in iron.core
+  keymaps = {
+    toggle_repl = "<space>rr", -- toggles the repl open and closed.
+    -- If repl_open_command is a table as above, then the following keymaps are
+    -- available
+    -- toggle_repl_with_cmd_1 = "<space>rv",
+    -- toggle_repl_with_cmd_2 = "<space>rh",
+    restart_repl = "<space>rR", -- calls `IronRestart` to restart the repl
+    send_motion = "<space>ss",
+    visual_send = "<space>ss",
+    send_file = "<space>sf",
+    send_line = "<space>sl",
+    send_paragraph = "<space>sp",
+    send_until_cursor = "<space>su",
+    send_mark = "<space>sm",
+    send_code_block = "<space>sb",
+    send_code_block_and_move = "<space>sn",
+    mark_motion = "<space>mc",
+    mark_visual = "<space>mc",
+    remove_mark = "<space>md",
+    cr = "<space>s<cr>",
+    interrupt = "<space>s<space>",
+    exit = "<space>sq",
+    clear = "<space>cl",
+  },
+  -- If the highlight is on, you can change how it looks
+  -- For the available options, check nvim_set_hl
+  highlight = {
+    italic = true
+  },
+  ignore_blank_lines = true, -- ignore blank lines when sending visual select lines
+}
+
+-- iron also has a list of commands, see :h iron-commands for all available commands
+vim.keymap.set('n', '<space>rf', '<cmd>IronFocus<cr>a')
+vim.keymap.set('n', '<space>rh', '<cmd>IronHide<cr>')
+vim.keymap.set('n', '<space>sap', function()
+    local ts_utils = require 'nvim-treesitter.ts_utils'
+
+    local bufnr = vim.api.nvim_get_current_buf()
+    local cursor_node = ts_utils.get_node_at_cursor()
+    local top_non_module = nil
+    local node = cursor_node
+
+    while node do
+      local type = node:type()
+      if type ~= 'module' then
+        top_non_module = node
+      end
+      node = node:parent()
+    end
+    data = vim.treesitter.get_node_text(top_non_module, bufnr)
+    iron.send(nil, data)
+  end
+)
+
+EOF
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ julia-vim
 let g:latex_to_unicode_suggestions = 0
@@ -708,12 +816,9 @@ EOF
 " let g:rooter_silent_chdir = 1
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-
 " {{{ StarDict
-
 let g:stardict_split_horizontal = 1
 let g:stardict_split_size = 180
-
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Syntastic (syntax checker)
 
@@ -729,6 +834,52 @@ let g:syntastic_cpp_checkers = ['cppcheck']
 " {{{ Table Mode
 let g:table_mode_auto_align = 0
 let g:table_mode_update_time = 1
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
+" {{{ Treesitter
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  -- A list of parser names, or "all" (the listed parsers MUST always be installed)
+  ensure_installed = { "julia", "javascript", "lua", "vim", "vimdoc", "query", "markdown", "markdown_inline" },
+
+  -- Install parsers synchronously (only applied to `ensure_installed`)
+  sync_install = false,
+
+  -- Automatically install missing parsers when entering buffer
+  -- Recommendation: set to false if you don't have `tree-sitter` CLI installed locally
+  auto_install = true,
+
+  -- List of parsers to ignore installing (or "all")
+  ignore_install = {},
+
+  ---- If you need to change the installation directory of the parsers (see -> Advanced Setup)
+  -- parser_install_dir = "/some/path/to/store/parsers", -- Remember to run vim.opt.runtimepath:append("/some/path/to/store/parsers")!
+
+  highlight = {
+    enable = true,
+
+    -- NOTE: these are the names of the parsers and not the filetype. (for example if you want to
+    -- disable highlighting for the `tex` filetype, you need to include `latex` in this list as this is
+    -- the name of the parser)
+    -- list of language that will be disabled
+    -- disable = { "c", "rust" },
+    -- Or use a function for more flexibility, e.g. to disable slow treesitter highlight for large files
+    -- disable = function(lang, buf)
+    --     local max_filesize = 100 * 1024 -- 100 KB
+    --     local ok, stats = pcall(vim.loop.fs_stat, vim.api.nvim_buf_get_name(buf))
+    --     if ok and stats and stats.size > max_filesize then
+    --         return true
+    --     end
+    -- end,
+
+    -- Setting this to true will run `:h syntax` and tree-sitter at the same time.
+    -- Set this to `true` if you depend on 'syntax' being enabled (like for indentation).
+    -- Using this option may slow down your editor, and you may see some duplicate highlights.
+    -- Instead of true it can also be a list of languages
+    additional_vim_regex_highlighting = false,
+  },
+}
+EOF
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ Unite
@@ -784,27 +935,3 @@ let g:unite_fasd#read_only = 0
 let g:yankring_history_dir = '~/.vim/'
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-" {{{ Zepl.vim
-
-let g:zepl_default_maps = 0
-
-command! -bar -nargs=0 ReplClear :call zepl#sendtif_paths ("\<C-l>", 1)
-command! -bar -nargs=0 ReplClose :call zepl#send("\<C-d><cr>", 1)
-nnoremap <silent> <localleader>zz :call zepl#jump()<cr>
-nnoremap <silent> <localleader>zj :Repl julia --threads auto<cr>
-nnoremap <silent> <localleader>zp :Repl python<cr>
-nnoremap <silent> <localleader>zr :Repl<cr>
-nnoremap <silent> <localleader>zq :ReplClose<cr>
-nnoremap <silent> <localleader>zc :ReplClear<cr>
-
-nmap <silent> gz <Plug>ReplSend_Motion
-nmap <silent> gzz gz_
-" Jump to the bottom of the block after visual send
-vmap <silent> gz <Plug>ReplSend_Visual<cr>gv<Esc>j
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-
-
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
-

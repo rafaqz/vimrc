@@ -95,30 +95,30 @@ nnoremap  <leader>yy  "+yy
 nnoremap <leader>dm mmHmt:%s/<C-V><cr>//ge<cr>'tzt'm
 
 " Ranger
-map <leader>rc :set operatorfunc=RangerChangeOperator<cr>g@
-map <leader>rR :set operatorfunc=RangerBrowseEdit<cr>g@
-map <leader>rT :set operatorfunc=RangerBrowseTab<cr>g@
-map <leader>rS :set operatorfunc=RangerBrowseSplit<cr>g@
-map <leader>rV :set operatorfunc=RangerBrowseVSplit<cr>g@
-map <leader>ri :RangerInsert<cr>
-map <leader>ra :RangerAppend<cr>
-map <leader>rr :RangerEdit<cr>
-map <leader>rv :RangerVSplit<cr>
-map <leader>rs :RangerSplit<cr>
-map <leader>rt :RangerTab<cr>
-map <leader>rd :RangerCD<cr>
-map <leader>rl :RangerLCD<cr>
+map <leader>fc :set operatorfunc=RangerChangeOperator<cr>g@
+map <leader>fR :set operatorfunc=RangerBrowseEdit<cr>g@
+map <leader>fT :set operatorfunc=RangerBrowseTab<cr>g@
+map <leader>fS :set operatorfunc=RangerBrowseSplit<cr>g@
+map <leader>fV :set operatorfunc=RangerBrowseVSplit<cr>g@
+map <leader>fi :RangerInsert<cr>
+map <leader>fa :RangerAppend<cr>
+map <leader>ff :RangerEdit<cr>
+map <leader>fv :RangerVSplit<cr>
+map <leader>fs :RangerSplit<cr>
+map <leader>ft :RangerTab<cr>
+map <leader>fd :RangerCD<cr>
+map <leader>fl :RangerLCD<cr>
 
 " Spell checking
-nnoremap <leader>ss :setlocal spell!<cr>
-nnoremap <leader>sx ea<C-X><C-S>
-nnoremap <leader>s? z=
+" nnoremap <leader>ss :setlocal spell!<cr>
+" nnoremap <leader>sx ea<C-X><C-S>
+" nnoremap <leader>s? z=
 
 " Splits
-nnoremap <leader>sh :leftabove  vnew<cr>
-nnoremap <leader>sl :rightbelow vnew<cr>
-nnoremap <leader>sk :leftabove  new<cr>
-nnoremap <leader>sj :rightbelow new<cr>
+" nnoremap <leader>sh :leftabove  vnew<cr>
+" nnoremap <leader>sl :rightbelow vnew<cr>
+" nnoremap <leader>sk :leftabove  new<cr>
+" nnoremap <leader>sj :rightbelow new<cr>
 
 " Titlecase selection
 vmap <leader>ti :s/\<\(\w\)\(\w*\)\>/\u\1\L\2/g<cr>

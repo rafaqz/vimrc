@@ -105,11 +105,11 @@ set t_Co=256
 " colorscheme solarized
 colorscheme one
 
-if GetFileLine("/home/raf/.background_color", 1) == "dark"
-  set background=dark
-else
-  set background=light
-endif
+" if GetFileLine("~/.background_color", 1) == "dark"
+"   set background=dark
+" else
+"   set background=light
+" endif
 
 syntax enable
 
@@ -224,16 +224,16 @@ set redrawtime=10000
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""}}}
 " {{{ LanguageServer
-lua << EOF
-  require'lspconfig'.julials.setup{
-      on_new_config = function(new_config, _)
-          local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
-          if require'lspconfig'.util.path.is_file(julia) then
-              new_config.cmd[1] = julia
-          end
-      end
-  }
-EOF
+" lua << EOF
+"   require'lspconfig'.julials.setup{
+"       on_new_config = function(new_config, _)
+"           local julia = vim.fn.expand("~/.julia/environments/nvim-lspconfig/bin/julia")
+"           if require'lspconfig'.util.path.is_file(julia) then
+"               new_config.cmd[1] = julia
+"           end
+"       end
+"   }
+" EOF
 
 
 autocmd Filetype julia setlocal omnifunc=v:lua.vim.lsp.omnifunc
